@@ -12,7 +12,7 @@ body ::-webkit-input-placeholder {
     font-weight: 300;
 }
 
-.wrapper {
+.wr {
     display: flex;
     justify-content: center;
     align-items: center;
