@@ -6,7 +6,7 @@ const Login = () => {
     const {isAuth, setIsAuth} = useContext(AuthContext)
     const [myLogin, setMyLogin] = useState('')
     const [password, setPassword] = useState('')
-    const navigate=useNavigate()
+    const navigate = useNavigate()
 
     const login = e => {
         e.preventDefault()
@@ -17,13 +17,11 @@ const Login = () => {
         if (!user) return // нет юзера с таким имейлом
         if (user.password !== password) return // юзер есть, но пароль неверный
         // все ок
-        
-        if (myLogin === 'test@test.com' && password === '123') {
+        else {
             setIsAuth(true)
             localStorage.setItem('isAuth', 'true');
             setIsAuth(true)
             navigate('/todo')
-
             return
         }
         setMyLogin('');

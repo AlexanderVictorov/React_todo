@@ -21,13 +21,12 @@ const Navigation = () => {
             ?
         <nav className='nav'>
             <NavLink to='/todo' style={styles}>Todo </NavLink>
-            <div style={styles()} onClick={onClickSignOut} >SignOut </div>
+            <a href='http://localhost:3000/login' onClick={onClickSignOut} >SignOut </a>
         </nav>
             :
             <nav className='nav'>
                 <NavLink to='/login' style={styles}>LogIn </NavLink>
                 <NavLink to='/registration' style={styles}>SignUp </NavLink>
-
 
 
             </nav>
