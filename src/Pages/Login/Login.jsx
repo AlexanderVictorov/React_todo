@@ -1,34 +1,54 @@
-import React from 'react';
-import './style.css'
-import Layout from "../../Layout";
+import React, {useContext, useState} from 'react';
+import {AuthContext} from "../../Context/Context";
+import {NavLink} from "react-router-dom";
 
 const Login = () => {
+    const {isAuth, setIsAuth} = useContext(AuthContext)
+    const [myLogin, setMyLogin] = useState('')
+    const [password, setPassword] = useState('')
+
+    const login = e => {
+        e.preventDefault()
+        if (myLogin === 'test@test.com' && password === '123') {
+            setIsAuth(true)
+            localStorage.setItem('isAuth', 'login');
+            return
+        }
+        setMyLogin('');
+        setPassword('');
+    }
     return (
-        <Layout>
-            <div className="wrapper">
-                <div className="container">
-                    <h1>Welcome</h1>
-                    <form className="form">
-                        <input type="text" placeholder="Username"/>
-                        <input type="password" placeholder="Password"/>
-                        <button type="submit" id="login-button">Login</button>
-                        <p className="message">Not registered? <a href="#">Create an account</a></p>
-                    </form>
-                </div>
-                <ul className="bg-bubbles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
+        <div className="wrapper">
+            <div className="container">
+                <h1>Welcome</h1>
+                <form onSubmit={login} className="form">
+                    <input
+                        value={myLogin}
+                        onChange={(e) => setMyLogin((e.target.value))}
+                        type="text"
+                        placeholder="Username"/>
+                    <input
+                        value={password}
+                        onChange={(e) => setPassword((e.target.value))}
+                        type="password"
+                        placeholder="Password"/>
+                    <button type="submit" id="login-button">Login</button>
+                    <p className="message">Not registered? <NavLink to='/registration'> Create an account</NavLink></p>
+                </form>
             </div>
-        </Layout>
+            <ul className="bg-bubbles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
     );
 };
 

@@ -1,13 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import './navigat.css'
 
 const Navigation = () => {
+    const styles = ({isActive}) => ({
+        fontWeight: isActive ? 'bold' : 'normal',
+    });
     return (
         <nav className='nav'>
-            <Link to='/login' >Login </Link>
-            <Link to='/registration' >SingIn </Link>
-            <Link to='/todo' >Todo </Link>
+            <NavLink to='/login' style={styles}>LogIn </NavLink>
+            <NavLink to='/registration' style={styles}>SignUp </NavLink>
+            <NavLink to='/todo' style={styles}>Todo </NavLink>
+            <NavLink to='/exit' >SignOut </NavLink>
         </nav>
     );
 };

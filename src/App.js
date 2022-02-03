@@ -1,22 +1,24 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import './App.css';
-import {Route, Routes} from 'react-router-dom';
-import Footer from "./Components/Footer/Footer";
-import Login from "./Pages/Login/Login";
-import TodoList from "./Components/Todo/TodoList";
-import Header from "./Components/Header/Header";
-import Registration from "./Pages/Registration/Registration";
+import {AuthContext} from "./Context/Context";
+import MyRoutes from "./Components/MyRouters/MyRoutes";
 
 function App() {
+    const [isAuth, setIsAuth] = useState(!!localStorage.getItem('isAuth'))
+    useEffect(() => {
+        if (localStorage.getItem('isAuth')) {
+            setIsAuth(true)
+        }
+        setIsAuth(false)
+    })
     return (
         <div className="App">
-            <Header/>
-            <Routes>
-                <Route path="login" element={<Login/>}/>
-                <Route path="registration" element={<Registration/>}/>
-                <Route path="todo" element={<TodoList/>}/>
-            </Routes>
-            <Footer/>
+            <AuthContext.Provider value={{
+                isAuth,
+                setIsAuth,
+            }}>
+                <MyRoutes/>
+            </AuthContext.Provider>
         </div>
     );
 }

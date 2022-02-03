@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import AddTodo from "./AddTodo";
 import {Grid, Paper} from "@mui/material";
 import List from "./List";
-
 
 const styles = {
     Paper: {
@@ -52,23 +51,23 @@ const TodoList = () => {
         setState(list);
     };
     return (
-        <React.Fragment>
-            <Grid container spacing={0}>
-                <Grid item xs={12}>
-                    <Paper style={styles.Paper}>
-                        <AddTodo addToList={addToList}/>
-                    </Paper>
+            <React.Fragment>
+                <Grid container spacing={0}>
+                    <Grid item xs={12}>
+                        <Paper style={styles.Paper}>
+                            <AddTodo addToList={addToList}/>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12} style={styles.Paper}>
+                        <List
+                            deleteTodo={deleteTodo}
+                            list={state}
+                            updateTodo={updateTodo}
+                            saveTodo={saveTodo}
+                        />
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} style={styles.Paper}>
-                    <List
-                        deleteTodo={deleteTodo}
-                        list={state}
-                        updateTodo={updateTodo}
-                        saveTodo={saveTodo}
-                    />
-                </Grid>
-            </Grid>
-        </React.Fragment>
+            </React.Fragment>
     );
 };
 
