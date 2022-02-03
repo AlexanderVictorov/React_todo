@@ -29,7 +29,7 @@ const MyRoutes = () => {
                     <Route index element={<Login/>}/>
                     <Route path="login" element={<Login/>}/>
                     <Route path="todo" element={<ErrorRegistration/>}/>
-                    <Route path="exit" element={<Login/>}/>
+                    {/*<Route path="exit" element={<Login/>}/>*/}
                     <Route path="registration" element={<Registration/>}/>
                     <Route path="*" element={<NoMatch />} />
                 </Route>
