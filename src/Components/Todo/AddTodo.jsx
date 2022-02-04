@@ -17,9 +17,6 @@ const AddTodo = ({addToList}) => {
         e.currentTarget.reset();
     };
 
-    // const onChangeInput = (e) => {
-    //     console.log(inputRef.current.value)
-    // }
     return (
         <form onSubmit={handleSubmit} style={{display: "flex"}}>
             <Input
@@ -27,7 +24,6 @@ const AddTodo = ({addToList}) => {
                 inputProps={{
                     "aria-label": "Description"
                 }}
-                // onChange={onChangeInput}
                 inputRef={inputRef}
                 style={{width: "90%"}}
             />

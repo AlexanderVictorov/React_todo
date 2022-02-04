@@ -15,3 +15,16 @@ body {
     background-image: url("./images/background.jpg");
 }
 
+.card_todo {
+    z-index: 1;
+    text-decoration: none;
+    position: relative;
+    display: flex;
+}
+
+.icon_change_todo {
+    z-index: 999;
+    position: absolute;
+    right: 0;
+    top: 0;
+}

@@ -7,6 +7,7 @@ import Registration from "../../Pages/Registration/Registration";
 import TodoList from "../Todo/TodoList";
 import NoMatch from "../../Pages/NoMatch/NoMatch";
 import ErrorRegistration from "../../Pages/NoMatch/ErrorRegistration";
+import TodoInfo from "../../Pages/TodoInfo/TodoInfo";
 
 const MyRoutes = () => {
     const {isAuth} = useContext(AuthContext)
@@ -19,7 +20,7 @@ const MyRoutes = () => {
                     <Route path="login" element={<Login/>}/>
                     <Route path="registration" element={<Registration/>}/>
                     <Route path="todo" element={<TodoList/>}/>
-                    {/*<Route path="todo/:id" element={<TodoItem/>}/>*/}
+                    <Route path="todo/:id" element={<TodoInfo/>}/>
                     <Route path="exit" element={<Login/>}/>
                     <Route path="*" element={<NoMatch />} />
                 </Route>

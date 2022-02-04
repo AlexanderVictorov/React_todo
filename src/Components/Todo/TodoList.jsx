@@ -8,7 +8,8 @@ const styles = {
         padding: 20,
         margin: "auto",
         textAlign: "center",
-        width: 500
+        width: 500,
+        zIndex:1
     }
 };
 
