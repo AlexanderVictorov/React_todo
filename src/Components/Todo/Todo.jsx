@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Grid, IconButton, Paper} from "@mui/material";
+import {Grid, IconButton, Paper, TextareaAutosize} from "@mui/material";
 import {Build, Delete} from "@material-ui/icons";
 
 
@@ -14,12 +14,18 @@ const styles = {
         alignItems: "center",
         marginTop: 10,
         width: 500
+    },
+    Textarea: {
+        resize: 'none',
+        width: '100%',
     }
 };
 
 const Todo = ({name, deleteTodo, id, updateTodo}) => {
+    const [isEditing, setIsEditing] = useState(false)
+    const [todoText, setTodoText] = useState(name)
     const gridRef = React.createRef();
-    // const gridClass = setState(true) ? "fade-out" : "";
+    const onChangeTodoText = event => setTodoText(event.target.value)
     return (
         <Grid
             xs={12}
@@ -29,12 +35,16 @@ const Todo = ({name, deleteTodo, id, updateTodo}) => {
             ref={gridRef}
         >
             <Paper elevation={2} style={styles.Paper}>
-                <span style={styles.todo}>{}{name}</span>
+                {isEditing ? (
+                    <TextareaAutosize value={todoText} onChange={onChangeTodoText} size={25} style={styles.Textarea}/>
+                ) : (
+                    <span style={styles.todo}>{}{name}</span>
+                )}
                 <IconButton
                     color="primary"
                     aria-label="Edit"
                     style={styles.Icon}
-                    onClick={() => updateTodo(id)}
+                    onClick={() => setIsEditing(true)}
                 >
                     <Build fontSize="small"/>
                 </IconButton>

@@ -14,9 +14,10 @@ const Login = () => {
         if (!userList) return // нет пользователей вообще
         userList = JSON.parse(userList)
         const user = userList.find(user => user.username === myLogin)
-        if (!user) return // нет юзера с таким имейлом
-        if (user.password !== password) return // юзер есть, но пароль неверный
-        // все ок
+        if (!user) {
+            setMyLogin('');
+            setPassword('');
+        }
         else {
             setIsAuth(true)
             localStorage.setItem('isAuth', 'true');
@@ -24,8 +25,8 @@ const Login = () => {
             navigate('/todo')
             return
         }
-        setMyLogin('');
-        setPassword('');
+
+
     }
     return (
         <div className="wrapper">

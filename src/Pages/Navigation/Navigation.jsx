@@ -29,6 +29,7 @@ const Navigation = () => {
                 <NavLink to='/registration' style={styles}>SignUp </NavLink>
 
 
+
             </nav>
     );
 };

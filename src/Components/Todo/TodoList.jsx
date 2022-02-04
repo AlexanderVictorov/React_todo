@@ -34,9 +34,10 @@ const TodoList = () => {
         let list = [...state];
         setState(list.filter(item => item.id !== id));
     };
-    const updateTodo = key => {
+    const updateTodo = id => {
         let list = [...state];
-        list[key]["status"] = "editing";
+        console.log(id)
+        // list[key]["status"] = "editing";
 
         setState(list);
     };
