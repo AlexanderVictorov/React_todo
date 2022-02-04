@@ -17,7 +17,7 @@ body ::-webkit-input-placeholder {
     align-items: center;
     background: #50a3a2;
     background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;

@@ -24,19 +24,34 @@ const styles = {
 const Todo = ({name, deleteTodo, id, updateTodo}) => {
     const [isEditing, setIsEditing] = useState(false)
     const [todoText, setTodoText] = useState(name)
-    const gridRef = React.createRef();
     const onChangeTodoText = event => setTodoText(event.target.value)
+    const onBlur = () => {
+        setIsEditing(false)
+        setTodoText(name)
+    }
+    const blurInput = (e) => {
+        if (e.key === 'Escape') {
+            setTodoText(name)
+            e.target.blur()
+        }
+    }
+    const changeInput = (e) => {
+        if (e.key === 'Enter') {
+            updateTodo(id, todoText)
+            e.target.blur()
+        }
+    }
     return (
         <Grid
             xs={12}
             className={``}
             item
             key={id}
-            ref={gridRef}
         >
             <Paper elevation={2} style={styles.Paper}>
                 {isEditing ? (
-                    <TextareaAutosize value={todoText} onChange={onChangeTodoText} size={25} style={styles.Textarea}/>
+                    <TextareaAutosize onKeyDown={changeInput} onKeyUp={blurInput} value={todoText} onChange={onChangeTodoText} onBlur={onBlur}
+                                      style={styles.Textarea} autoFocus/>
                 ) : (
                     <span style={styles.todo}>{}{name}</span>
                 )}

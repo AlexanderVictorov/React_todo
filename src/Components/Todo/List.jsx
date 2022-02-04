@@ -20,7 +20,7 @@ const List = ({list, deleteTodo, saveTodo, updateTodo}) => {
                     key={todo}
                     index={todo}
                     todo={todo.todo}
-                    saveTodo={saveTodo}
+                    // saveTodo={saveTodo}
                 />
             );
         }

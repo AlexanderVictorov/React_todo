@@ -34,23 +34,26 @@ const TodoList = () => {
         let list = [...state];
         setState(list.filter(item => item.id !== id));
     };
-    const updateTodo = id => {
+    const updateTodo = (id, newText) => {
         let list = [...state];
-        console.log(id)
-        // list[key]["status"] = "editing";
-
-        setState(list);
+        setState(list.map(item => {
+            if (item.id === id) {
+                item.name = newText
+            }
+            return item
+        }));
     };
-    const saveTodo = (key, todo) => {
-        let list = [...state];
-        list.push({
-            id: Date.now(),
-            name: todo,
-            status: "active"
-        })
-
-        setState(list);
-    };
+    // const saveTodo = (key, todo) => {
+    //     let list = [...state];
+    //     console.log(list)
+    //     list.push({
+    //         id: Date.now(),
+    //         name: todo,
+    //         status: "active"
+    //     })
+    //
+    //     setState(list);
+    // };
     return (
             <React.Fragment>
                 <Grid container spacing={0}>
@@ -64,7 +67,7 @@ const TodoList = () => {
                             deleteTodo={deleteTodo}
                             list={state}
                             updateTodo={updateTodo}
-                            saveTodo={saveTodo}
+                            // saveTodo={saveTodo}
                         />
                     </Grid>
                 </Grid>
