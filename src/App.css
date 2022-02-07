@@ -23,8 +23,8 @@ body {
 }
 
 .icon_change_todo {
-    z-index: 999;
+    z-index: 99;
     position: absolute;
-    right: 0;
+    right: -2px;
     top: 0;
 }

@@ -23,6 +23,7 @@ body ::-webkit-input-placeholder {
     width: 100%;
     height: 70px;
     overflow: hidden;
+    z-index: 9999;
 
 }
 .wrapper.form-success .container h1 {

@@ -24,7 +24,7 @@ const styles = {
     },
     Textarea: {
         resize: 'none',
-        width: '100%',
+        width: '87%',
     }
 };
 
@@ -48,6 +48,9 @@ const Todo = ({name, deleteTodo, id, updateTodo}) => {
             e.target.blur()
         }
     }
+    const preventDef = (e) => {
+      e.preventDefault()
+    }
     return (
         <Grid
             xs={12}
@@ -65,7 +68,8 @@ const Todo = ({name, deleteTodo, id, updateTodo}) => {
                 ) : (
                     <span style={styles.Card}>{}{name}</span>
                 )}
-                <div className='icon_change_todo'>
+                <div className='icon_change_todo'
+                onClick={preventDef}>
                     <IconButton className='icon_change_todo'
                                 color="primary"
                                 aria-label="Edit"
