@@ -1,15 +1,16 @@
 import React, {useContext} from 'react';
-import {AuthContext} from "../../Context/Context";
+import {AuthContext} from "../../context/Context";
 import {Route, Routes} from "react-router-dom";
 import Layout from "../../Layout";
-import Login from "../../Pages/Login/Login";
-import Registration from "../../Pages/Registration/Registration";
+import Login from "../../pages/Login";
+import Registration from "../../pages/Registration";
 import TodoList from "../Todo/TodoList";
-import NoMatch from "../../Pages/NoMatch/NoMatch";
-import ErrorRegistration from "../../Pages/NoMatch/ErrorRegistration";
-import TodoInfo from "../../Pages/TodoInfo/TodoInfo";
+import NoMatch from "../../pages/NoMatch";
+import ErrorRegistration from "../../pages/NoMatch/ErrorRegistration";
+import TodoInfo from "../../pages/TodoInfo";
 
 const MyRoutes = () => {
+    // todo map routes
     const {isAuth} = useContext(AuthContext)
     return (
         isAuth

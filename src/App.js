@@ -1,9 +1,10 @@
 import React, {useState} from "react";
 import './App.css';
-import {AuthContext} from "./Context/Context";
-import MyRoutes from "./Components/MyRouters/MyRoutes";
+import {AuthContext} from "./context/Context";
+import MyRoutes from "./components/MyRouters";
 
 function App() {
+    // todo rename folders to lowercase
     const [isAuth, setIsAuth] = useState(JSON.parse(localStorage.getItem('isAuth')))
 
     return (

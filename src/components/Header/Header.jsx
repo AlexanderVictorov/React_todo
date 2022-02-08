@@ -1,6 +1,6 @@
 import React from 'react';
 import './header.css'
-import Navigation from "../../Pages/Navigation/Navigation";
+import Navigation from "../../pages/Navigation/Navigation";
 const Header = () => {
     return (
         <div className="wr">
