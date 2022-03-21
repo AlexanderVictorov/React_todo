@@ -19,8 +19,6 @@ const styles = {
 
 const ChangeTodo = ({todo, index, key, saveTodo}) => {
     const inputRef = React.createRef();
-
-
     return (
         <Grid xs={12} item key={index}>
             <Paper elevation={2} style={styles.Paper}>

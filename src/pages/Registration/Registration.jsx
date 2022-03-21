@@ -30,7 +30,7 @@ const Registration = () => {
     return (
             <div className="wrapper">
                 <div className="container">
-                    <h1>Сreate a new user</h1>
+                    <h1>Create a new user</h1>
                     <form className="form" onSubmit={onCreate}>
                         <input type="text" name="username" value={newUser.username} onChange={onChange} placeholder="Username"/>
                         <input type="text" name="email" value={newUser.email} onChange={onChange} placeholder="Email"/>

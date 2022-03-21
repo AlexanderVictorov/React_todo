@@ -29,8 +29,6 @@ const Navigation = () => {
       <nav className={nav}>
         <NavLink to='/login' style={styles}>LogIn </NavLink>
         <NavLink to='/registration' style={styles}>SignUp </NavLink>
-
-
       </nav>
   );
 };

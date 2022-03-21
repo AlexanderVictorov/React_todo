@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {NavLink} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import {Grid, IconButton, Paper, TextareaAutosize} from "@mui/material";
 import {Build, Delete} from "@material-ui/icons";
 
@@ -7,7 +7,7 @@ import {Build, Delete} from "@material-ui/icons";
 const styles = {
     Card: {
         textDecoration: 'none',
-        width:'430px',
+        width: '430px',
     },
     Icon: {
         marginLeft: "auto"
@@ -20,7 +20,8 @@ const styles = {
         marginTop: 10,
         width: 500,
         textDecoration: 'none',
-        zIndex: 1
+        zIndex: 1,
+        cursor: 'pointer'
     },
     Textarea: {
         resize: 'none',
@@ -31,6 +32,7 @@ const styles = {
 const Todo = ({name, deleteTodo, id, updateTodo}) => {
     const [isEditing, setIsEditing] = useState(false)
     const [todoText, setTodoText] = useState(name)
+    const navigate = useNavigate()
     const onChangeTodoText = event => setTodoText(event.target.value)
     const onBlur = () => {
         setIsEditing(false)
@@ -49,8 +51,15 @@ const Todo = ({name, deleteTodo, id, updateTodo}) => {
         }
     }
     const preventDef = (e) => {
-      e.preventDefault()
+        e.preventDefault()
+        e.stopPropagation()
     }
+    const todoInfoCard = () => {
+        if (!isEditing) {
+            navigate(`/todo/${id}`)
+        }
+    }
+
     return (
         <Grid
             xs={12}
@@ -58,9 +67,8 @@ const Todo = ({name, deleteTodo, id, updateTodo}) => {
             key={id}
         >
             <Paper className='card_todo'
-                as={NavLink}
-                to={`/todo/${id}`}
-                elevation={2} style={styles.Paper}>
+                   onClick={todoInfoCard}
+                   elevation={2} style={styles.Paper}>
                 {isEditing ? (
                     <TextareaAutosize onKeyDown={changeInput} onKeyUp={blurInput} value={todoText}
                                       onChange={onChangeTodoText} onBlur={onBlur}
@@ -69,7 +77,7 @@ const Todo = ({name, deleteTodo, id, updateTodo}) => {
                     <span style={styles.Card}>{}{name}</span>
                 )}
                 <div className='icon_change_todo'
-                onClick={preventDef}>
+                     onClick={preventDef}>
                     <IconButton className='icon_change_todo'
                                 color="primary"
                                 aria-label="Edit"

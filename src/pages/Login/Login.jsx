@@ -11,22 +11,24 @@ const Login = () => {
     const login = e => {
         e.preventDefault()
         let userList = localStorage.getItem('userList')
-        if (!userList) return // нет пользователей вообще
+        if (!userList) {
+            alert('Пользователь не зарегестрирован');
+            setMyLogin('');
+            setPassword('');
+        }
         userList = JSON.parse(userList)
         const user = userList.find(user => user.username === myLogin)
         if (!user) {
             setMyLogin('');
             setPassword('');
-        }
-        else {
+        } else {
             setIsAuth(true)
             localStorage.setItem('isAuth', 'true');
             setIsAuth(true)
             navigate('/todo')
             return
         }
-
-
+        
     }
     return (
         <div className="wrapper">
