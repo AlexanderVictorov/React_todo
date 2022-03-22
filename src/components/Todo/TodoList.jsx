@@ -17,20 +17,18 @@ const styles = {
 const TodoList = () => {
     const todoListFromLocalStorage = localStorage.getItem('todoList')
     const [state, setState] = useState(todoListFromLocalStorage ? JSON.parse(todoListFromLocalStorage) : [])
-    console.log(state)
-    let token = localStorage.getItem('token')
-    console.log(token)
-    const todoListFromServer = async () => {
-        const response = await $api.post('/todos', {
-            ...state,
-        }, {
-            headers: {'Authorization': `Bearer ${token}`}
-        })
-        const data = response
-    }
 
     useEffect(() => {
         localStorage.setItem('todoList', JSON.stringify(state))
+        let token = localStorage.getItem('token')
+        const todoListFromServer = async () => {
+            const response = await $api.post('/todos', {
+                ...state,
+            }, {
+                headers: {'Authorization': `Bearer ${token}`}
+            })
+            const data = response
+        }
         todoListFromServer()
     }, [state])
 
