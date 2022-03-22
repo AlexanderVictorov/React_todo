@@ -10,7 +10,6 @@ const Registration = () => {
         email: '',
         password: '',
     })
-    console.log(newUser)
     const onChange = event => {
         setNewUser({
             ...newUser,
@@ -22,14 +21,13 @@ const Registration = () => {
         const response = await $api.post('/auth/registration', {
             ...newUser
         })
+        const data = await response
+        setNewUser(newUser)
         setNewUser({
             username: '',
             email: '',
             password: '',
         })
-        const data = await response
-        setNewUser(newUser)
-
     }
     return (
         <div className="wrapper">

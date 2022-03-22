@@ -6,8 +6,6 @@ import $api from "../../http";
 const Login = () => {
 
     const {isAuth, setIsAuth} = useContext(AuthContext)
-    // const [myLogin, setMyLogin] = useState('')
-    // const [password, setPassword] = useState('')
     const navigate = useNavigate()
     const [myLogin, setMyLogin] = useState({
         username: '',
@@ -19,7 +17,6 @@ const Login = () => {
             ...myLogin,
             [event.target.name]: event.target.value,
         })
-
     }
     const login = async e => {
         e.preventDefault()
@@ -28,6 +25,8 @@ const Login = () => {
                 ...myLogin
             })
             const data = await response
+            const token= data.data.token
+            localStorage.setItem('token',JSON.stringify(token))
             setMyLogin(myLogin)
             setMyLogin({
                 username: '',

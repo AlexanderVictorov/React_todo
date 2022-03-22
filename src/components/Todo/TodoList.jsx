@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import AddTodo from "./AddTodo";
 import {Grid, Paper} from "@mui/material";
 import List from "./List";
+import $api from "../../http";
 
 const styles = {
     Paper: {
@@ -9,16 +10,28 @@ const styles = {
         margin: "auto",
         textAlign: "center",
         width: 500,
-        zIndex:1
+        zIndex: 1
     }
 };
 
 const TodoList = () => {
     const todoListFromLocalStorage = localStorage.getItem('todoList')
     const [state, setState] = useState(todoListFromLocalStorage ? JSON.parse(todoListFromLocalStorage) : [])
+    console.log(state)
+    let token = localStorage.getItem('token')
+    console.log(token)
+    const todoListFromServer = async () => {
+        const response = await $api.post('/todos', {
+            ...state,
+        }, {
+            headers: {'Authorization': `Bearer ${token}`}
+        })
+        const data = response
+    }
 
     useEffect(() => {
         localStorage.setItem('todoList', JSON.stringify(state))
+        todoListFromServer()
     }, [state])
 
     const addToList = (todo) => {
@@ -44,35 +57,23 @@ const TodoList = () => {
             return item
         }));
     };
-    // const saveTodo = (key, todo) => {
-    //     let list = [...state];
-    //     console.log(list)
-    //     list.push({
-    //         id: Date.now(),
-    //         name: todo,
-    //         status: "active"
-    //     })
-    //
-    //     setState(list);
-    // };
     return (
-            <React.Fragment>
-                <Grid container spacing={0}>
-                    <Grid item xs={12}>
-                        <Paper style={styles.Paper}>
-                            <AddTodo addToList={addToList}/>
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={12} style={styles.Paper}>
-                        <List
-                            deleteTodo={deleteTodo}
-                            list={state}
-                            updateTodo={updateTodo}
-                            // saveTodo={saveTodo}
-                        />
-                    </Grid>
+        <React.Fragment>
+            <Grid container spacing={0}>
+                <Grid item xs={12}>
+                    <Paper style={styles.Paper}>
+                        <AddTodo addToList={addToList}/>
+                    </Paper>
                 </Grid>
-            </React.Fragment>
+                <Grid item xs={12} style={styles.Paper}>
+                    <List
+                        deleteTodo={deleteTodo}
+                        list={state}
+                        updateTodo={updateTodo}
+                    />
+                </Grid>
+            </Grid>
+        </React.Fragment>
     );
 };
 
