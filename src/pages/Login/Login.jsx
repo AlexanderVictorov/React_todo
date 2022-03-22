@@ -1,50 +1,65 @@
 import React, {useContext, useState} from 'react';
 import {AuthContext} from "../../context/Context";
 import {NavLink, useNavigate} from "react-router-dom";
+import $api from "../../http";
 
 const Login = () => {
-    const {isAuth, setIsAuth} = useContext(AuthContext)
-    const [myLogin, setMyLogin] = useState('')
-    const [password, setPassword] = useState('')
-    const navigate = useNavigate()
 
-    const login = e => {
+    const {isAuth, setIsAuth} = useContext(AuthContext)
+    // const [myLogin, setMyLogin] = useState('')
+    // const [password, setPassword] = useState('')
+    const navigate = useNavigate()
+    const [myLogin, setMyLogin] = useState({
+        username: '',
+        email: '',
+        password: '',
+    })
+    const onChange = event => {
+        setMyLogin({
+            ...myLogin,
+            [event.target.name]: event.target.value,
+        })
+
+    }
+    const login = async e => {
         e.preventDefault()
-        let userList = localStorage.getItem('userList')
-        if (!userList) {
-            alert('Пользователь не зарегестрирован');
-            setMyLogin('');
-            setPassword('');
+        try {
+            const response = await $api.post('/auth/login', {
+                ...myLogin
+            })
+            const data = await response
+            setMyLogin(myLogin)
+            setMyLogin({
+                username: '',
+                email: '',
+                password: '',
+            })
+            if (data.status === 200) {
+                setIsAuth(true)
+                localStorage.setItem('isAuth', 'true');
+                setIsAuth(true)
+                navigate('/todo')
+                return
+            }
+        } catch (error) {
+            window.confirm('Пользователь не зарегестрирован')
+            setMyLogin({
+                username: '',
+                email: '',
+                password: '',
+            })
         }
-        userList = JSON.parse(userList)
-        const user = userList.find(user => user.username === myLogin)
-        if (!user) {
-            setMyLogin('');
-            setPassword('');
-        } else {
-            setIsAuth(true)
-            localStorage.setItem('isAuth', 'true');
-            setIsAuth(true)
-            navigate('/todo')
-            return
-        }
-        
     }
     return (
         <div className="wrapper">
             <div className="container">
                 <h1>Welcome</h1>
                 <form onSubmit={login} className="form">
-                    <input
-                        value={myLogin}
-                        onChange={(e) => setMyLogin((e.target.value))}
-                        type="text"
-                        placeholder="Username"/>
-                    <input
-                        value={password}
-                        onChange={(e) => setPassword((e.target.value))}
-                        type="password"
-                        placeholder="Password"/>
+                    <input type="text" name="username" value={myLogin.username} onChange={onChange}
+                           placeholder="Username"/>
+                    <input type="text" name="email" value={myLogin.email} onChange={onChange} placeholder="Email"/>
+                    <input type="password" name="password" value={myLogin.password} onChange={onChange}
+                           placeholder="Password"/>
                     <button type="submit" id="login-button">Login</button>
                     <p className="message">Not registered? <NavLink to='/registration'> Create an account</NavLink></p>
                 </form>
