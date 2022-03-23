@@ -20,10 +20,10 @@ const TodoList = () => {
 
     useEffect(() => {
         localStorage.setItem('todoList', JSON.stringify(state))
-        let token = localStorage.getItem('token')
+        let token = JSON.parse(localStorage.getItem('token') || '')
         const todoListFromServer = async () => {
             const response = await $api.post('/todos', {
-                ...state,
+                "todos":state,
             }, {
                 headers: {'Authorization': `Bearer ${token}`}
             })
