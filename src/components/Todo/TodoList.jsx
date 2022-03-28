@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import AddTodo from "./AddTodo";
 import {Grid, Paper} from "@mui/material";
 import List from "./List";
-import $api from "../../http";
+import instance from "../../http";
+import {useNavigate} from "react-router-dom";
 
 const styles = {
     Paper: {
@@ -15,22 +16,27 @@ const styles = {
 };
 
 const TodoList = () => {
-    const todoListFromLocalStorage = localStorage.getItem('todoList')
-    const [state, setState] = useState(todoListFromLocalStorage ? JSON.parse(todoListFromLocalStorage) : [])
-
+    const navigate = useNavigate()
+    const todoFromServer = async () => {
+        const response = await instance.get('/todos')
+        const todo = response.data
+        setState(todo)
+    }
     useEffect(() => {
-        localStorage.setItem('todoList', JSON.stringify(state))
-        let token = JSON.parse(localStorage.getItem('token') || '')
-        const todoListFromServer = async () => {
-            const response = await $api.post('/todos', {
-                "todos":state,
-            }, {
-                headers: {'Authorization': `Bearer ${token}`}
-            })
-            const data = response
+        const token = localStorage.getItem('token')
+        if(token){
+            todoFromServer()
+        }else {
+            console.log('!!!!!!!!!!!!!')
+            navigate('/login')
         }
-        todoListFromServer()
-    }, [state])
+    }, [])
+    const [state, setState] = useState([])
+        const todoListFromServer = async (list) => {
+            const response = await instance.post('/todos', {
+                "todos": list,
+            })
+        }
 
     const addToList = (todo) => {
         let list = [...state];
@@ -39,8 +45,8 @@ const TodoList = () => {
             name: todo,
             status: "active"
         })
-
-        setState(list);
+        setState(list)
+        todoListFromServer(list)
     };
     const deleteTodo = id => {
         let list = [...state];

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './style.css'
 import {NavLink} from "react-router-dom";
-import $api from "../../http";
+import instance from "../../http";
 
 
 const Registration = () => {
@@ -18,7 +18,7 @@ const Registration = () => {
     }
     const addUser = async (event) => {
         event.preventDefault()
-        const response = await $api.post('/auth/registration', {
+        const response = await instance.post('/auth/registration', {
             ...newUser
         })
         const data = await response

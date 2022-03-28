@@ -13,7 +13,8 @@ const Navigation = () => {
   const navigate = useNavigate()
 
   const onClickSignOut = () => {
-    localStorage.removeItem('isAuth')
+      localStorage.removeItem('token')
+      localStorage.removeItem('isAuth')
     navigate('/login')
 
   }

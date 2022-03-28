@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {AuthContext} from "../../context/Context";
 import {NavLink, useNavigate} from "react-router-dom";
-import $api from "../../http";
+import instance from "../../http";
 
 const Login = () => {
 
@@ -21,19 +21,18 @@ const Login = () => {
     const login = async e => {
         e.preventDefault()
         try {
-            const response = await $api.post('/auth/login', {
+            const response = await instance.post('/auth/login', {
                 ...myLogin
             })
-            const data = await response
-            const token= data.data.token
-            localStorage.setItem('token',JSON.stringify(token))
+            const token = response.data.token
+            localStorage.setItem('token', JSON.stringify(token))
             setMyLogin(myLogin)
             setMyLogin({
                 username: '',
                 email: '',
                 password: '',
             })
-            if (data.status === 200) {
+            if (response.status === 200) {
                 setIsAuth(true)
                 localStorage.setItem('isAuth', 'true');
                 setIsAuth(true)
