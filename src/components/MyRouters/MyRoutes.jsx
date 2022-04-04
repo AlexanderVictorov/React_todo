@@ -23,7 +23,7 @@ const MyRoutes = () => {
                     <Route path="todo" element={<TodoList/>}/>
                     <Route path="todo/:id" element={<TodoInfo/>}/>
                     <Route path="exit" element={<Login/>}/>
-                    <Route path="*" element={<NoMatch />} />
+                    <Route path="*" element={<NoMatch/>}/>
                 </Route>
             </Routes>
             :
@@ -33,7 +33,7 @@ const MyRoutes = () => {
                     <Route path="login" element={<Login/>}/>
                     <Route path="todo" element={<ErrorRegistration/>}/>
                     <Route path="registration" element={<Registration/>}/>
-                    <Route path="*" element={<NoMatch />} />
+                    <Route path="*" element={<NoMatch/>}/>
                 </Route>
             </Routes>
     );

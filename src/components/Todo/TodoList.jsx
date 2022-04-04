@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import AddTodo from "./AddTodo";
 import {Grid, Paper} from "@mui/material";
-import List from "./List";
-import instance from "../../http";
 import {useNavigate} from "react-router-dom";
+import {TodoService} from "../../services/TodoService";
+import List from '../../components/Todo/List'
 
 const styles = {
     Paper: {
@@ -16,28 +16,26 @@ const styles = {
 };
 
 const TodoList = () => {
-    const navigate = useNavigate()
+    const [state, setState] = useState([]);
+
     const todoFromServer = async () => {
-        const response = await instance.get('/todos')
+        const response = await TodoService.getTodos()
         const todo = response.data
-        setState(todo)
+        setState(todo);
     }
+
+    const todoListOnServer = async (list) => {
+        await TodoService.postTodos(list)
+    }
+    const navigate = useNavigate()
     useEffect(() => {
         const token = localStorage.getItem('token')
-        if(token){
+        if (token) {
             todoFromServer()
-        }else {
-            console.log('!!!!!!!!!!!!!')
+        } else {
             navigate('/login')
         }
     }, [])
-    const [state, setState] = useState([])
-        const todoListFromServer = async (list) => {
-            const response = await instance.post('/todos', {
-                "todos": list,
-            })
-        }
-
     const addToList = (todo) => {
         let list = [...state];
         list.push({
@@ -46,20 +44,27 @@ const TodoList = () => {
             status: "active"
         })
         setState(list)
-        todoListFromServer(list)
+        todoListOnServer(list)
     };
     const deleteTodo = id => {
         let list = [...state];
-        setState(list.filter(item => item.id !== id));
+        const todo = list.filter(item => item.id !== id)
+        setState(todo);
+        todoListOnServer(todo)
+
     };
     const updateTodo = (id, newText) => {
         let list = [...state];
-        setState(list.map(item => {
+        const todo = list.map(item => {
             if (item.id === id) {
                 item.name = newText
             }
+
             return item
-        }));
+        })
+        setState(todo);
+        todoListOnServer(todo)
+
     };
     return (
         <React.Fragment>
@@ -72,9 +77,8 @@ const TodoList = () => {
                 <Grid item xs={12} style={styles.Paper}>
                     <List
                         deleteTodo={deleteTodo}
-                        list={state}
                         updateTodo={updateTodo}
-                    />
+                        list={state}/>
                 </Grid>
             </Grid>
         </React.Fragment>

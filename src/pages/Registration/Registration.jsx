@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './style.css'
 import {NavLink} from "react-router-dom";
-import instance from "../../http";
+import {APIService} from "../../services/APIService";
 
 
 const Registration = () => {
@@ -18,10 +18,7 @@ const Registration = () => {
     }
     const addUser = async (event) => {
         event.preventDefault()
-        const response = await instance.post('/auth/registration', {
-            ...newUser
-        })
-        const data = await response
+        await APIService.registration(newUser)
         setNewUser(newUser)
         setNewUser({
             username: '',
@@ -48,16 +45,16 @@ const Registration = () => {
             </div>
 
             <ul className="bg-bubbles">
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
             </ul>
         </div>
 

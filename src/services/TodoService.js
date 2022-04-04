@@ -1,7 +1,12 @@
 import $api from "../http/api";
 
 export const TodoService = {
-    todos() {
-        return $api.post('/todos')
+    postTodos(todo) {
+        return $api.post('/todos', {
+            "todos": todo
+        })
+    },
+    getTodos() {
+        return $api.get('/todos')
     }
 }

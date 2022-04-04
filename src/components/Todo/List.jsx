@@ -1,33 +1,11 @@
 import React from 'react';
 import {Grid} from "@mui/material";
-import ChangeTodo from "./ChangeTodo";
-import Todo from "./Todo";
+import TodoItem from "./TodoItem";
 
-const List = ({list, deleteTodo, saveTodo, updateTodo}) => {
-    const CreateTodo = ({todo}) => {
-        if (todo.status === "active") {
-            return (
-                <Todo
-                    id={todo.id}
-                    name={todo.name}
-                    deleteTodo={deleteTodo}
-                    updateTodo={updateTodo}
-                />
-            );
-        } else if (todo.status === "editing") {
-            return (
-                <ChangeTodo
-                    key={todo}
-                    index={todo}
-                    todo={todo.todo}
-                    // saveTodo={saveTodo}
-                />
-            );
-        }
-    };
+const List = ({list, deleteTodo, updateTodo}) => {
     return (
         <Grid container>
-            {list.map(todo=>(<CreateTodo key={todo.id} todo={todo}/>))}
+            {list.map(todo => (<TodoItem deleteTodo={deleteTodo} updateTodo={updateTodo} key={todo.id} todo={todo}/>))}
         </Grid>
     );
 }

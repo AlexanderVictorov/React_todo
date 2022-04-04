@@ -4,6 +4,7 @@
     padding: 0;
     font-weight: 300;
 }
+
 body ::-webkit-input-placeholder {
     /* WebKit browsers */
     font-family: "Source Sans Pro", sans-serif;
@@ -26,6 +27,7 @@ body ::-webkit-input-placeholder {
     z-index: 9999;
 
 }
+
 .wrapper.form-success .container h1 {
     transform: translateY(85px);
 }
@@ -38,6 +40,7 @@ body ::-webkit-input-placeholder {
     height: 100%;
     z-index: 1;
 }
+
 .bg-bubbles li {
     position: absolute;
     list-style: none;
@@ -50,9 +53,11 @@ body ::-webkit-input-placeholder {
     animation: square 25s infinite;
     transition-timing-function: linear;
 }
+
 .bg-bubbles li:nth-child(1) {
     left: 10%;
 }
+
 .bg-bubbles li:nth-child(2) {
     left: 20%;
     width: 80px;
@@ -62,11 +67,13 @@ body ::-webkit-input-placeholder {
     -webkit-animation-duration: 17s;
     animation-duration: 17s;
 }
+
 .bg-bubbles li:nth-child(3) {
     left: 25%;
     -webkit-animation-delay: 4s;
     animation-delay: 4s;
 }
+
 .bg-bubbles li:nth-child(4) {
     left: 40%;
     width: 60px;
@@ -75,9 +82,11 @@ body ::-webkit-input-placeholder {
     animation-duration: 22s;
     background-color: rgba(255, 255, 255, 0.25);
 }
+
 .bg-bubbles li:nth-child(5) {
     left: 70%;
 }
+
 .bg-bubbles li:nth-child(6) {
     left: 80%;
     width: 120px;
@@ -86,6 +95,7 @@ body ::-webkit-input-placeholder {
     animation-delay: 3s;
     background-color: rgba(255, 255, 255, 0.2);
 }
+
 .bg-bubbles li:nth-child(7) {
     left: 32%;
     width: 160px;
@@ -93,6 +103,7 @@ body ::-webkit-input-placeholder {
     -webkit-animation-delay: 7s;
     animation-delay: 7s;
 }
+
 .bg-bubbles li:nth-child(8) {
     left: 55%;
     width: 20px;
@@ -102,6 +113,7 @@ body ::-webkit-input-placeholder {
     -webkit-animation-duration: 40s;
     animation-duration: 40s;
 }
+
 .bg-bubbles li:nth-child(9) {
     left: 25%;
     width: 10px;
@@ -112,6 +124,7 @@ body ::-webkit-input-placeholder {
     animation-duration: 40s;
     background-color: rgba(255, 255, 255, 0.3);
 }
+
 .bg-bubbles li:nth-child(10) {
     left: 90%;
     width: 160px;
@@ -119,6 +132,7 @@ body ::-webkit-input-placeholder {
     -webkit-animation-delay: 11s;
     animation-delay: 11s;
 }
+
 @-webkit-keyframes square {
     0% {
         transform: translateY(0);
@@ -127,6 +141,7 @@ body ::-webkit-input-placeholder {
         transform: translateY(-700px) rotate(600deg);
     }
 }
+
 @keyframes square {
     0% {
         transform: translateY(0);

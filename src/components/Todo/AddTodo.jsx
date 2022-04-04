@@ -4,11 +4,11 @@ import {Button, Input} from "@mui/material";
 const AddTodo = ({addToList}) => {
     const inputRef = React.createRef();
     const errorRef = React.createRef();
-    const [isError,setIsError]=useState(false)
+    const [isError, setIsError] = useState(false)
     const handleSubmit = e => {
         e.preventDefault();
         if (inputRef.current.value === "") {
-           setIsError(true)
+            setIsError(true)
             return
         }
         setIsError(false)
@@ -36,7 +36,7 @@ const AddTodo = ({addToList}) => {
             >
                 Add
             </Button>
-            {isError &&  <p ref={errorRef} className="error">
+            {isError && <p ref={errorRef} className="error">
                 Error, must enter a value!
             </p>}
         </form>

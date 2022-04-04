@@ -1,6 +1,7 @@
 import React from 'react';
 import './header.css'
 import Navigation from "../../pages/Navigation/Navigation";
+
 const Header = () => {
     return (
         <div className="wr">
@@ -9,16 +10,16 @@ const Header = () => {
                 <Navigation/>
             </div>
             <ul className="bg-bubbles">
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
             </ul>
 
         </div>

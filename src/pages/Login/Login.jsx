@@ -1,11 +1,11 @@
 import React, {useContext, useState} from 'react';
 import {AuthContext} from "../../context/Context";
 import {NavLink, useNavigate} from "react-router-dom";
-import instance from "../../http";
+import {APIService} from "../../services/APIService";
 
 const Login = () => {
 
-    const {isAuth, setIsAuth} = useContext(AuthContext)
+    const {setIsAuth} = useContext(AuthContext)
     const navigate = useNavigate()
     const [myLogin, setMyLogin] = useState({
         username: '',
@@ -21,9 +21,7 @@ const Login = () => {
     const login = async e => {
         e.preventDefault()
         try {
-            const response = await instance.post('/auth/login', {
-                ...myLogin
-            })
+            const response = await APIService.login(myLogin)
             const token = response.data.token
             localStorage.setItem('token', JSON.stringify(token))
             setMyLogin(myLogin)
@@ -33,14 +31,13 @@ const Login = () => {
                 password: '',
             })
             if (response.status === 200) {
-                setIsAuth(true)
                 localStorage.setItem('isAuth', 'true');
                 setIsAuth(true)
                 navigate('/todo')
-                return
             }
         } catch (error) {
-            window.confirm('Пользователь не зарегестрирован')
+            console.log('Пользователь не зарегестрирован')
+            // window.confirm('Пользователь не зарегестрирован')
             setMyLogin({
                 username: '',
                 email: '',
@@ -63,16 +60,16 @@ const Login = () => {
                 </form>
             </div>
             <ul className="bg-bubbles">
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
+                <li/>
             </ul>
         </div>
     );
