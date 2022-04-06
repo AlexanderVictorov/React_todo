@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import AddTodo from "./AddTodo";
 import {Grid, Paper} from "@mui/material";
 import {useNavigate} from "react-router-dom";
-import {TodoService} from "../../services/TodoService";
 import List from '../../components/Todo/List'
+import {useDispatch, useSelector} from "react-redux";
+import {fetchTodos} from "../../store/asyncAction/fetchTodos";
+import {addTodo, changeTodos, deleteTodo} from "../../store/slice/todos";
 
 const styles = {
     Paper: {
@@ -16,54 +18,32 @@ const styles = {
 };
 
 const TodoList = () => {
-    const [state, setState] = useState([]);
-
-    const todoFromServer = async () => {
-        const response = await TodoService.getTodos()
-        const todo = response.data
-        setState(todo);
-    }
-
-    const todoListOnServer = async (list) => {
-        await TodoService.postTodos(list)
-    }
+    const dispatch = useDispatch()
+    const select = useSelector((state) => state.todos.todos)
     const navigate = useNavigate()
+
     useEffect(() => {
         const token = localStorage.getItem('token')
         if (token) {
-            todoFromServer()
+            dispatch(fetchTodos())
         } else {
             navigate('/login')
         }
     }, [])
+
     const addToList = (todo) => {
-        let list = [...state];
-        list.push({
+        dispatch(addTodo({
             id: Date.now(),
             name: todo,
             status: "active"
-        })
-        setState(list)
-        todoListOnServer(list)
-    };
-    const deleteTodo = id => {
-        let list = [...state];
-        const todo = list.filter(item => item.id !== id)
-        setState(todo);
-        todoListOnServer(todo)
+        }))
 
+    };
+    const removeTodo = id => {
+        dispatch(deleteTodo(id))
     };
     const updateTodo = (id, newText) => {
-        let list = [...state];
-        const todo = list.map(item => {
-            if (item.id === id) {
-                item.name = newText
-            }
-
-            return item
-        })
-        setState(todo);
-        todoListOnServer(todo)
+        dispatch(changeTodos({id, newText}))
 
     };
     return (
@@ -76,9 +56,9 @@ const TodoList = () => {
                 </Grid>
                 <Grid item xs={12} style={styles.Paper}>
                     <List
-                        deleteTodo={deleteTodo}
+                        deleteTodo={removeTodo}
                         updateTodo={updateTodo}
-                        list={state}/>
+                        list={select}/>
                 </Grid>
             </Grid>
         </React.Fragment>
