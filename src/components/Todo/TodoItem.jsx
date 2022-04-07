@@ -3,8 +3,6 @@ import Todo from './Todo';
 
 const TodoItem = ({todo, deleteTodo, updateTodo}) => {
   // vladComment создать функцию, которая будет запускаться в render, а не превратить весь компонент в switch
-  // switch (todo?.status) {
-  //     case "active":
   return (
     <Todo
       id={todo.id}
@@ -13,17 +11,6 @@ const TodoItem = ({todo, deleteTodo, updateTodo}) => {
       updateTodo={updateTodo}
     />
   );
-  // case "editing":
-  //     return (
-  //         <ChangeTodo
-  //             key={todo}
-  //             index={todo}
-  //             todo={todo.todo}
-  //         />
-  //     );
-  // default:
-  //     return null
-// }
 };
 
 export default TodoItem;
