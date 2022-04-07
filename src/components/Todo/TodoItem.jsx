@@ -1,8 +1,7 @@
 import React from 'react';
 import Todo from './Todo';
 
-const TodoItem = ({todo, deleteTodo, updateTodo}) => {
-  // vladComment создать функцию, которая будет запускаться в render, а не превратить весь компонент в switch
+function TodoItem({ todo, deleteTodo, updateTodo }) {
   return (
     <Todo
       id={todo.id}
@@ -11,7 +10,6 @@ const TodoItem = ({todo, deleteTodo, updateTodo}) => {
       updateTodo={updateTodo}
     />
   );
-};
+}
 
 export default TodoItem;
-

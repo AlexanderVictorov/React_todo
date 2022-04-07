@@ -1,22 +1,23 @@
 import React from 'react';
+import './animation.css';
 
-const Animation = () => {
+function Animation() {
   return (
     <div>
-      <ul className="bg-bubbles">
-        <li/>
-        <li/>
-        <li/>
-        <li/>
-        <li/>
-        <li/>
-        <li/>
-        <li/>
-        <li/>
-        <li/>
+      <ul className='bg-bubbles'>
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
+        <li />
       </ul>
     </div>
   );
-};
+}
 
 export default Animation;

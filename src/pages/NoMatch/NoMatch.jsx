@@ -1,13 +1,13 @@
 import React from 'react';
 
-const NoMatch = () => {
-    return (
+function NoMatch() {
+  return (
 
-        <h2>
-            There's nothing here: 404!
-        </h2>
+    <h2>
+      There is nothing here: 404!
+    </h2>
 
-    );
-};
+  );
+}
 
 export default NoMatch;

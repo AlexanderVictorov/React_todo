@@ -1,4 +1,4 @@
-export const ROUTE_LINKS = {
+const ROUTE_LINKS = {
   login: '/login',
   registration: 'registration',
   todo: 'todo',
@@ -7,3 +7,4 @@ export const ROUTE_LINKS = {
   otherRoutes: '*',
 };
 
+export default ROUTE_LINKS;

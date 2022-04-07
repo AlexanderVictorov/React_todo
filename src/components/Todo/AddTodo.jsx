@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Input } from '@mui/material';
+import {
+  Box, Button, Input, Typography,
+} from '@mui/material';
 
-const AddTodo = ({ addToList }) => {
-  // vladComment убрать рефы и сделать контролируемые инпуты с помощью useState. Рефы используются для прямого контроля элемента DOM, а не для получения его value.
+function AddTodo({ addToList }) {
   const [newTodo, setNewTodo] = useState('');
   const [isError, setIsError] = useState(false);
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (newTodo === '') {
       setIsError(true);
@@ -15,38 +16,36 @@ const AddTodo = ({ addToList }) => {
     addToList(newTodo);
     setNewTodo('');
   };
-  const onChange = event => {
+  const onChange = (event) => {
     setNewTodo(() => event.target.value);
   };
 
   return (
-    // vladComment уверен в Material UI есть альтернатива <form />
-    <form onSubmit={handleSubmit} style={{ display: 'flex' }}>
+    <Box component='form' onSubmit={handleSubmit} sx={{ display: 'flex' }}>
       <Input
-        placeholder="Todo"
+        placeholder='Todo'
         inputProps={{
           'aria-label': 'Description',
         }}
         onChange={onChange}
         value={newTodo}
-        // vladComment убрать style из элементов Material UI, для этого есть sx/makeStyles/styled
-        style={{ width: '90%' }}
+        sx={{ width: '90%' }}
       />
       <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        // vladComment убрать style из элементов Material UI, для этого есть sx/makeStyles/styled
-        style={{ width: '10%' }}
+        type='submit'
+        variant='contained'
+        color='primary'
+        sx={{ width: '10%' }}
       >
         Add
       </Button>
-      {/*vladComment убрать <p /> в Material UI есть Typography, стили задавать по доке material UI */}
-      {isError && <p className="error">
-        Error, must enter a value!
-      </p>}
-    </form>
-    );
-};
+      {isError && (
+        <Typography variant='caption' color='error'>
+          Error, must enter a value!
+        </Typography>
+      )}
+    </Box>
+  );
+}
 
 export default AddTodo;
