@@ -1,34 +1,36 @@
-import React, {useEffect} from 'react';
-import AddTodo from "./AddTodo";
-import {Grid, Paper} from "@mui/material";
-import {useNavigate} from "react-router-dom";
-import List from '../../components/Todo/List'
-import {useDispatch, useSelector} from "react-redux";
-import {fetchTodos} from "../../store/asyncAction/fetchTodos";
-import {addTodo, changeTodos, deleteTodo} from "../../store/slice/todos";
+import React, { useEffect } from 'react';
+import AddTodo from './AddTodo';
+import { Grid, Paper } from '@mui/material';
+import List from '../../components/Todo/List';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTodos } from '../../store/asyncAction/fetchTodos';
+import { addTodo, changeTodos, deleteTodo } from '../../store/slice/todos';
 
 const styles = {
     Paper: {
         padding: 20,
-        margin: "auto",
-        textAlign: "center",
+        margin: 'auto',
+        textAlign: 'center',
         width: 500,
-        zIndex: 1
-    }
+        zIndex: 1,
+    },
 };
 
 const TodoList = () => {
     const dispatch = useDispatch()
     const select = useSelector((state) => state.todos.todos)
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
-        if (token) {
-            dispatch(fetchTodos())
-        } else {
-            navigate('/login')
-        }
+        // vladComment использовать AuthContext тут
+        // const token = localStorage.getItem('token')
+        dispatch(fetchTodos());
+
+        // if (token) {
+        //     dispatch(fetchTodos())
+        // } else {
+        //     navigate(ROUTE_LINKS.login)
+        // }
     }, [])
 
     const addToList = (todo) => {

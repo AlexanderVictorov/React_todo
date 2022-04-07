@@ -2,6 +2,7 @@ import React from 'react';
 import './footer.css'
 import {saveTodoOnServer} from "../../store/asyncAction/fetchTodos";
 import {useDispatch} from "react-redux";
+import Animation from '../Animation/animation';
 
 const Footer = () => {
     const dispatch = useDispatch()
@@ -10,18 +11,8 @@ const Footer = () => {
             <div className="contant">
                 <h3>Save Todos</h3>
             </div>
-            <ul className="bg-bubbles">
-                <li/>
-                <li/>
-                <li/>
-                <li/>
-                <li/>
-                <li/>
-                <li/>
-                <li/>
-                <li/>
-                <li/>
-            </ul>
+            {/* vladComment выделить в отдельную компоненту */}
+            <Animation/>
         </div>
     );
 };

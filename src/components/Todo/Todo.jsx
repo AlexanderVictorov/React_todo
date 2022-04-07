@@ -56,7 +56,7 @@ const Todo = ({name, deleteTodo, id, updateTodo}) => {
     }
     const todoInfoCard = () => {
         if (!isEditing) {
-            navigate(`/todo/${id}`)
+            navigate(`${id}`)
         }
     }
 
@@ -64,8 +64,11 @@ const Todo = ({name, deleteTodo, id, updateTodo}) => {
         <Grid
             xs={12}
             item
-            key={id}
+            // vladComment не понял зачем key
+            // key={id}
         >
+            {/*vladComment вместо css использовать возможности Material UI sx/makeStyles/styled */}
+            {/*vladComment убрать style из Material UI */}
             <Paper className='card_todo'
                    onClick={todoInfoCard}
                    elevation={2} style={styles.Paper}>

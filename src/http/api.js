@@ -1,7 +1,7 @@
 import axios from "axios";
 import {AuthContext} from "../context/Context";
 
-
+// vladComment вынести BASE_URL в .env
 export const API_URL = `http://localhost:5000`
 export const API_URL_Axios = `http://localhost:5000/auth/`
 const $api = axios.create({

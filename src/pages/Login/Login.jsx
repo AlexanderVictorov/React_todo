@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react';
 import {AuthContext} from "../../context/Context";
 import {NavLink, useNavigate} from "react-router-dom";
 import {APIService} from "../../services/APIService";
+import Animation from '../../components/Animation/animation';
 
 const Login = () => {
 
@@ -59,18 +60,7 @@ const Login = () => {
                     <p className="message">Not registered? <NavLink to='/registration'> Create an account</NavLink></p>
                 </form>
             </div>
-            <ul className="bg-bubbles">
-                <li/>
-                <li/>
-                <li/>
-                <li/>
-                <li/>
-                <li/>
-                <li/>
-                <li/>
-                <li/>
-                <li/>
-            </ul>
+            <Animation/>
         </div>
     );
 };

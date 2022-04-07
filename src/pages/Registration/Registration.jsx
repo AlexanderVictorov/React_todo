@@ -43,7 +43,7 @@ const Registration = () => {
 
                 </form>
             </div>
-
+            {/*vladComment снова этот код */}
             <ul className="bg-bubbles">
                 <li/>
                 <li/>
