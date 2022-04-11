@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Typography } from '@mui/material';
 import { AuthContext } from '../../context/Context';
 import useStyles from './Navigation.styles';
 
 function Navigation() {
-  const styles = ({ isActive }) => ({
+  const isActiveStyle = ({ isActive }) => ({
     fontWeight: isActive ? 'bold' : 'normal',
   });
   const { nav } = useStyles();
@@ -20,16 +21,16 @@ function Navigation() {
   return (
     isAuth
       ? (
-        <nav className={nav}>
-          <NavLink to='/todo' style={styles}>Todos </NavLink>
-          <Link to='/login' onClick={onClickSignOut}>SignOut </Link>
-        </nav>
+        <Typography className={nav}>
+          <NavLink to='/todo' style={isActiveStyle}>Todos </NavLink>
+          <Link to='/login' onClick={onClickSignOut}> SignOut </Link>
+        </Typography>
       )
       : (
-        <nav className={nav}>
-          <NavLink to='/login' style={styles}>LogIn </NavLink>
-          <NavLink to='/registration' style={styles}>SignUp </NavLink>
-        </nav>
+        <Typography className={nav}>
+          <NavLink to='/login' style={isActiveStyle}>LogIn </NavLink>
+          <NavLink to='/registration' style={isActiveStyle}>SignUp </NavLink>
+        </Typography>
       )
   );
 }

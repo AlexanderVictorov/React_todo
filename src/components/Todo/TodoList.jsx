@@ -8,10 +8,10 @@ import { addTodo, changeTodos, deleteTodo } from '../../store/slice/todos';
 
 const styles = {
   Paper: {
-    padding: 20,
+    padding: '20px',
     margin: 'auto',
     textAlign: 'center',
-    width: 500,
+    width: '500px',
     zIndex: 1,
   },
 };
@@ -21,7 +21,6 @@ function TodoList() {
   const select = useSelector((state) => state.todos.todos);
 
   useEffect(() => {
-    // vladComment использовать AuthContext тут
     dispatch(fetchTodos());
   }, []);
 
@@ -41,11 +40,11 @@ function TodoList() {
   return (
     <Grid container spacing={0}>
       <Grid item xs={12}>
-        <Paper style={styles.Paper}>
+        <Paper sx={styles.Paper}>
           <AddTodo addToList={addToList} />
         </Paper>
       </Grid>
-      <Grid item xs={12} style={styles.Paper}>
+      <Grid item xs={12} sx={styles.Paper}>
         <List
           deleteTodo={removeTodo}
           updateTodo={updateTodo}

@@ -1,16 +1,20 @@
 import React, { useContext, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import { Box, Typography } from '@mui/material';
+import {
+  Box, Button, Stack, TextField, Typography,
+} from '@mui/material';
 import { AuthContext } from '../../context/Context';
 import { APIService } from '../../services/APIService';
 import Animation from '../../components/Animation/animation';
+import ROUTE_LINKS from '../../components/MyRouters/routeLink';
 
 const StyledBox = styled(Box)`
-  background: #50a3a2;
-  background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
   position: absolute;
-  top: 30%;
+  top: 25%;
   left: 0;
   width: 100%;
   height: 400px;
@@ -62,26 +66,45 @@ function Login() {
     <StyledBox>
       <Box>
         <Typography sx={{ marginTop: '20px' }} variant='h2'>Welcome</Typography>
-        <Box component='form' onSubmit={login}>
-          <input
-            type='text'
-            name='username'
-            value={myLogin.username}
-            onChange={onChange}
-            placeholder='Username'
-          />
-          <input type='text' name='email' value={myLogin.email} onChange={onChange} placeholder='Email' />
-          <input
-            type='password'
-            name='password'
-            value={myLogin.password}
-            onChange={onChange}
-            placeholder='Password'
-          />
-          <button type='submit' id='login-button'>Login</button>
+        <Box sx={{ marginLeft: '35px', position: 'relative', zIndex: '2' }} component='form' onSubmit={login}>
+          <Box
+            sx={{
+              '& > :not(style)': { m: 1, width: '25ch', display: 'flex' },
+            }}
+            noValidate
+            autoComplete='off'
+          >
+            <TextField
+              label='Username'
+              variant='outlined'
+              type='text'
+              name='username'
+              value={myLogin.username}
+              onChange={onChange}
+            />
+            <TextField
+              label='Email'
+              variant='outlined'
+              type='text'
+              name='email'
+              value={myLogin.email}
+              onChange={onChange}
+            />
+            <TextField
+              label='Password'
+              variant='outlined'
+              type='password'
+              name='password'
+              value={myLogin.password}
+              onChange={onChange}
+            />
+          </Box>
+          <Stack spacing={2} direction='row'>
+            <Button sx={{ marginLeft: '9px', width: '200px' }} variant='contained' type='submit'>Log In</Button>
+          </Stack>
           <Typography sx={{ marginTop: '10px' }} variant='body1' className='message'>
             Not registered?
-            <NavLink to='/registration'> Create an account </NavLink>
+            <NavLink to={ROUTE_LINKS.registration}> Create an account </NavLink>
           </Typography>
         </Box>
       </Box>

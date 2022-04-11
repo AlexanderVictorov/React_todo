@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import './style.css';
 import { NavLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import { Box, Typography } from '@mui/material';
+import {
+  Box, Button, Stack, TextField, Typography,
+} from '@mui/material';
 import { APIService } from '../../services/APIService';
 import Animation from '../../components/Animation/animation';
 import ROUTE_LINKS from '../../components/MyRouters/routeLink';
 
 const StyledBox = styled(Box)`
-  background: #50a3a2;
-  background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
   position: absolute;
   top: 50%;
   left: 0;
@@ -43,28 +45,48 @@ function Registration() {
   };
   return (
     <StyledBox>
-      <Box sx={{ marginTop: '50px' }}>
-        <Typography variant='body1'>Create a new user </Typography>
-        <Box component='form' onSubmit={addUser}>
-          <input
-            type='text'
-            name='username'
-            value={newUser.username}
-            onChange={onChange}
-            placeholder='Username'
-          />
-          <input type='text' name='email' value={newUser.email} onChange={onChange} placeholder='Email' />
-          <input
-            type='password'
-            name='password'
-            value={newUser.password}
-            onChange={onChange}
-            placeholder='Password'
-          />
-          <button type='submit' id='login-button'>
-            Create New Account
-          </button>
-          <Typography variant='inherit'><NavLink to={ROUTE_LINKS.login}>Back To Login</NavLink></Typography>
+      <Box sx={{ marginTop: '30px' }}>
+        <Typography variant='h5'>Create a new user </Typography>
+        <Box sx={{ paddingTop: '10px', position: 'relative', zIndex: '2' }} component='form' onSubmit={addUser}>
+          <Box
+            sx={{
+              '& > :not(style)': { m: 1, width: '25ch', display: 'flex' },
+            }}
+            noValidate
+            autoComplete='off'
+          >
+            <TextField
+              // id='outlined-basic'
+              label='Username'
+              variant='outlined'
+              type='text'
+              name='username'
+              value={newUser.username}
+              onChange={onChange}
+            />
+            <TextField
+              // id='outlined-basic'
+              label='Email'
+              variant='outlined'
+              type='text'
+              name='email'
+              value={newUser.email}
+              onChange={onChange}
+            />
+            <TextField
+              // id='outlined-basic'
+              label='Password'
+              variant='outlined'
+              type='password'
+              name='password'
+              value={newUser.password}
+              onChange={onChange}
+            />
+          </Box>
+          <Stack spacing={2} direction='row'>
+            <Button sx={{ marginLeft: '6px' }} variant='contained' type='submit'>Create New Account</Button>
+          </Stack>
+          <Typography sx={{ marginTop: '20px' }} variant='body1'><NavLink to={ROUTE_LINKS.login}>Back To Login</NavLink></Typography>
         </Box>
       </Box>
       <Animation />

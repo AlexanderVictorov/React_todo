@@ -1,6 +1,6 @@
 const ROUTE_LINKS = {
   login: '/login',
-  registration: 'registration',
+  registration: '/registration',
   todo: 'todo',
   todoId: 'todo/:id',
   exit: 'exit',

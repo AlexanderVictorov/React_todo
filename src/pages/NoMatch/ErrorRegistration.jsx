@@ -1,12 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
 function ErrorRegistration() {
   return (
-    <h2 className='message'>
+    <Typography variant='h5' className='message'>
       Not registered?
       <NavLink to='/registration'> Create an account</NavLink>
-    </h2>
+    </Typography>
   );
 }
 

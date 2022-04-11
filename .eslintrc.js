@@ -22,7 +22,7 @@ module.exports = {
     'no-console': 'off',
     'import/prefer-default-export': 'off',
     'jsx-quotes': ['error', 'prefer-single'],
-    'no-param-reassign': 0,
+    // 'no-param-reassign': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'jsx-a11y/no-static-element-interactions': [
       'error',

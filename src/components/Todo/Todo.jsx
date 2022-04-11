@@ -3,7 +3,7 @@ jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Grid, IconButton, Paper, TextareaAutosize,
+  Box, Grid, IconButton, Paper, TextField, Typography,
 } from '@mui/material';
 import { Build, Delete } from '@material-ui/icons';
 
@@ -14,29 +14,40 @@ const styles = {
   },
   Icon: {
     marginLeft: 'auto',
+    zIndex: '99',
+    width: '25px',
+    paddingTop: '6px',
   },
   Paper: {
+    position: 'relative',
     margin: 'auto',
-    padding: 10,
+    marginTop: '10px',
+    padding: '5px',
     display: 'flex',
-    alignItems: 'center',
-    marginTop: 10,
-    width: 500,
+    width: '500px',
     textDecoration: 'none',
     zIndex: 1,
     cursor: 'pointer',
   },
   Textarea: {
-    resize: 'none',
     width: '87%',
+    height: 'auto',
+  },
+  BoxStyle: {
+    zIndex: '99',
+    position: 'absolute',
+    right: '-2px',
+    top: '0',
   },
 };
 
 function Todo({
   name, deleteTodo, id, updateTodo,
 }) {
+  console.log('name:', name);
   const [isEditing, setIsEditing] = useState(false);
   const [todoText, setTodoText] = useState(name);
+  console.log('todoText;', todoText);
   const navigate = useNavigate();
   const onChangeTodoText = (event) => setTodoText(event.target.value);
   const onBlur = () => {
@@ -51,7 +62,10 @@ function Todo({
   };
   const changeInput = (e) => {
     if (e.key === 'Enter') {
+      setIsEditing(true);
+      setTodoText(name);
       updateTodo(id, todoText);
+      setIsEditing(false);
       e.target.blur();
     }
   };
@@ -71,54 +85,54 @@ function Todo({
       item
     >
       <Paper
-        className='card_todo'
         onClick={todoInfoCard}
         elevation={2}
-        style={styles.Paper}
+        sx={styles.Paper}
       >
         {isEditing ? (
-          <TextareaAutosize
+          <TextField
+            id='standard-basic'
+            label='Todo'
+            variant='standard'
+            multiline
             onKeyDown={changeInput}
             onKeyUp={blurInput}
             value={todoText}
             onChange={onChangeTodoText}
             onBlur={onBlur}
-            style={styles.Textarea}
+            sx={styles.Textarea}
             autoFocus
           />
         ) : (
-          <span style={styles.Card}>
-            {}
+          <Typography sx={styles.Card}>
             {name}
-          </span>
+          </Typography>
         )}
-        <div
+        <Box
+          sx={styles.BoxStyle}
           onClick={preventDef}
           className='icon_change_todo'
           aria-hidden='true'
         >
           <IconButton
             role='button'
-            className='icon_change_todo'
             color='primary'
             aria-label='Edit'
-            style={styles.Icon}
+            sx={styles.Icon}
             onClick={() => setIsEditing(true)}
           >
             <Build fontSize='small' />
           </IconButton>
           <IconButton
-            className='icon_change_todo'
+            sx={styles.Icon}
             color='secondary'
             aria-label='Delete'
             onClick={() => deleteTodo(id)}
           >
             <Delete fontSize='small' />
           </IconButton>
-        </div>
-
+        </Box>
       </Paper>
-
     </Grid>
   );
 }

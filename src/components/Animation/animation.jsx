@@ -1,9 +1,10 @@
 import React from 'react';
 import './animation.css';
+import { Box } from '@mui/material';
 
 function Animation() {
   return (
-    <div>
+    <Box>
       <ul className='bg-bubbles'>
         <li />
         <li />
@@ -16,7 +17,7 @@ function Animation() {
         <li />
         <li />
       </ul>
-    </div>
+    </Box>
   );
 }
 

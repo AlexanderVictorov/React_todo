@@ -1,20 +1,20 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Paper } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 const styles = {
   Paper: {
+    position: 'relative',
     margin: 'auto',
-    padding: 10,
+    padding: '10px',
     display: 'flex',
     alignItems: 'center',
-    marginTop: 10,
-    width: 500,
+    marginTop: '10px',
+    width: '500px',
     textDecoration: 'none',
     zIndex: 1,
   },
-
 };
 
 function ShowTodoInfo() {
@@ -24,14 +24,13 @@ function ShowTodoInfo() {
 
   return (
     <Paper
-      className='card_todo'
       elevation={2}
-      style={styles.Paper}
+      sx={styles.Paper}
     >
-      <span style={styles.todo}>
+      <Typography>
         Info:
         {todoInfo.name}
-      </span>
+      </Typography>
     </Paper>
   );
 }

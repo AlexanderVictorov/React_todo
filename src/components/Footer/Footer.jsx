@@ -6,6 +6,7 @@ import Animation from '../Animation/animation';
 import { saveTodoOnServer } from '../../store/asyncAction/fetchTodos';
 
 const StyledBox = styled(Box)`
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
