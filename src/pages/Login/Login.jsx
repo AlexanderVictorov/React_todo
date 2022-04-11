@@ -40,6 +40,7 @@ function Login() {
       setFormValid(true);
     }
   }, [userNameError, emailError, passwordError]);
+
   const [myLogin, setMyLogin] = useState({
     username: '',
     email: '',
@@ -116,7 +117,7 @@ function Login() {
       if (response.status === 200) {
         localStorage.setItem('isAuth', 'true');
         setIsAuth(true);
-        navigate('/todo');
+        navigate(ROUTE_LINKS.todo);
       }
     } catch (error) {
       console.log('Пользователь не зарегестрирован');

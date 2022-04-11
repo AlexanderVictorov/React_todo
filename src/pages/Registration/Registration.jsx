@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import {
@@ -16,22 +16,87 @@ const StyledBox = styled(Box)`
   top: 50%;
   left: 0;
   width: 100%;
-  height: 400px;
+  height: auto;
   margin-top: -200px;
   overflow: hidden;
+  padding-bottom: 15px;
 `;
 
 function Registration() {
+  const [userNameDirty, setUserNameDirty] = useState(false);
+  const [emailDirty, setEmailDirty] = useState(false);
+  const [passwordDirty, setPasswordDirty] = useState(false);
+  const [userNameError, setUserNameError] = useState('Enter values for the username field');
+  const [emailError, setEmailError] = useState('Enter values for the email field');
+  const [passwordError, setPasswordError] = useState('Enter values for the password field');
+  const [formValid, setFormValid] = useState(false);
   const [newUser, setNewUser] = useState({
     username: '',
     email: '',
     password: '',
   });
-  const onChange = (event) => {
+
+  useEffect(() => {
+    if (userNameError || emailError || passwordError) {
+      setFormValid(false);
+    } else {
+      setFormValid(true);
+    }
+  }, [userNameError, emailError, passwordError]);
+
+  const blurHandler = (e) => {
+    switch (e.target.name) {
+      case 'username':
+        setUserNameDirty(true);
+        break;
+      case 'email':
+        setEmailDirty(true);
+        break;
+      case 'password':
+        setPasswordDirty(true);
+        break;
+      default:
+        console.log('lol');
+    }
+  };
+  const userNameHandler = (e) => {
     setNewUser({
       ...newUser,
-      [event.target.name]: event.target.value,
+      [e.target.name]: e.target.value,
     });
+    if (!e.target.value) {
+      setUserNameError('Enter values for the username field');
+    } else {
+      setUserNameError('');
+    }
+  };
+  const emailHandler = (e) => {
+    setNewUser({
+      ...newUser,
+      [e.target.name]: e.target.value,
+    });
+    const re = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    if (!re.test(String(e.target.value).toLowerCase())) {
+      setEmailError('Not correct email');
+    } else {
+      setEmailError('');
+    }
+  };
+  const passwordHandler = (e) => {
+    console.log(e.target.value);
+    setNewUser({
+      ...newUser,
+      [e.target.name]: e.target.value,
+    });
+    if (e.target.value.length < 3) {
+      console.log('password');
+      setPasswordError('password must be longer than 3 characters');
+      if (!e.target.value) {
+        setPasswordError('Enter values for the password field');
+      } else {
+        setPasswordError('');
+      }
+    }
   };
   const addUser = async (event) => {
     event.preventDefault();
@@ -50,41 +115,50 @@ function Registration() {
         <Box sx={{ paddingTop: '10px', position: 'relative', zIndex: '2' }} component='form' onSubmit={addUser}>
           <Box
             sx={{
-              '& > :not(style)': { m: 1, width: '25ch', display: 'flex' },
+              '& > :not(style)': { m: 1, width: '26ch', display: 'flex' },
             }}
             noValidate
             autoComplete='off'
           >
+            {(userNameDirty && userNameError)
+              && <Typography sx={{ fontSize: '12px' }} color='error'>{userNameError}</Typography>}
             <TextField
-              // id='outlined-basic'
               label='Username'
               variant='outlined'
               type='text'
               name='username'
               value={newUser.username}
-              onChange={onChange}
+              onChange={userNameHandler}
+              onBlur={blurHandler}
             />
+            {(emailDirty && emailError)
+              && <Typography sx={{ fontSize: '12px' }} color='error'>{emailError}</Typography>}
             <TextField
-              // id='outlined-basic'
               label='Email'
               variant='outlined'
               type='text'
               name='email'
               value={newUser.email}
-              onChange={onChange}
+              onChange={emailHandler}
+              onBlur={blurHandler}
             />
+            {(passwordDirty && passwordError)
+              && <Typography sx={{ fontSize: '12px' }} color='error'>{passwordError}</Typography>}
             <TextField
-              // id='outlined-basic'
               label='Password'
               variant='outlined'
               type='password'
               name='password'
               value={newUser.password}
-              onChange={onChange}
+              onChange={passwordHandler}
+              onBlur={blurHandler}
             />
           </Box>
           <Stack spacing={2} direction='row'>
-            <Button sx={{ marginLeft: '6px' }} variant='contained' type='submit'>Create New Account</Button>
+            <Button disabled={!formValid} sx={{ marginLeft: '10px' }} variant='contained' type='submit'>
+              Create New
+              Account
+            </Button>
           </Stack>
           <Typography sx={{ marginTop: '20px' }} variant='body1'><NavLink to={ROUTE_LINKS.login}>Back To Login</NavLink></Typography>
         </Box>

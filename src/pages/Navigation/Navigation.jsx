@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { AuthContext } from '../../context/Context';
 import useStyles from './Navigation.styles';
+import ROUTE_LINKS from '../../components/MyRouters/routeLink';
 
 function Navigation() {
   const isActiveStyle = ({ isActive }) => ({
@@ -15,7 +16,7 @@ function Navigation() {
   const onClickSignOut = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('isAuth');
-    navigate('/login');
+    navigate(ROUTE_LINKS.login);
   };
 
   return (

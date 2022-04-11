@@ -1,7 +1,7 @@
 const ROUTE_LINKS = {
   login: '/login',
   registration: '/registration',
-  todo: 'todo',
+  todo: '/todo',
   todoId: 'todo/:id',
   exit: 'exit',
   otherRoutes: '*',
