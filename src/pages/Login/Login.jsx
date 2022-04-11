@@ -81,14 +81,14 @@ function Login() {
       ...myLogin,
       [e.target.name]: e.target.value,
     });
+    if (!e.target.value) {
+      setPasswordError('Enter values for the password field');
+    }
     if (e.target.value.length < 3) {
       console.log('password');
       setPasswordError('password must be longer than 3 characters');
-      if (!e.target.value) {
-        setPasswordError('Enter values for the password field');
-      } else {
-        setPasswordError('');
-      }
+    } else {
+      setPasswordError('');
     }
   };
   const userNameHandler = (e) => {

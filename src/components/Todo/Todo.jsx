@@ -44,10 +44,8 @@ const styles = {
 function Todo({
   name, deleteTodo, id, updateTodo,
 }) {
-  console.log('name:', name);
   const [isEditing, setIsEditing] = useState(false);
   const [todoText, setTodoText] = useState(name);
-  console.log('todoText;', todoText);
   const navigate = useNavigate();
   const onChangeTodoText = (event) => setTodoText(event.target.value);
   const onBlur = () => {
@@ -62,11 +60,8 @@ function Todo({
   };
   const changeInput = (e) => {
     if (e.key === 'Enter') {
-      setIsEditing(true);
-      setTodoText(name);
-      updateTodo(id, todoText);
       setIsEditing(false);
-      e.target.blur();
+      updateTodo(id, todoText);
     }
   };
   const preventDef = (e) => {
