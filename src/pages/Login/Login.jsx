@@ -85,7 +85,6 @@ function Login() {
       setPasswordError('Enter values for the password field');
     }
     if (e.target.value.length < 3) {
-      console.log('password');
       setPasswordError('password must be longer than 3 characters');
     } else {
       setPasswordError('');
