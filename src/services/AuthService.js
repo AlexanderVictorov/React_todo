@@ -1,6 +1,7 @@
+// eslint-disable-next-line import/no-cycle
 import $api from '../http/api';
 
-export const APIService = {
+export const AuthService = {
   login({ username, email, password }) {
     return $api.post('/auth/login', { username, email, password });
   },

@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import {
   Box, Button, Stack, TextField, Typography,
 } from '@mui/material';
-import { APIService } from '../../services/APIService';
+import { AuthService } from '../../services/AuthService';
 import Animation from '../../components/Animation/animation';
 import ROUTE_LINKS from '../../components/MyRouters/routeLink';
 
@@ -100,7 +100,7 @@ function Registration() {
   };
   const addUser = async (event) => {
     event.preventDefault();
-    await APIService.registration(newUser);
+    await AuthService.registration(newUser);
     setNewUser(newUser);
     setNewUser({
       username: '',

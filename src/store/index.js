@@ -1,7 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import todoSlice from './slice/todos';
+// eslint-disable-next-line import/no-cycle
+import todoSlice from './slices/todos';
+// eslint-disable-next-line import/no-cycle
+import authSlice from './slices/auth';
 
 const rootReducer = combineReducers({
+  auth: authSlice,
   todos: todoSlice,
 });
 

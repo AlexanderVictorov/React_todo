@@ -39,6 +39,11 @@ function AddTodo({ addToList }) {
       >
         Add
       </Button>
+      <Box sx={{ display: 'flex', flexDirection: 'role', width: '180px' }}>
+        <Button>Done</Button>
+        <Button>All</Button>
+        <Button>Other</Button>
+      </Box>
       {isError && (
         <Typography variant='caption' color='error'>
           Error, must enter a value!

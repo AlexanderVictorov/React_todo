@@ -1,10 +1,16 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchTodos } from '../asyncAction/fetchTodos';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+// eslint-disable-next-line import/no-cycle
+import { TodoService } from '../../services/TodoService';
 
 const initialState = {
   todos: [],
 };
+
+export const fetchTodos = createAsyncThunk('todoSlice/fetchTodos', async () => {
+  const response = await TodoService.getTodos();
+  return response.data;
+});
 
 const todoSlice = createSlice({
   name: 'todoSlice',

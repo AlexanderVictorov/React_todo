@@ -3,8 +3,9 @@ import { Grid, Paper } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import AddTodo from './AddTodo';
 import List from './List';
-import { fetchTodos } from '../../store/asyncAction/fetchTodos';
-import { addTodo, changeTodos, deleteTodo } from '../../store/slice/todos';
+import {
+  addTodo, changeTodos, deleteTodo, fetchTodos,
+} from '../../store/slices/todos';
 
 const styles = {
   Paper: {

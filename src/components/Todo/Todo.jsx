@@ -6,6 +6,7 @@ import {
   Box, Grid, IconButton, Paper, TextField, Typography,
 } from '@mui/material';
 import { Build, Delete } from '@material-ui/icons';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const styles = {
   Card: {
@@ -19,6 +20,19 @@ const styles = {
     paddingTop: '6px',
   },
   Paper: {
+    color: 'black',
+    position: 'relative',
+    margin: 'auto',
+    marginTop: '10px',
+    padding: '5px',
+    display: 'flex',
+    width: '500px',
+    textDecoration: 'none',
+    zIndex: 1,
+    cursor: 'pointer',
+  },
+  DoneTodos: {
+    color: 'red',
     position: 'relative',
     margin: 'auto',
     marginTop: '10px',
@@ -45,9 +59,19 @@ function Todo({
   name, deleteTodo, id, updateTodo,
 }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [doneTodo, setDoneTodo] = useState(false);
   const [todoText, setTodoText] = useState(name);
   const navigate = useNavigate();
   const onChangeTodoText = (event) => setTodoText(event.target.value);
+  const doneTodos = () => {
+    if (!doneTodo) {
+      setDoneTodo(true);
+      styles.Paper.color = 'red';
+    } else {
+      setDoneTodo(false);
+      styles.Paper.color = 'black';
+    }
+  };
   const onBlur = () => {
     setIsEditing(false);
     setTodoText(name);
@@ -118,6 +142,15 @@ function Todo({
           >
             <Build fontSize='small' />
           </IconButton>
+          <CheckCircleIcon
+            role='button'
+            color='primary'
+            aria-label='done'
+            sx={styles.Icon}
+            onClick={doneTodos}
+          >
+            <Build fontSize='small' />
+          </CheckCircleIcon>
           <IconButton
             sx={styles.Icon}
             color='secondary'

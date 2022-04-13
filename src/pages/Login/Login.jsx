@@ -5,7 +5,7 @@ import {
   Box, Button, Stack, TextField, Typography,
 } from '@mui/material';
 import { AuthContext } from '../../context/Context';
-import { APIService } from '../../services/APIService';
+import { AuthService } from '../../services/AuthService';
 import Animation from '../../components/Animation/animation';
 import ROUTE_LINKS from '../../components/MyRouters/routeLink';
 
@@ -76,7 +76,6 @@ function Login() {
   };
 
   const passwordHandler = (e) => {
-    console.log(e.target.value);
     setMyLogin({
       ...myLogin,
       [e.target.name]: e.target.value,
@@ -104,7 +103,7 @@ function Login() {
   const login = async (e) => {
     e.preventDefault();
     try {
-      const response = await APIService.login(myLogin);
+      const response = await AuthService.login(myLogin);
       const { token } = response.data;
       localStorage.setItem('token', JSON.stringify(token));
       setMyLogin(myLogin);
