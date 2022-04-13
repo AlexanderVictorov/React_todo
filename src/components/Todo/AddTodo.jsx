@@ -3,7 +3,9 @@ import {
   Box, Button, Input, Typography,
 } from '@mui/material';
 
-function AddTodo({ addToList }) {
+function AddTodo({
+  addToList, active, all, done,
+}) {
   const [newTodo, setNewTodo] = useState('');
   const [isError, setIsError] = useState(false);
   const handleSubmit = (e) => {
@@ -40,9 +42,9 @@ function AddTodo({ addToList }) {
         Add
       </Button>
       <Box sx={{ display: 'flex', flexDirection: 'role', width: '180px' }}>
-        <Button>Done</Button>
-        <Button>All</Button>
-        <Button>Other</Button>
+        <Button onClick={() => done()}>Done</Button>
+        <Button onClick={() => all()}>All</Button>
+        <Button onClick={() => active()}>Other</Button>
       </Box>
       {isError && (
         <Typography variant='caption' color='error'>

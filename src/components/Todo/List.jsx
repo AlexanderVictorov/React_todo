@@ -13,7 +13,7 @@ function List({ list, deleteTodo, updateTodo }) {
           updateTodo={updateTodo}
           key={todo.id}
           todo={todo}
-          sx={{ color: todo.completed ? 'red' : 'yellow' }}
+          status={todo.status}
         />
       ))}
     </Grid>

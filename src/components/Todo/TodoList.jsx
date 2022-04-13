@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Grid, Paper } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import AddTodo from './AddTodo';
@@ -20,7 +20,31 @@ const styles = {
 function TodoList() {
   const dispatch = useDispatch();
   const select = useSelector((state) => state.todos.todos);
+  const [filter, setFilter] = useState('all');
 
+  const filterTodo = useMemo(() => {
+    switch (filter) {
+      case 'all':
+        return select;
+      case 'done':
+        return select.filter((todo) => todo.status === 'done');
+      case 'active':
+        return select.filter((todo) => todo.status === 'active');
+      default:
+        return null;
+    }
+  }, [filter, select]);
+
+  console.log(filterTodo);
+  const doneTodo = () => {
+    setFilter('done');
+  };
+  const allTodo = () => {
+    setFilter('all');
+  };
+  const activeTodo = () => {
+    setFilter('active');
+  };
   useEffect(() => {
     dispatch(fetchTodos());
   }, []);
@@ -42,14 +66,14 @@ function TodoList() {
     <Grid container spacing={0}>
       <Grid item xs={12}>
         <Paper sx={styles.Paper}>
-          <AddTodo addToList={addToList} />
+          <AddTodo done={doneTodo} all={allTodo} active={activeTodo} addToList={addToList} />
         </Paper>
       </Grid>
       <Grid item xs={12} sx={styles.Paper}>
         <List
           deleteTodo={removeTodo}
           updateTodo={updateTodo}
-          list={select}
+          list={filterTodo}
         />
       </Grid>
     </Grid>

@@ -7,6 +7,8 @@ import {
 } from '@mui/material';
 import { Build, Delete } from '@material-ui/icons';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useDispatch } from 'react-redux';
+import { changeStatus } from '../../store/slices/todos';
 
 const styles = {
   Card: {
@@ -56,20 +58,21 @@ const styles = {
 };
 
 function Todo({
-  name, deleteTodo, id, updateTodo,
+  status, name, deleteTodo, id, updateTodo,
 }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [doneTodo, setDoneTodo] = useState(false);
   const [todoText, setTodoText] = useState(name);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const onChangeTodoText = (event) => setTodoText(event.target.value);
   const doneTodos = () => {
-    if (!doneTodo) {
-      setDoneTodo(true);
-      styles.Paper.color = 'red';
-    } else {
-      setDoneTodo(false);
-      styles.Paper.color = 'black';
+    if (status === 'active') {
+      const statusTodoDone = 'done';
+      dispatch(changeStatus({ id, statusTodoDone }));
+    }
+    if (status === 'done') {
+      const statusTodoActive = 'active';
+      dispatch(changeStatus({ id, statusTodoActive }));
     }
   };
   const onBlur = () => {
@@ -106,7 +109,7 @@ function Todo({
       <Paper
         onClick={todoInfoCard}
         elevation={2}
-        sx={styles.Paper}
+        sx={status === 'active' ? styles.Paper : styles.DoneTodos}
       >
         {isEditing ? (
           <TextField

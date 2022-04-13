@@ -19,7 +19,7 @@ function App() {
     dispatch(changeLogout(false));
     dispatch(logout());
     navigate(ROUTE_LINKS.login);
-    // todo clear store
+    // todos clear store
   }, [isLogout]);
 
   return (
