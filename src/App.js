@@ -12,12 +12,12 @@ function App() {
   const dispatch = useDispatch();
   const [isAuth, setIsAuth] = useState(JSON.parse(localStorage.getItem('isAuth')));
   const forEsLint = useMemo(() => ({ isAuth, setIsAuth }), [isAuth, setIsAuth]);
-  const isLogout = useSelector((state) => state.auth.logout);
+  const isLogout = useSelector((state) => state.auth.isLogin);
   const navigate = useNavigate();
-
+  console.log(isLogout);
   useEffect(() => {
-    if (!isLogout) return;
-    dispatch(changeLogout(false));
+    if (isLogout) return;
+    dispatch(changeLogout(true));
     dispatch(logout());
     navigate(ROUTE_LINKS.login);
     // todos clear store

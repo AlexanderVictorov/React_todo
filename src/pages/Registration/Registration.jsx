@@ -4,9 +4,10 @@ import { styled } from '@mui/material/styles';
 import {
   Box, Button, Stack, TextField, Typography,
 } from '@mui/material';
-import { AuthService } from '../../services/AuthService';
+import { useDispatch } from 'react-redux';
 import Animation from '../../components/Animation/animation';
 import ROUTE_LINKS from '../../components/MyRouters/routeLink';
+import { fetchRegistration } from '../../store/slices/todos';
 
 const StyledBox = styled(Box)`
   display: flex;
@@ -35,7 +36,7 @@ function Registration() {
     email: '',
     password: '',
   });
-
+  const dispatch = useDispatch();
   useEffect(() => {
     if (userNameError || emailError || passwordError) {
       setFormValid(false);
@@ -100,7 +101,7 @@ function Registration() {
   };
   const addUser = async (event) => {
     event.preventDefault();
-    await AuthService.registration(newUser);
+    await dispatch(fetchRegistration(newUser));
     setNewUser(newUser);
     setNewUser({
       username: '',

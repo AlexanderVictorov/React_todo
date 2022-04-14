@@ -25,6 +25,9 @@ export const fetchLogin = createAsyncThunk('todoSlice/fetchLogin', async (action
     console.log('Пользователь не зарегестрирован');
   }
 });
+export const fetchRegistration = createAsyncThunk('todoSlice/fetchLogin', async (action) => {
+  await AuthService.registration(action);
+});
 const todoSlice = createSlice({
   name: 'todoSlice',
   initialState,

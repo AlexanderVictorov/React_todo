@@ -8,14 +8,14 @@ export const logout = createAsyncThunk('auth/logout', async () => {
   await AuthService.logout();
 });
 const initialState = {
-  logout: false,
+  isLogin: false,
 };
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     changeLogout(state, action) {
-      state.logout = action.payload;
+      state.isLogin = action.payload;
     },
   },
   extraReducers: {

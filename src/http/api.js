@@ -34,7 +34,7 @@ $api.interceptors.response.use(
         return $api(error.config);
       } catch (e) {
         if (e.response.status === 401) {
-          store.dispatch(changeLogout(true));
+          store.dispatch(changeLogout(false));
           localStorage.removeItem('token');
           localStorage.removeItem('isAuth');
         }
