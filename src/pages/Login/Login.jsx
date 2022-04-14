@@ -4,10 +4,11 @@ import { styled } from '@mui/material/styles';
 import {
   Box, Button, Stack, TextField, Typography,
 } from '@mui/material';
+import { useDispatch } from 'react-redux';
 import { AuthContext } from '../../context/Context';
-import { AuthService } from '../../services/AuthService';
 import Animation from '../../components/Animation/animation';
 import ROUTE_LINKS from '../../components/MyRouters/routeLink';
+import { fetchLogin } from '../../store/slices/todos';
 
 const StyledBox = styled(Box)`
   padding-bottom: 15px;
@@ -32,7 +33,7 @@ function Login() {
   const [emailError, setEmailError] = useState('Enter values for the email field');
   const [passwordError, setPasswordError] = useState('Enter values for the password field');
   const [formValid, setFormValid] = useState(false);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     if (userNameError || emailError || passwordError) {
       setFormValid(false);
@@ -61,7 +62,6 @@ function Login() {
         console.log('lol');
     }
   };
-
   const emailHandler = (e) => {
     setMyLogin({
       ...myLogin,
@@ -74,7 +74,6 @@ function Login() {
       setEmailError('');
     }
   };
-
   const passwordHandler = (e) => {
     setMyLogin({
       ...myLogin,
@@ -102,29 +101,16 @@ function Login() {
   };
   const login = async (e) => {
     e.preventDefault();
-    try {
-      const response = await AuthService.login(myLogin);
-      const { token } = response.data;
-      localStorage.setItem('token', JSON.stringify(token));
-      setMyLogin(myLogin);
-      setMyLogin({
-        username: '',
-        email: '',
-        password: '',
-      });
-      if (response.status === 200) {
-        localStorage.setItem('isAuth', 'true');
-        setIsAuth(true);
-        navigate(ROUTE_LINKS.todo);
-      }
-    } catch (error) {
-      console.log('Пользователь не зарегестрирован');
-      // window.confirm('Пользователь не зарегестрирован')
-      setMyLogin({
-        username: '',
-        email: '',
-        password: '',
-      });
+    await dispatch(fetchLogin(myLogin));
+    setMyLogin(myLogin);
+    setMyLogin({
+      username: '',
+      email: '',
+      password: '',
+    });
+    if (localStorage.getItem('isAuth')) {
+      setIsAuth(true);
+      navigate(ROUTE_LINKS.todo);
     }
   };
   return (
