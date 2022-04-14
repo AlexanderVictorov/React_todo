@@ -26,22 +26,21 @@ function TodoInfo() {
   const params = useParams();
   const todo = useSelector((state) => state.todos.todos);
   const [todoInfo, setTodoInfo] = useState(null);
-  const [nextIndex, setNextIndex] = useState(null);
-  const [prevIndex, setPrevIndex] = useState(null);
+  const [curIndex, setCurIndex] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onNextTodo = () => {
-    if (todo[nextIndex]) {
-      navigate(`${ROUTE_LINKS.todo}/${todo[nextIndex].id}`);
+    if (todo[curIndex + 1]) {
+      navigate(`${ROUTE_LINKS.todo}/${todo[curIndex + 1].id}`);
     } else {
       navigate(`${ROUTE_LINKS.todo}/${todo[0].id}`);
     }
   };
   const onPreviousTodo = () => {
-    if (todo[prevIndex]) {
-      navigate(`${ROUTE_LINKS.todo}/${todo[prevIndex].id}`);
+    if (todo[curIndex - 1]) {
+      navigate(`${ROUTE_LINKS.todo}/${todo[curIndex - 1].id}`);
     } else {
       navigate(`${ROUTE_LINKS.todo}/${todo[todo.length - 1].id}`);
     }
@@ -54,8 +53,7 @@ function TodoInfo() {
     if (!todo) return;
     const candidate = todo.find((item, inx) => {
       if (item.id === +params.id) {
-        setNextIndex(inx + 1);
-        setPrevIndex(inx - 1);
+        setCurIndex(inx);
         return true;
       }
       return false;

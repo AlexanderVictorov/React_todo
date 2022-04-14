@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { useSnackbar } from 'notistack';
 import Animation from '../Animation/animation';
 import { saveTodoOnServer } from '../../store/asyncAction/fetchTodos';
 
@@ -18,22 +19,27 @@ const StyledBox = styled(Box)`
   width: 100%;
   height: 70px;
   overflow: hidden;
-  z-index: 9999;
+  z-index: 1;
 `;
-// const notifier = () => {
-//   toaster.notify('Hello world', {
-//     duration: 2000,
-//   });
-// };
+
 function Footer() {
+  const { enqueueSnackbar } = useSnackbar();
+  const handleClick = () => {
+    enqueueSnackbar('Save Todos', {
+      variant: 'success',
+    });
+  };
   const dispatch = useDispatch();
   return (
-    <StyledBox onClick={() => dispatch(saveTodoOnServer())}>
-      <Box>
-        <Typography variant='h5'>Save Todos</Typography>
-      </Box>
-      <Animation />
-    </StyledBox>
+    <Box onClick={handleClick}>
+      <StyledBox onClick={() => dispatch(saveTodoOnServer())}>
+        <Box>
+          <Typography variant='h5'>Save Todos</Typography>
+        </Box>
+        <Animation />
+      </StyledBox>
+    </Box>
+
   );
 }
 

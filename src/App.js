@@ -15,7 +15,6 @@ function App() {
   const navigate = useNavigate();
   useEffect(() => {
     if (isLogout) return;
-    console.log('olol');
     dispatch(changeLogout(true));
     dispatch(logout());
     navigate(ROUTE_LINKS.login);
