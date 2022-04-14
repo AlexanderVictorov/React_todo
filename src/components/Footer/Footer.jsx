@@ -20,7 +20,11 @@ const StyledBox = styled(Box)`
   overflow: hidden;
   z-index: 9999;
 `;
-
+// const notifier = () => {
+//   toaster.notify('Hello world', {
+//     duration: 2000,
+//   });
+// };
 function Footer() {
   const dispatch = useDispatch();
   return (

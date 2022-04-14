@@ -14,7 +14,8 @@ function App() {
   const isLogout = useSelector((state) => state.auth.isLogin);
   const navigate = useNavigate();
   useEffect(() => {
-    if (!isLogout) return;
+    if (isLogout) return;
+    console.log('olol');
     dispatch(changeLogout(true));
     dispatch(logout());
     navigate(ROUTE_LINKS.login);
