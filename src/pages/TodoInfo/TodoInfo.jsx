@@ -1,6 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Paper, Typography } from '@mui/material';
+import {
+  Box, Button, Paper, Typography,
+} from '@mui/material';
 import { useSelector } from 'react-redux';
 
 const styles = {
@@ -23,15 +25,28 @@ function ShowTodoInfo() {
   const todoInfo = todo.find((user) => user.id === +params.id);
 
   return (
-    <Paper
-      elevation={2}
-      sx={styles.Paper}
+    <Box sx={{
+      display: 'flex', flexDirection: 'column', alignItems: 'center',
+    }}
     >
-      <Typography>
-        Info:
-        {todoInfo.name}
-      </Typography>
-    </Paper>
+      <Paper
+        elevation={2}
+        sx={styles.Paper}
+      >
+        <Typography>
+          Info:
+          {todoInfo.name}
+        </Typography>
+      </Paper>
+      <Box sx={{
+        marginTop: '20px', display: 'flex', justifyContent: 'space-between', width: '150px',
+      }}
+      >
+        <Button sx={{ height: '30px' }} variant='contained'>back</Button>
+        <Button sx={{ height: '30px' }} variant='contained'>next</Button>
+      </Box>
+
+    </Box>
   );
 }
 
