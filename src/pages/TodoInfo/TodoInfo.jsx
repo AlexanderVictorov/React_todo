@@ -27,7 +27,7 @@ function TodoInfo() {
   const todo = useSelector((state) => state.todos.todos);
   const [todoInfo, setTodoInfo] = useState(null);
   const [nextIndex, setNextIndex] = useState(null);
-  // console.log(nextIndex);
+  const [prevIndex, setPrevIndex] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -40,15 +40,11 @@ function TodoInfo() {
     }
   };
   const onPreviousTodo = () => {
-    setNextIndex((prevstate) => prevstate - 4);
-    if (todo[nextIndex]) {
-      console.log('previous', nextIndex);
-
-      navigate(`${ROUTE_LINKS.todo}/${todo[nextIndex].id}`);
+    if (todo[prevIndex]) {
+      navigate(`${ROUTE_LINKS.todo}/${todo[prevIndex].id}`);
+    } else {
+      navigate(`${ROUTE_LINKS.todo}/${todo[todo.length - 1].id}`);
     }
-    // if (todo[0]) {
-    //   navigate(`${ROUTE_LINKS.todo}/${todo[todo.length - 1].id}`);
-    // }
   };
   useEffect(() => {
     if (todo) return;
@@ -59,6 +55,7 @@ function TodoInfo() {
     const candidate = todo.find((item, inx) => {
       if (item.id === +params.id) {
         setNextIndex(inx + 1);
+        setPrevIndex(inx - 1);
         return true;
       }
       return false;
