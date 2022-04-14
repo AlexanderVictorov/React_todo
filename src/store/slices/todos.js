@@ -6,7 +6,7 @@ import { TodoService } from '../../services/TodoService';
 import { AuthService } from '../../services/AuthService';
 
 const initialState = {
-  todos: [],
+  todos: null,
 };
 const loading = {
   loading: false,

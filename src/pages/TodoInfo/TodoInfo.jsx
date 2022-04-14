@@ -1,9 +1,12 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Box, Button, Paper, Typography,
 } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTodos } from '../../store/slices/todos';
+import ROUTE_LINKS from '../../components/MyRouters/routeLink';
+import Loader from '../../components/loader/Loader';
 
 const styles = {
   Paper: {
@@ -19,24 +22,52 @@ const styles = {
   },
 };
 
-function ShowTodoInfo() {
+function TodoInfo() {
   const params = useParams();
   const todo = useSelector((state) => state.todos.todos);
-  const todoInfo = todo.find((item) => item.id === +params.id);
-  const iterator = (array) => {
-    let index = 0;
-    return () => {
-      const value = array[index];
-      if (index < array.length) {
-        // eslint-disable-next-line no-plusplus
-        index++;
-      }
-      return value;
-    };
+  const [todoInfo, setTodoInfo] = useState(null);
+  const [nextIndex, setNextIndex] = useState(null);
+  // console.log(nextIndex);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const onNextTodo = () => {
+    if (todo[nextIndex]) {
+      navigate(`${ROUTE_LINKS.todo}/${todo[nextIndex].id}`);
+    } else {
+      navigate(`${ROUTE_LINKS.todo}/${todo[0].id}`);
+    }
   };
-  const nextTodo = iterator(todo);
-  console.log(nextTodo());
-  console.log(nextTodo());
+  const onPreviousTodo = () => {
+    setNextIndex((prevstate) => prevstate - 4);
+    if (todo[nextIndex]) {
+      console.log('previous', nextIndex);
+
+      navigate(`${ROUTE_LINKS.todo}/${todo[nextIndex].id}`);
+    }
+    // if (todo[0]) {
+    //   navigate(`${ROUTE_LINKS.todo}/${todo[todo.length - 1].id}`);
+    // }
+  };
+  useEffect(() => {
+    if (todo) return;
+    dispatch(fetchTodos());
+  }, [todo]);
+  useEffect(() => {
+    if (!todo) return;
+    const candidate = todo.find((item, inx) => {
+      if (item.id === +params.id) {
+        setNextIndex(inx + 1);
+        return true;
+      }
+      return false;
+    });
+    if (!candidate) return;
+    setTodoInfo(candidate);
+  }, [todo, params]);
+
+  if (!todoInfo) return <Loader />;
   return (
     <Box sx={{
       display: 'flex', flexDirection: 'column', alignItems: 'center',
@@ -52,15 +83,15 @@ function ShowTodoInfo() {
         </Typography>
       </Paper>
       <Box sx={{
-        marginTop: '20px', display: 'flex', justifyContent: 'space-between', width: '150px',
+        marginTop: '20px', display: 'flex', justifyContent: 'space-between', width: '300px',
       }}
       >
-        <Button sx={{ height: '30px' }} variant='contained'>back</Button>
-        <Button onClick={nextTodo} sx={{ height: '30px' }} variant='contained'>next</Button>
+        <Button onClick={onPreviousTodo} sx={{ height: '30px' }} variant='contained'>previous Todos</Button>
+        <Button onClick={onNextTodo} sx={{ height: '30px' }} variant='contained'>next Todos</Button>
       </Box>
 
     </Box>
   );
 }
 
-export default ShowTodoInfo;
+export default TodoInfo;

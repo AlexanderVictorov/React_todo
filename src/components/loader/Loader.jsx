@@ -2,6 +2,7 @@ import * as React from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Box, Button } from '@mui/material';
+import { useEffect } from 'react';
 
 function Loader() {
   const [open, setOpen] = React.useState(false);
@@ -11,7 +12,9 @@ function Loader() {
   const handleToggle = () => {
     setOpen(!open);
   };
-
+  useEffect(() => {
+    handleToggle();
+  }, []);
   return (
     <Box>
       <Button onClick={handleToggle}>Show backdrop</Button>

@@ -19,7 +19,7 @@ const styles = {
 
 function TodoList() {
   const dispatch = useDispatch();
-  const select = useSelector((state) => state.todos.todos);
+  const select = useSelector((state) => state.todos.todos || []);
   const [filter, setFilter] = useState('all');
 
   const filterTodo = useMemo(() => {
