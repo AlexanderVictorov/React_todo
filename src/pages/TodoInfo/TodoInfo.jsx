@@ -22,8 +22,21 @@ const styles = {
 function ShowTodoInfo() {
   const params = useParams();
   const todo = useSelector((state) => state.todos.todos);
-  const todoInfo = todo.find((user) => user.id === +params.id);
-
+  const todoInfo = todo.find((item) => item.id === +params.id);
+  const iterator = (array) => {
+    let index = 0;
+    return () => {
+      const value = array[index];
+      if (index < array.length) {
+        // eslint-disable-next-line no-plusplus
+        index++;
+      }
+      return value;
+    };
+  };
+  const nextTodo = iterator(todo);
+  console.log(nextTodo());
+  console.log(nextTodo());
   return (
     <Box sx={{
       display: 'flex', flexDirection: 'column', alignItems: 'center',
@@ -43,7 +56,7 @@ function ShowTodoInfo() {
       }}
       >
         <Button sx={{ height: '30px' }} variant='contained'>back</Button>
-        <Button sx={{ height: '30px' }} variant='contained'>next</Button>
+        <Button onClick={nextTodo} sx={{ height: '30px' }} variant='contained'>next</Button>
       </Box>
 
     </Box>

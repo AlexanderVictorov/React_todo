@@ -8,9 +8,9 @@ import { AuthService } from '../../services/AuthService';
 const initialState = {
   todos: [],
 };
-// const loading = {
-//   loading: false,
-// };
+const loading = {
+  loading: false,
+};
 export const fetchTodos = createAsyncThunk('todoSlice/fetchTodos', async () => {
   const response = await TodoService.getTodos();
   return response.data;
@@ -33,6 +33,7 @@ export const fetchRegistration = createAsyncThunk('todoSlice/fetchLogin', async 
 const todoSlice = createSlice({
   name: 'todoSlice',
   initialState,
+  loading,
   reducers: {
     addTodo(state, action) {
       state.todos.push(action.payload);

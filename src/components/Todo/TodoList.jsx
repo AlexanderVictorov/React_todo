@@ -35,7 +35,6 @@ function TodoList() {
     }
   }, [filter, select]);
 
-  console.log(filterTodo);
   const doneTodo = () => {
     setFilter('done');
   };
