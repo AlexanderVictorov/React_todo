@@ -8,6 +8,7 @@ import {
 import { Build, Delete } from '@material-ui/icons';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch } from 'react-redux';
+import { useSnackbar } from 'notistack';
 import { changeStatus } from '../../store/slices/todos';
 
 const styles = {
@@ -65,6 +66,12 @@ function Todo({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onChangeTodoText = (event) => setTodoText(event.target.value);
+  const { enqueueSnackbar } = useSnackbar();
+  const handleClick = () => {
+    enqueueSnackbar('Change Todos', {
+      variant: 'success',
+    });
+  };
   const doneTodos = () => {
     if (status === 'active') {
       const statusTodoDone = 'done';
@@ -89,6 +96,7 @@ function Todo({
     if (e.key === 'Enter') {
       setIsEditing(false);
       updateTodo(id, todoText);
+      handleClick();
     }
   };
   const preventDef = (e) => {

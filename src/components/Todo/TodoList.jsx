@@ -9,7 +9,7 @@ import {
 
 const styles = {
   Paper: {
-    padding: '20px',
+    padding: '15px',
     margin: 'auto',
     textAlign: 'center',
     width: '500px',
@@ -45,6 +45,7 @@ function TodoList() {
     setFilter('active');
   };
   useEffect(() => {
+    console.log('olol');
     dispatch(fetchTodos());
   }, []);
 

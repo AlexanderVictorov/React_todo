@@ -23,34 +23,45 @@ function AddTodo({
   };
 
   return (
-    <Box component='form' onSubmit={handleSubmit} sx={{ display: 'flex' }}>
-      <Input
-        placeholder='Todo'
-        inputProps={{
-          'aria-label': 'Description',
-        }}
-        onChange={onChange}
-        value={newTodo}
-        sx={{ width: '90%' }}
-      />
-      <Button
-        type='submit'
-        variant='contained'
-        color='primary'
-        sx={{ width: '10%' }}
-      >
-        Add
-      </Button>
-      <Box sx={{ display: 'flex', flexDirection: 'role', width: '180px' }}>
-        <Button onClick={() => done()}>Done</Button>
-        <Button onClick={() => all()}>All</Button>
-        <Button onClick={() => active()}>Other</Button>
+    <Box
+      sx={{
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
+      }}
+      component='form'
+      onSubmit={handleSubmit}
+    >
+      <Box sx={{ display: 'flex', width: '100%' }}>
+        <Input
+          placeholder='Todo'
+          inputProps={{
+            'aria-label': 'Description',
+          }}
+          onChange={onChange}
+          value={newTodo}
+          sx={{ width: '90%' }}
+        />
+        <Button
+          type='submit'
+          variant='contained'
+          color='primary'
+          size='small'
+        >
+          Add
+        </Button>
+        {isError && (
+          <Typography variant='caption' color='error'>
+            Error, must enter a value!
+          </Typography>
+        )}
       </Box>
-      {isError && (
-        <Typography variant='caption' color='error'>
-          Error, must enter a value!
-        </Typography>
-      )}
+      <Box sx={{
+        display: 'flex', marginTop: '10px', justifyContent: 'space-between', width: '270px', alignItems: 'center',
+      }}
+      >
+        <Button variant='contained' size='small' onClick={() => done()}>Done</Button>
+        <Button variant='contained' size='small' onClick={() => all()}>All</Button>
+        <Button variant='contained' size='small' onClick={() => active()}>In Progress</Button>
+      </Box>
     </Box>
   );
 }

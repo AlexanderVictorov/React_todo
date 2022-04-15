@@ -6,7 +6,7 @@ import MyRoutes from './components/MyRouters/MyRoutes';
 import { changeLogout, logout } from './store/slices/auth';
 import { AuthContext } from './context/Context';
 import ROUTE_LINKS from './components/MyRouters/routeLink';
-import Loader from './components/loader/Loader';
+// import Loader from './components/loader/Loader';
 
 function App() {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ function App() {
     dispatch(logout());
     navigate(ROUTE_LINKS.login);
   }, [isLogout]);
-  if (loading) return <Loader />;
+  // if (loading) return <Loader />;
   return (
     <div className='App'>
       <AuthContext.Provider value={forEsLint}>

@@ -47,6 +47,7 @@ function TodoInfo() {
   };
   useEffect(() => {
     if (todo) return;
+    console.log('todoInfo');
     dispatch(fetchTodos());
   }, [todo]);
   useEffect(() => {
