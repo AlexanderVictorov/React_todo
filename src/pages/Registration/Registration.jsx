@@ -5,6 +5,7 @@ import {
   Box, Button, Stack, TextField, Typography,
 } from '@mui/material';
 import { useDispatch } from 'react-redux';
+import { useSnackbar } from 'notistack';
 import Animation from '../../components/Animation/animation';
 import ROUTE_LINKS from '../../components/MyRouters/routeLink';
 import { fetchRegistration } from '../../store/slices/todos';
@@ -109,6 +110,12 @@ function Registration() {
       password: '',
     });
   };
+  const { enqueueSnackbar } = useSnackbar();
+  const handleClick = () => {
+    enqueueSnackbar('User registered', {
+      variant: 'success',
+    });
+  };
   return (
     <StyledBox>
       <Box sx={{ marginTop: '30px' }}>
@@ -156,7 +163,7 @@ function Registration() {
             />
           </Box>
           <Stack spacing={2} direction='row'>
-            <Button disabled={!formValid} sx={{ marginLeft: '10px' }} variant='contained' type='submit'>
+            <Button onClick={handleClick} disabled={!formValid} sx={{ marginLeft: '10px' }} variant='contained' type='submit'>
               Create New
               Account
             </Button>

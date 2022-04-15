@@ -11,8 +11,7 @@ const StyledBox = styled(Box)`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #50a3a2;
-  background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
+  background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
   position: fixed;
   bottom: 0;
   left: 0;
@@ -31,7 +30,7 @@ function Footer() {
   };
   const dispatch = useDispatch();
   return (
-    <Box onClick={handleClick}>
+    <Box sx={{ marginTop: '20px' }} onClick={handleClick}>
       <StyledBox onClick={() => dispatch(saveTodoOnServer())}>
         <Box>
           <Typography variant='h5'>Save Todos</Typography>

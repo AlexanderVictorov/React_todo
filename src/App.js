@@ -6,12 +6,15 @@ import MyRoutes from './components/MyRouters/MyRoutes';
 import { changeLogout, logout } from './store/slices/auth';
 import { AuthContext } from './context/Context';
 import ROUTE_LINKS from './components/MyRouters/routeLink';
+import Loader from './components/loader/Loader';
 
 function App() {
   const dispatch = useDispatch();
   const [isAuth, setIsAuth] = useState(JSON.parse(localStorage.getItem('isAuth')));
   const forEsLint = useMemo(() => ({ isAuth, setIsAuth }), [isAuth, setIsAuth]);
   const isLogout = useSelector((state) => state.auth.isLogin);
+  const loading = useSelector((state) => state.todos.loading);
+  console.log(loading);
   const navigate = useNavigate();
   useEffect(() => {
     if (isLogout) return;
@@ -19,7 +22,7 @@ function App() {
     dispatch(logout());
     navigate(ROUTE_LINKS.login);
   }, [isLogout]);
-
+  if (loading) return <Loader />;
   return (
     <div className='App'>
       <AuthContext.Provider value={forEsLint}>

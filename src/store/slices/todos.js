@@ -7,10 +7,11 @@ import { AuthService } from '../../services/AuthService';
 
 const initialState = {
   todos: null,
-};
-const loading = {
   loading: false,
 };
+// const loading = {
+//   loading: false,
+// };
 export const fetchTodos = createAsyncThunk('todoSlice/fetchTodos', async () => {
   const response = await TodoService.getTodos();
   return response.data;
@@ -33,7 +34,6 @@ export const fetchRegistration = createAsyncThunk('todoSlice/fetchLogin', async 
 const todoSlice = createSlice({
   name: 'todoSlice',
   initialState,
-  loading,
   reducers: {
     addTodo(state, action) {
       state.todos.push(action.payload);
@@ -63,13 +63,15 @@ const todoSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchTodos.pending, () => {
-      console.log('fetchTodos/pending');
-    }).addCase(fetchTodos.rejected, () => {
+    builder.addCase(fetchTodos.pending, (state) => {
+      state.loading = true;
+    }).addCase(fetchTodos.rejected, (state) => {
+      state.loading = false;
       console.log('fetchTodos/rejected');
     })
       .addCase(fetchTodos.fulfilled, (state, { payload }) => {
         state.todos = payload;
+        state.loading = false;
       });
   },
 });

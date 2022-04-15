@@ -3,13 +3,20 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
+import { Collapse } from '@mui/material';
 import App from './App';
 import { store } from './store';
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <SnackbarProvider maxSnack={3}>
+      <SnackbarProvider
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        TransitionComponent={Collapse}
+      >
         <App />
       </SnackbarProvider>
     </BrowserRouter>

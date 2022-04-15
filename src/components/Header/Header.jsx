@@ -8,9 +8,8 @@ const StyledBox = styled(Box)`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #50a3a2;
-  background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
   position: absolute;
+  background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
   top: 0;
   left: 0;
   width: 100%;
