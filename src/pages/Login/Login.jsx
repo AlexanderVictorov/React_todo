@@ -5,6 +5,7 @@ import {
   Box, Button, Stack, TextField, Typography,
 } from '@mui/material';
 import { useDispatch } from 'react-redux';
+import { useSnackbar } from 'notistack';
 import { AuthContext } from '../../context/Context';
 import Animation from '../../components/Animation/animation';
 import ROUTE_LINKS from '../../components/MyRouters/routeLink';
@@ -99,6 +100,12 @@ function Login() {
       setUserNameError('');
     }
   };
+  const { enqueueSnackbar } = useSnackbar();
+  const handleClick = () => {
+    enqueueSnackbar('User not registered', {
+      variant: 'error',
+    });
+  };
   const login = async (e) => {
     e.preventDefault();
     await dispatch(fetchLogin(myLogin));
@@ -111,6 +118,8 @@ function Login() {
     if (localStorage.getItem('isAuth')) {
       setIsAuth(true);
       navigate(ROUTE_LINKS.todo);
+    } else {
+      handleClick();
     }
   };
   return (

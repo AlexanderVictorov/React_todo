@@ -9,9 +9,6 @@ const initialState = {
   todos: null,
   loading: false,
 };
-// const loading = {
-//   loading: false,
-// };
 export const fetchTodos = createAsyncThunk('todoSlice/fetchTodos', async () => {
   const response = await TodoService.getTodos();
   return response.data;

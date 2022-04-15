@@ -23,6 +23,7 @@ const styles = {
 };
 
 function TodoInfo() {
+  const loading = useSelector((state) => state.todos.loading);
   const params = useParams();
   const todo = useSelector((state) => state.todos.todos);
   const [todoInfo, setTodoInfo] = useState(null);
@@ -47,9 +48,8 @@ function TodoInfo() {
   };
   useEffect(() => {
     if (todo) return;
-    console.log('todoInfo');
     dispatch(fetchTodos());
-  }, [todo]);
+  }, [todo, loading]);
   useEffect(() => {
     if (!todo) return;
     const candidate = todo.find((item, inx) => {

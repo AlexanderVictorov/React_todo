@@ -14,7 +14,6 @@ function Loader() {
   };
   useEffect(() => {
     handleToggle();
-    // handleClose();
   }, []);
   return (
     <Box>
