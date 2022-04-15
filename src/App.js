@@ -14,7 +14,6 @@ function App() {
   const forEsLint = useMemo(() => ({ isAuth, setIsAuth }), [isAuth, setIsAuth]);
   const isLogout = useSelector((state) => state.auth.isLogin);
   const loading = useSelector((state) => state.todos.loading);
-  console.log(loading);
   const navigate = useNavigate();
   useEffect(() => {
     if (isLogout) return;
