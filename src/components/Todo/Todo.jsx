@@ -3,9 +3,10 @@ jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Box, Grid, IconButton, Paper, TextField, Typography,
+  Box, Grid, Paper, TextField, Typography,
 } from '@mui/material';
-import { Build, Delete } from '@material-ui/icons';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
@@ -23,7 +24,6 @@ const styles = {
     paddingTop: '6px',
   },
   Paper: {
-    color: 'black',
     position: 'relative',
     margin: 'auto',
     marginTop: '10px',
@@ -144,32 +144,26 @@ function Todo({
           className='icon_change_todo'
           aria-hidden='true'
         >
-          <IconButton
+          <EditIcon
             role='button'
             color='primary'
             aria-label='Edit'
             sx={styles.Icon}
             onClick={() => setIsEditing(true)}
-          >
-            <Build fontSize='small' />
-          </IconButton>
+          />
           <CheckCircleIcon
             role='button'
             color='primary'
             aria-label='done'
             sx={styles.Icon}
             onClick={doneTodos}
-          >
-            <Build fontSize='small' />
-          </CheckCircleIcon>
-          <IconButton
+          />
+          <DeleteIcon
             sx={styles.Icon}
             color='secondary'
             aria-label='Delete'
             onClick={() => deleteTodo(id)}
-          >
-            <Delete fontSize='small' />
-          </IconButton>
+          />
         </Box>
       </Paper>
     </Grid>

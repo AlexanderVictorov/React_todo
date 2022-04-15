@@ -1,13 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useSnackbar } from 'notistack';
 import Animation from '../Animation/animation';
-import { saveTodoOnServer } from '../../store/asyncAction/fetchTodos';
 
 const StyledBox = styled(Box)`
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,22 +18,13 @@ const StyledBox = styled(Box)`
 `;
 
 function Footer() {
-  const { enqueueSnackbar } = useSnackbar();
-  const handleClick = () => {
-    enqueueSnackbar('Save Todos', {
-      variant: 'success',
-    });
-  };
-  const dispatch = useDispatch();
   return (
-    <Box sx={{ marginTop: '20px' }} onClick={handleClick}>
-      <StyledBox onClick={() => dispatch(saveTodoOnServer())}>
-        <Box>
-          <Typography variant='h5'>Save Todos</Typography>
-        </Box>
-        <Animation />
-      </StyledBox>
-    </Box>
+    <StyledBox>
+      <Box>
+        <Typography variant='h5'>Footer</Typography>
+      </Box>
+      <Animation />
+    </StyledBox>
 
   );
 }

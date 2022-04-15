@@ -62,7 +62,9 @@ function TodoInfo() {
     if (!candidate) return;
     setTodoInfo(candidate);
   }, [todo, params]);
-
+  const backTodos = () => {
+    navigate(ROUTE_LINKS.todo);
+  };
   if (!todoInfo) return <Loader />;
   return (
     <Box sx={{
@@ -77,13 +79,23 @@ function TodoInfo() {
           Info:
           {todoInfo.name}
         </Typography>
+        <Button
+          sx={{
+            marginLeft: 'auto', fontFamily: 'serif', fontSize: '12px', textTransform: 'capitalize',
+          }}
+          onClick={backTodos}
+          variant='contained'
+          size='small'
+        >
+          Back Todos
+        </Button>
       </Paper>
       <Box sx={{
-        marginTop: '20px', display: 'flex', justifyContent: 'space-between', width: '300px',
+        marginTop: '20px', display: 'flex', justifyContent: 'space-between', width: '200px',
       }}
       >
-        <Button onClick={onPreviousTodo} sx={{ height: '30px' }} variant='contained'>previous Todos</Button>
-        <Button onClick={onNextTodo} sx={{ height: '30px' }} variant='contained'>next Todos</Button>
+        <Button sx={{ fontFamily: 'serif', fontSize: '12px', textTransform: 'capitalize' }} onClick={onPreviousTodo} size='small' variant='contained'>previous Todos</Button>
+        <Button sx={{ fontFamily: 'serif', fontSize: '12px', textTransform: 'capitalize' }} onClick={onNextTodo} size='small' variant='contained'>next Todos</Button>
       </Box>
 
     </Box>

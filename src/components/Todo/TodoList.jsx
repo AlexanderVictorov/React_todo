@@ -45,7 +45,6 @@ function TodoList() {
     setFilter('active');
   };
   useEffect(() => {
-    console.log('olol');
     dispatch(fetchTodos());
   }, []);
 
