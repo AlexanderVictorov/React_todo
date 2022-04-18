@@ -1,11 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Grid, Paper } from '@mui/material';
+import { Box, Grid, Paper } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import { styled } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 import AddTodo from './AddTodo';
 import List from './List';
 import {
   addTodo, changeTodos, fetchTodos,
 } from '../../store/slices/todos';
+import fullTrash from '../../images/fullTrash.png';
+import ROUTE_LINKS from '../MyRouters/routeLink';
 
 const styles = {
   Paper: {
@@ -16,9 +20,20 @@ const styles = {
     zIndex: 1,
   },
 };
+const StyledBox = styled(Box)`
+  display: flex;
+  position: fixed;
+  bottom: 80px;
+  right: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 9999;
+`;
 
 function TodoList() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const select = useSelector((state) => state.todos.todos || []);
   const [filter, setFilter] = useState('all');
 
@@ -56,8 +71,11 @@ function TodoList() {
   };
   const removeTodo = () => {
     console.log('delete todo');
-    setFilter('trash');
+    setFilter('all');
     // dispatch(deleteTodo(id));
+  };
+  const goToTrash = () => {
+    navigate(ROUTE_LINKS.trash);
   };
   const updateTodo = (id, newText) => {
     dispatch(changeTodos({ id, newText }));
@@ -73,6 +91,9 @@ function TodoList() {
             addToList={addToList}
           />
         </Paper>
+        <StyledBox onClick={goToTrash}>
+          <img src={fullTrash} alt='iconTrash' />
+        </StyledBox>
       </Grid>
       <Grid item xs={12} sx={styles.Paper}>
         <List

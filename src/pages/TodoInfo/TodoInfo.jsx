@@ -50,6 +50,7 @@ function TodoInfo() {
     if (todo) return;
     dispatch(fetchTodos());
   }, [todo, loading]);
+
   useEffect(() => {
     if (!todo) return;
     const candidate = todo.find((item, inx) => {

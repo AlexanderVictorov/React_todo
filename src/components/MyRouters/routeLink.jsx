@@ -5,6 +5,7 @@ const ROUTE_LINKS = {
   todoId: 'todo/:id',
   exit: 'exit',
   otherRoutes: '*',
+  trash: '/trash',
 };
 
 export default ROUTE_LINKS;

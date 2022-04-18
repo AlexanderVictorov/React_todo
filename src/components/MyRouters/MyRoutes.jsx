@@ -9,6 +9,7 @@ import Login from '../../pages/Login/Login';
 import Registration from '../../pages/Registration/Registration';
 import TodoInfo from '../../pages/TodoInfo/TodoInfo';
 import NoMatch from '../../pages/NoMatch/NoMatch';
+import Trash from '../../pages/Trash/Trash';
 
 function MyRoutes() {
   const { isAuth } = useContext(AuthContext);
@@ -24,6 +25,7 @@ function MyRoutes() {
             <Route path={ROUTE_LINKS.todoId} element={<TodoInfo />} />
             <Route path={ROUTE_LINKS.exit} element={<Login />} />
             <Route path={ROUTE_LINKS.otherRoutes} element={<NoMatch />} />
+            <Route path={ROUTE_LINKS.trash} element={<Trash />} />
           </Route>
         </Routes>
       )
