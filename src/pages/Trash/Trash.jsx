@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import {
   Box, Paper,
 } from '@mui/material';
-// import emptyTrash from '../../images/emptyTrash.png';
 import { useDispatch, useSelector } from 'react-redux';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import { changeStatus, deleteTodo, fetchTodos } from '../../store/slices/todos';
 import Loader from '../../components/loader/Loader';
-// import ROUTE_LINKS from '../../components/MyRouters/routeLink';
+import { saveTodoOnServer } from '../../store/asyncAction/fetchTodos';
+import ROUTE_LINKS from '../../components/MyRouters/routeLink';
 
 const styles = {
   Paper: {
@@ -29,7 +30,18 @@ function Trash() {
   const todo = useSelector((state) => state.todos.todos);
   const [trashTodo, setTrashTodo] = useState(null);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
+  const handleClickRestoreTodo = () => {
+    enqueueSnackbar('Restore Todos', {
+      variant: 'success',
+    });
+  };
+  const handleClickRemoveTodo = () => {
+    enqueueSnackbar('Remove Todos', {
+      variant: 'info',
+    });
+  };
   useEffect(() => {
     if (todo) return;
     dispatch(fetchTodos());
@@ -38,17 +50,21 @@ function Trash() {
   useEffect(() => {
     if (!todo) return;
     const candidate = todo.filter((todos) => todos.status === 'trash');
+    if (candidate.length === 0) {
+      navigate(ROUTE_LINKS.todo);
+    }
     if (!candidate) return;
     setTrashTodo(candidate);
   }, [todo]);
-
   const restoreTodo = (id) => {
-    console.log(id);
     const statusTodoActive = 'active';
     dispatch(changeStatus({ id, statusTodoActive }));
+    handleClickRestoreTodo();
   };
   const removeTodo = (id) => {
     dispatch(deleteTodo(id));
+    handleClickRemoveTodo();
+    dispatch(saveTodoOnServer());
   };
   if (!trashTodo) return <Loader />;
   return (

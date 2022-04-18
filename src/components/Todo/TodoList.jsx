@@ -8,6 +8,7 @@ import List from './List';
 import {
   addTodo, changeTodos, fetchTodos,
 } from '../../store/slices/todos';
+import emptyTrash from '../../images/emtyTrash.png';
 import fullTrash from '../../images/fullTrash.png';
 import ROUTE_LINKS from '../MyRouters/routeLink';
 
@@ -35,8 +36,8 @@ function TodoList() {
   const navigate = useNavigate();
 
   const select = useSelector((state) => state.todos.todos || []);
+  const [trashCondition, setTrashCondition] = useState(false);
   const [filter, setFilter] = useState('all');
-
   const filterTodo = useMemo(() => {
     switch (filter) {
       case 'all':
@@ -59,8 +60,14 @@ function TodoList() {
     setFilter('active');
   };
   useEffect(() => {
+    const trashStatusInTodo = select.find((item) => item.status === 'trash');
+    if (!trashStatusInTodo) return;
+    setTrashCondition(true);
+  }, [trashCondition, select]);
+  useEffect(() => {
+    if (select.length) return;
     dispatch(fetchTodos());
-  }, []);
+  }, [select]);
 
   const addToList = (todo) => {
     dispatch(addTodo({
@@ -70,9 +77,7 @@ function TodoList() {
     }));
   };
   const removeTodo = () => {
-    console.log('delete todo');
     setFilter('all');
-    // dispatch(deleteTodo(id));
   };
   const goToTrash = () => {
     navigate(ROUTE_LINKS.trash);
@@ -92,7 +97,9 @@ function TodoList() {
           />
         </Paper>
         <StyledBox onClick={goToTrash}>
-          <img src={fullTrash} alt='iconTrash' />
+          {trashCondition
+            ? <img src={fullTrash} alt='iconTrash' />
+            : <img src={emptyTrash} alt='iconTrash' />}
         </StyledBox>
       </Grid>
       <Grid item xs={12} sx={styles.Paper}>
