@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AddTodo from './AddTodo';
 import List from './List';
 import {
-  addTodo, changeTodos, deleteTodo, fetchTodos,
+  addTodo, changeTodos, fetchTodos,
 } from '../../store/slices/todos';
 
 const styles = {
@@ -25,7 +25,7 @@ function TodoList() {
   const filterTodo = useMemo(() => {
     switch (filter) {
       case 'all':
-        return select;
+        return select.filter((todo) => todo.status !== 'trash');
       case 'done':
         return select.filter((todo) => todo.status === 'done');
       case 'active':
@@ -34,7 +34,6 @@ function TodoList() {
         return null;
     }
   }, [filter, select]);
-
   const doneTodo = () => {
     setFilter('done');
   };
@@ -55,8 +54,10 @@ function TodoList() {
       status: 'active',
     }));
   };
-  const removeTodo = (id) => {
-    dispatch(deleteTodo(id));
+  const removeTodo = () => {
+    console.log('delete todo');
+    setFilter('trash');
+    // dispatch(deleteTodo(id));
   };
   const updateTodo = (id, newText) => {
     dispatch(changeTodos({ id, newText }));
@@ -65,7 +66,12 @@ function TodoList() {
     <Grid container spacing={0}>
       <Grid item xs={12}>
         <Paper sx={styles.Paper}>
-          <AddTodo done={doneTodo} all={allTodo} active={activeTodo} addToList={addToList} />
+          <AddTodo
+            done={doneTodo}
+            all={allTodo}
+            active={activeTodo}
+            addToList={addToList}
+          />
         </Paper>
       </Grid>
       <Grid item xs={12} sx={styles.Paper}>

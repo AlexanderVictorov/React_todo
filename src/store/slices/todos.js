@@ -47,6 +47,9 @@ const todoSlice = createSlice({
         if (action.payload.statusTodoActive) {
           item.status = action.payload.statusTodoActive;
         }
+        if (action.payload.statusTodoTrash) {
+          item.status = action.payload.statusTodoTrash;
+        }
         return item;
       });
     },

@@ -59,7 +59,7 @@ const styles = {
 };
 
 function Todo({
-  status, name, deleteTodo, id, updateTodo,
+  status, name, id, updateTodo, deleteTodo,
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [todoText, setTodoText] = useState(name);
@@ -67,9 +67,14 @@ function Todo({
   const navigate = useNavigate();
   const onChangeTodoText = (event) => setTodoText(event.target.value);
   const { enqueueSnackbar } = useSnackbar();
-  const handleClick = () => {
+  const handleClickChangeTodo = () => {
     enqueueSnackbar('Change Todos', {
       variant: 'success',
+    });
+  };
+  const handleClickDeleteTodo = () => {
+    enqueueSnackbar('Delete Todos', {
+      variant: 'info',
     });
   };
   const doneTodos = () => {
@@ -81,6 +86,12 @@ function Todo({
       const statusTodoActive = 'active';
       dispatch(changeStatus({ id, statusTodoActive }));
     }
+  };
+  const todoInTrash = () => {
+    const statusTodoTrash = 'trash';
+    dispatch(changeStatus({ id, statusTodoTrash }));
+    deleteTodo(id);
+    handleClickDeleteTodo();
   };
   const onBlur = () => {
     setIsEditing(false);
@@ -96,7 +107,7 @@ function Todo({
     if (e.key === 'Enter') {
       setIsEditing(false);
       updateTodo(id, todoText);
-      handleClick();
+      handleClickChangeTodo();
     }
   };
   const preventDef = (e) => {
@@ -162,7 +173,7 @@ function Todo({
             sx={styles.Icon}
             color='secondary'
             aria-label='Delete'
-            onClick={() => deleteTodo(id)}
+            onClick={todoInTrash}
           />
         </Box>
       </Paper>
