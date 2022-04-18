@@ -6,20 +6,25 @@ import { useSnackbar } from 'notistack';
 import { useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import { saveTodoOnServer } from '../../store/asyncAction/fetchTodos';
+import SortTodo from '../SortTodo/SortTodo';
 
 const StyledBox = styled(Box)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
+  //position: absolute;
+  //top: 20px;
+  //left: 0;
+  //width: 400px;
+  //z-index: 100;
   position: absolute;
-  top: 20px;
-  left: 0;
-  width: 400px;
+  top: 15px;
+  left: 5px;
   z-index: 100;
 `;
 
 function AddTodo({
-  addToList, active, all, done,
+  addToList,
 }) {
   const [newTodo, setNewTodo] = useState('');
   const [isError, setIsError] = useState(false);
@@ -78,11 +83,6 @@ function AddTodo({
         >
           Add Todos
         </Button>
-        {isError && (
-          <Typography variant='caption' color='error'>
-            Error, must enter a value!
-          </Typography>
-        )}
         <Button
           sx={{
             backgroundColor: 'green',
@@ -99,38 +99,45 @@ function AddTodo({
         >
           Save Todos
         </Button>
+        {isError && (
+          <Typography sx={{ marginLeft: '10px' }} variant='caption' color='error'>
+            Error, must enter a value!
+          </Typography>
+        )}
       </Box>
       <Box />
       <StyledBox>
-        <Button
-          sx={{
-            fontFamily: 'serif', fontSize: '12px', textTransform: 'capitalize', marginRight: '10px',
-          }}
-          variant='contained'
-          size='small'
-          onClick={() => all()}
-        >
-          All todos
-        </Button>
-        <Button
-          sx={{
-            fontFamily: 'serif', fontSize: '12px', textTransform: 'capitalize', marginRight: '10px',
-          }}
-          variant='contained'
-          size='small'
-          onClick={() => done()}
-        >
-          Completed Todos
-        </Button>
-        <Button
-          sx={{ fontFamily: 'serif', fontSize: '12px', textTransform: 'capitalize' }}
-          variant='contained'
-          size='small'
-          onClick={() => active()}
-        >
-          Not Completed Todos
-        </Button>
-
+        <SortTodo />
+        {/* <Button */}
+        {/* sx={{ */}
+        {/*   fontFamily: 'serif', fontSize: '12px', textTransform: 'capitalize', */}
+        {/*   marginRight: '10px', */}
+        {/* }} */}
+        {/* variant='contained' */}
+        {/* size='small' */}
+        {/* onClick={() => all()} */}
+        {/* > */}
+        {/* All todos */}
+        {/* </Button> */}
+        {/* <Button */}
+        {/* sx={{ */}
+        {/*   fontFamily: 'serif', fontSize: '12px', textTransform: 'capitalize', */}
+        {/*   marginRight: '10px', */}
+        {/* }} */}
+        {/* variant='contained' */}
+        {/* size='small' */}
+        {/* onClick={() => done()} */}
+        {/* > */}
+        {/* Completed Todos */}
+        {/* </Button> */}
+        {/* <Button */}
+        {/* sx={{ fontFamily: 'serif', fontSize: '12px', textTransform: 'capitalize' }} */}
+        {/* variant='contained' */}
+        {/* size='small' */}
+        {/* onClick={() => active()} */}
+        {/* > */}
+        {/* Not Completed Todos */}
+        {/* </Button> */}
       </StyledBox>
     </Box>
   );
