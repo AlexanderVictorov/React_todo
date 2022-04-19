@@ -7,9 +7,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { changeStatus, deleteTodo, fetchTodos } from '../../store/slices/todos';
+import {
+  changeStatus, deleteTodo, fetchTodos, saveTodoOnServer,
+} from '../../store/slices/todos';
 import Loader from '../../components/loader/Loader';
-import { saveTodoOnServer } from '../../store/asyncAction/fetchTodos';
 import ROUTE_LINKS from '../../components/MyRouters/routeLink';
 
 const styles = {

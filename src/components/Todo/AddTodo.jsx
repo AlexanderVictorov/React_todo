@@ -5,8 +5,8 @@ import {
 import { useSnackbar } from 'notistack';
 import { useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
-import { saveTodoOnServer } from '../../store/asyncAction/fetchTodos';
 import SortTodo from '../SortTodo/SortTodo';
+import { saveTodoOnServer } from '../../store/slices/todos';
 
 const StyledBox = styled(Box)`
   //display: flex;

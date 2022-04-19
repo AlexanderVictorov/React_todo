@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import Animation from '../../components/Animation/animation';
 import ROUTE_LINKS from '../../components/MyRouters/routeLink';
-import { fetchRegistration } from '../../store/slices/todos';
+import { RegistrationInServer } from '../../store/slices/auth';
 
 const StyledBox = styled(Box)`
   display: flex;
@@ -102,7 +102,7 @@ function Registration() {
   };
   const addUser = async (event) => {
     event.preventDefault();
-    await dispatch(fetchRegistration(newUser));
+    await dispatch(RegistrationInServer(newUser));
     setNewUser(newUser);
     setNewUser({
       username: '',

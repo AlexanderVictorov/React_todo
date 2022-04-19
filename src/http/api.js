@@ -1,8 +1,4 @@
 import axios from 'axios';
-// eslint-disable-next-line import/no-cycle
-import { store } from '../store';
-// eslint-disable-next-line import/no-cycle
-import { changeLogout } from '../store/slices/auth';
 
 const $api = axios.create({
   withCredentials: true,
@@ -34,7 +30,7 @@ $api.interceptors.response.use(
         return $api(error.config);
       } catch (e) {
         if (e.response.status === 401) {
-          store.dispatch(changeLogout(false));
+          // store.dispatch(changeLogout(false));
           localStorage.removeItem('token');
           localStorage.removeItem('isAuth');
         }

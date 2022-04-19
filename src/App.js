@@ -12,15 +12,15 @@ function App() {
   const dispatch = useDispatch();
   const [isAuth, setIsAuth] = useState(JSON.parse(localStorage.getItem('isAuth')));
   const forEsLint = useMemo(() => ({ isAuth, setIsAuth }), [isAuth, setIsAuth]);
-  const isLogout = useSelector((state) => state.auth.isLogin);
+  const isLogin = useSelector((state) => state.auth.isLogin);
   const loading = useSelector((state) => state.todos.loading);
   const navigate = useNavigate();
   useEffect(() => {
-    if (isLogout) return;
+    if (isLogin) return;
     dispatch(changeLogout(true));
     dispatch(logout());
     navigate(ROUTE_LINKS.login);
-  }, [isLogout]);
+  }, [isLogin]);
   return (
     <div className='App'>
       {loading && <Loader />}

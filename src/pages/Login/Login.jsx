@@ -9,7 +9,7 @@ import { useSnackbar } from 'notistack';
 import { AuthContext } from '../../context/Context';
 import Animation from '../../components/Animation/animation';
 import ROUTE_LINKS from '../../components/MyRouters/routeLink';
-import { fetchLogin } from '../../store/slices/todos';
+import { LoginInServer } from '../../store/slices/auth';
 
 const StyledBox = styled(Box)`
   padding-bottom: 15px;
@@ -108,7 +108,7 @@ function Login() {
   };
   const login = async (e) => {
     e.preventDefault();
-    await dispatch(fetchLogin(myLogin));
+    await dispatch(LoginInServer(myLogin));
     setMyLogin(myLogin);
     setMyLogin({
       username: '',

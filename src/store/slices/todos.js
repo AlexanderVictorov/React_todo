@@ -1,9 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// eslint-disable-next-line import/no-cycle
 import { TodoService } from '../../services/TodoService';
-// eslint-disable-next-line import/no-cycle
-import { AuthService } from '../../services/AuthService';
 
 const initialState = {
   todos: null,
@@ -13,21 +10,11 @@ export const fetchTodos = createAsyncThunk('todoSlice/fetchTodos', async () => {
   const response = await TodoService.getTodos();
   return response.data;
 });
-export const fetchLogin = createAsyncThunk('todoSlice/fetchLogin', async (action) => {
-  try {
-    const response = await AuthService.login(action);
-    const { token } = response.data;
-    localStorage.setItem('token', JSON.stringify(token));
-    if (response.status === 200) {
-      localStorage.setItem('isAuth', 'true');
-    }
-  } catch (error) {
-    console.log('Пользователь не зарегестрирован');
-  }
+export const saveTodoOnServer = createAsyncThunk('todoSlice/saveTodoOnServer', async (_, { getState }) => {
+  const { todos } = getState().todos;
+  await TodoService.postTodos(todos);
 });
-export const fetchRegistration = createAsyncThunk('todoSlice/fetchLogin', async (action) => {
-  await AuthService.registration(action);
-});
+
 const todoSlice = createSlice({
   name: 'todoSlice',
   initialState,
