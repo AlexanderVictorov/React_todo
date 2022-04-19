@@ -24,7 +24,7 @@ const StyledBox = styled(Box)`
 `;
 
 function AddTodo({
-  addToList,
+  addToList, setFilter, filter,
 }) {
   const [newTodo, setNewTodo] = useState('');
   const [isError, setIsError] = useState(false);
@@ -107,7 +107,10 @@ function AddTodo({
       </Box>
       <Box />
       <StyledBox>
-        <SortTodo />
+        <SortTodo
+          filter={filter}
+          setFilter={setFilter}
+        />
         {/* <Button */}
         {/* sx={{ */}
         {/*   fontFamily: 'serif', fontSize: '12px', textTransform: 'capitalize', */}

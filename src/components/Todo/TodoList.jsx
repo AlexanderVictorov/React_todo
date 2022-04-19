@@ -90,6 +90,8 @@ function TodoList() {
       <Grid item xs={12}>
         <Paper sx={styles.Paper}>
           <AddTodo
+            filter={filter}
+            setFilter={setFilter}
             done={doneTodo}
             all={allTodo}
             active={activeTodo}
