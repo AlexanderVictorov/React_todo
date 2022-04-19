@@ -52,7 +52,7 @@ function TodoList() {
   useEffect(() => {
     if (todoArray.length) return;
     dispatch(fetchTodos());
-  }, [todoArray]);
+  }, []);
 
   const addTodoInList = (todo) => {
     dispatch(addTodo({
