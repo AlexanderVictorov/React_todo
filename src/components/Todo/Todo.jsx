@@ -20,8 +20,6 @@ const styles = {
   Icon: {
     marginLeft: 'auto',
     zIndex: '99',
-    width: '25px',
-    paddingTop: '6px',
   },
   Paper: {
     position: 'relative',
@@ -29,6 +27,8 @@ const styles = {
     marginTop: '10px',
     padding: '5px',
     display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '500px',
     textDecoration: 'none',
     zIndex: 1,
@@ -50,11 +50,8 @@ const styles = {
     width: '87%',
     height: 'auto',
   },
-  BoxStyle: {
-    zIndex: '99',
-    position: 'absolute',
-    right: '-2px',
-    top: '0',
+  ControlButtons: {
+    width: '78px',
   },
 };
 
@@ -150,7 +147,7 @@ function Todo({
           </Typography>
         )}
         <Box
-          sx={styles.BoxStyle}
+          sx={styles.ControlButtons}
           onClick={preventDef}
           className='icon_change_todo'
           aria-hidden='true'

@@ -4,24 +4,40 @@ import {
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { useDispatch } from 'react-redux';
-import { styled } from '@mui/material/styles';
 import SortTodo from '../SortTodo/SortTodo';
 import { saveTodoOnServer } from '../../store/slices/todos';
 
-const StyledBox = styled(Box)`
-  //display: flex;
-  //justify-content: center;
-  //align-items: center;
-  //position: absolute;
-  //top: 20px;
-  //left: 0;
-  //width: 400px;
-  //z-index: 100;
-  position: absolute;
-  top: 15px;
-  left: 5px;
-  z-index: 100;
-`;
+const styles = {
+  SortDropDown: {
+    position: 'absolute',
+    top: '15px',
+    left: '5px',
+    zIndex: '100',
+  },
+  ButtonAddTodo: {
+    lineHeight: '13px',
+    marginRight: '5px',
+    fontFamily: 'serif',
+    fontSize: '14px',
+    textTransform: 'capitalize',
+  },
+  ButtonSaveTodo: {
+    backgroundColor: 'green',
+    marginRight: '-5px',
+    fontFamily: 'serif',
+    fontSize: '14px',
+    lineHeight: '13px',
+    letterSpacing: '0px',
+    textTransform: 'capitalize',
+  },
+  TodoPanel: {
+    display: 'flex',
+    width: '100%',
+    height: '30px',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+};
 
 function AddTodo({
   addToList, setFilter, filter,
@@ -29,6 +45,7 @@ function AddTodo({
   const [newTodo, setNewTodo] = useState('');
   const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,11 +57,10 @@ function AddTodo({
     addToList(newTodo);
     setNewTodo('');
   };
-  const onChange = (event) => {
+  const onChangeInput = (event) => {
     setNewTodo(() => event.target.value);
   };
-  const { enqueueSnackbar } = useSnackbar();
-  const saveTodos = () => {
+  const saveTodosInServer = () => {
     enqueueSnackbar('Save Todos', {
       variant: 'success',
     });
@@ -52,30 +68,21 @@ function AddTodo({
   };
   return (
     <Box
-      sx={{
-        display: 'flex', flexDirection: 'column', alignItems: 'center',
-      }}
       component='form'
       onSubmit={handleSubmit}
     >
-      <Box sx={{ display: 'flex', width: '100%', height: '30px' }}>
+      <Box sx={styles.TodoPanel}>
         <Input
           placeholder='Todo'
           inputProps={{
             'aria-label': 'Description',
           }}
-          onChange={onChange}
+          onChange={onChangeInput}
           value={newTodo}
-          sx={{ width: '90%' }}
+          sx={{ width: '100%' }}
         />
         <Button
-          sx={{
-            lineHeight: '13px',
-            marginRight: '5px',
-            fontFamily: 'serif',
-            fontSize: '14px',
-            textTransform: 'capitalize',
-          }}
+          sx={styles.ButtonAddTodo}
           type='submit'
           variant='contained'
           color='primary'
@@ -84,18 +91,10 @@ function AddTodo({
           Add Todos
         </Button>
         <Button
-          sx={{
-            backgroundColor: 'green',
-            marginRight: '-5px',
-            fontFamily: 'serif',
-            fontSize: '14px',
-            lineHeight: '13px',
-            letterSpacing: '0px',
-            textTransform: 'capitalize',
-          }}
+          sx={styles.ButtonSaveTodo}
           variant='contained'
           size='small'
-          onClick={saveTodos}
+          onClick={saveTodosInServer}
         >
           Save Todos
         </Button>
@@ -106,42 +105,12 @@ function AddTodo({
         )}
       </Box>
       <Box />
-      <StyledBox>
+      <Box sx={styles.SortDropDown}>
         <SortTodo
           filter={filter}
           setFilter={setFilter}
         />
-        {/* <Button */}
-        {/* sx={{ */}
-        {/*   fontFamily: 'serif', fontSize: '12px', textTransform: 'capitalize', */}
-        {/*   marginRight: '10px', */}
-        {/* }} */}
-        {/* variant='contained' */}
-        {/* size='small' */}
-        {/* onClick={() => all()} */}
-        {/* > */}
-        {/* All todos */}
-        {/* </Button> */}
-        {/* <Button */}
-        {/* sx={{ */}
-        {/*   fontFamily: 'serif', fontSize: '12px', textTransform: 'capitalize', */}
-        {/*   marginRight: '10px', */}
-        {/* }} */}
-        {/* variant='contained' */}
-        {/* size='small' */}
-        {/* onClick={() => done()} */}
-        {/* > */}
-        {/* Completed Todos */}
-        {/* </Button> */}
-        {/* <Button */}
-        {/* sx={{ fontFamily: 'serif', fontSize: '12px', textTransform: 'capitalize' }} */}
-        {/* variant='contained' */}
-        {/* size='small' */}
-        {/* onClick={() => active()} */}
-        {/* > */}
-        {/* Not Completed Todos */}
-        {/* </Button> */}
-      </StyledBox>
+      </Box>
     </Box>
   );
 }

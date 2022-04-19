@@ -14,3 +14,6 @@
 body {
     background-image: url("./images/background.jpg");
 }
+.css-8l5owd-MuiGrid-root{
+    padding: 0!important;
+}

@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import $api from '../http/api';
+import $api from './apiService';
 
 export const TodoService = {
   postTodos(todo) {

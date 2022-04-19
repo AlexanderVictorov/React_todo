@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { styled } from '@mui/material/styles';
 import {
   Box, Button, Stack, TextField, Typography,
 } from '@mui/material';
@@ -11,22 +10,23 @@ import Animation from '../../components/Animation/animation';
 import ROUTE_LINKS from '../../components/MyRouters/routeLink';
 import { LoginInServer } from '../../store/slices/auth';
 
-const StyledBox = styled(Box)`
-  padding-bottom: 15px;
-  display: flex;
-  justify-content: center;
-  background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
-  position: absolute;
-  top: 25%;
-  left: 0;
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-`;
+const styles = {
+  Login: {
+    display: 'flex',
+    justifyContent: 'center',
+    background: 'linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c)',
+    paddingBottom: '15px',
+    position: 'absolute',
+    top: '25%',
+    left: '0px',
+    width: '100%',
+    height: 'auto',
+    overflow: 'hidden',
+  },
+};
 
 function Login() {
-  const { setIsAuth } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const [userLoginDetails, setUserLoginDetails] = useState({ username: '', email: '', password: '' });
   const [userNameDirty, setUserNameDirty] = useState(false);
   const [emailDirty, setEmailDirty] = useState(false);
   const [passwordDirty, setPasswordDirty] = useState(false);
@@ -34,7 +34,11 @@ function Login() {
   const [emailError, setEmailError] = useState('Enter values for the email field');
   const [passwordError, setPasswordError] = useState('Enter values for the password field');
   const [formValid, setFormValid] = useState(false);
+  const { setIsAuth } = useContext(AuthContext);
+  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (userNameError || emailError || passwordError) {
       setFormValid(false);
@@ -43,11 +47,6 @@ function Login() {
     }
   }, [userNameError, emailError, passwordError]);
 
-  const [myLogin, setMyLogin] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
   const blurHandler = (e) => {
     switch (e.target.name) {
       case 'username':
@@ -60,24 +59,24 @@ function Login() {
         setPasswordDirty(true);
         break;
       default:
-        console.log('lol');
+        console.log('default');
     }
   };
   const emailHandler = (e) => {
-    setMyLogin({
-      ...myLogin,
+    setUserLoginDetails({
+      ...userLoginDetails,
       [e.target.name]: e.target.value,
     });
-    const re = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-    if (!re.test(String(e.target.value).toLowerCase())) {
+    const regularExpression = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    if (!regularExpression.test(String(e.target.value).toLowerCase())) {
       setEmailError('Not correct email');
     } else {
       setEmailError('');
     }
   };
   const passwordHandler = (e) => {
-    setMyLogin({
-      ...myLogin,
+    setUserLoginDetails({
+      ...userLoginDetails,
       [e.target.name]: e.target.value,
     });
     if (!e.target.value) {
@@ -90,8 +89,8 @@ function Login() {
     }
   };
   const userNameHandler = (e) => {
-    setMyLogin({
-      ...myLogin,
+    setUserLoginDetails({
+      ...userLoginDetails,
       [e.target.name]: e.target.value,
     });
     if (!e.target.value) {
@@ -100,33 +99,28 @@ function Login() {
       setUserNameError('');
     }
   };
-  const { enqueueSnackbar } = useSnackbar();
-  const handleClick = () => {
+  const userNotification = () => {
     enqueueSnackbar('User not registered', {
       variant: 'error',
     });
   };
-  const login = async (e) => {
+  const LoginFormHandler = async (e) => {
     e.preventDefault();
-    await dispatch(LoginInServer(myLogin));
-    setMyLogin(myLogin);
-    setMyLogin({
-      username: '',
-      email: '',
-      password: '',
-    });
+    await dispatch(LoginInServer(userLoginDetails));
+    setUserLoginDetails(userLoginDetails);
+    setUserLoginDetails({ username: '', email: '', password: '' });
     if (localStorage.getItem('isAuth')) {
       setIsAuth(true);
       navigate(ROUTE_LINKS.todo);
     } else {
-      handleClick();
+      userNotification();
     }
   };
   return (
-    <StyledBox>
+    <Box sx={styles.Login}>
       <Box>
         <Typography sx={{ marginTop: '20px' }} variant='h2'>Welcome</Typography>
-        <Box sx={{ marginLeft: '35px', position: 'relative', zIndex: '2' }} component='form' onSubmit={login}>
+        <Box sx={{ marginLeft: '35px', position: 'relative', zIndex: '2' }} component='form' onSubmit={LoginFormHandler}>
           <Box
             sx={{
               '& > :not(style)': { m: 1, width: '26ch', display: 'flex' },
@@ -141,7 +135,7 @@ function Login() {
               variant='outlined'
               type='text'
               name='username'
-              value={myLogin.username}
+              value={userLoginDetails.username}
               onChange={userNameHandler}
               onBlur={blurHandler}
             />
@@ -152,7 +146,7 @@ function Login() {
               variant='outlined'
               type='text'
               name='email'
-              value={myLogin.email}
+              value={userLoginDetails.email}
               onChange={emailHandler}
               onBlur={blurHandler}
             />
@@ -163,7 +157,7 @@ function Login() {
               variant='outlined'
               type='password'
               name='password'
-              value={myLogin.password}
+              value={userLoginDetails.password}
               onChange={passwordHandler}
               onBlur={blurHandler}
             />
@@ -181,7 +175,7 @@ function Login() {
         </Box>
       </Box>
       <Animation />
-    </StyledBox>
+    </Box>
   );
 }
 

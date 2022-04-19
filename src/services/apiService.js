@@ -4,7 +4,7 @@ const $api = axios.create({
   withCredentials: true,
   baseURL: process.env.REACT_APP_BASE_URL,
 });
-const api = axios.create({
+const apiService = axios.create({
   withCredentials: true,
   baseURL: process.env.REACT_APP_BASE_URL_AXIOS,
 });
@@ -22,7 +22,7 @@ $api.interceptors.response.use(
     const code = error.response.status;
     if (code === 401) {
       try {
-        const res = await api.get('refresh');
+        const res = await apiService.get('refresh');
         const newToken = res.data.token;
         localStorage.setItem('token', newToken);
         // eslint-disable-next-line no-param-reassign

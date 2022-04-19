@@ -1,4 +1,4 @@
-import $api from '../http/api';
+import $api from './apiService';
 
 export const AuthService = {
   login({ username, email, password }) {
