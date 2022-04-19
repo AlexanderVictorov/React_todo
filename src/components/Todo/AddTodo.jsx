@@ -40,7 +40,7 @@ const styles = {
 };
 
 function AddTodo({
-  addToList, setFilter, filter,
+  addTodoInList, setFilter, filter,
 }) {
   const [newTodo, setNewTodo] = useState('');
   const [isError, setIsError] = useState(false);
@@ -54,7 +54,7 @@ function AddTodo({
       return;
     }
     setIsError(false);
-    addToList(newTodo);
+    addTodoInList(newTodo);
     setNewTodo('');
   };
   const onChangeInput = (event) => {

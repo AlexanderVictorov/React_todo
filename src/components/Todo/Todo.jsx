@@ -17,10 +17,6 @@ const styles = {
     textDecoration: 'none',
     width: '430px',
   },
-  Icon: {
-    marginLeft: 'auto',
-    zIndex: '99',
-  },
   Paper: {
     position: 'relative',
     margin: 'auto',
@@ -31,7 +27,6 @@ const styles = {
     alignItems: 'center',
     width: '500px',
     textDecoration: 'none',
-    zIndex: 1,
     cursor: 'pointer',
   },
   DoneTodos: {
@@ -43,7 +38,6 @@ const styles = {
     padding: '5px',
     display: 'flex',
     width: '500px',
-    zIndex: 1,
     cursor: 'pointer',
   },
   Textarea: {
@@ -56,14 +50,14 @@ const styles = {
 };
 
 function Todo({
-  status, name, id, updateTodo, deleteTodo,
+  status, name, id, updateTodo,
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [todoText, setTodoText] = useState(name);
+  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onChangeTodoText = (event) => setTodoText(event.target.value);
-  const { enqueueSnackbar } = useSnackbar();
   const handleClickChangeTodo = () => {
     enqueueSnackbar('Change Todos', {
       variant: 'success',
@@ -74,7 +68,7 @@ function Todo({
       variant: 'info',
     });
   };
-  const doneTodos = () => {
+  const changeStatusTodo = () => {
     if (status === 'active') {
       const statusTodoDone = 'done';
       dispatch(changeStatus({ id, statusTodoDone }));
@@ -84,10 +78,9 @@ function Todo({
       dispatch(changeStatus({ id, statusTodoActive }));
     }
   };
-  const todoInTrash = () => {
+  const addTodoInTrash = () => {
     const statusTodoTrash = 'trash';
     dispatch(changeStatus({ id, statusTodoTrash }));
-    deleteTodo(id);
     handleClickDeleteTodo();
   };
   const onBlur = () => {
@@ -111,11 +104,12 @@ function Todo({
     e.preventDefault();
     e.stopPropagation();
   };
-  const todoInfoCard = () => {
+  const informationAboutTodo = () => {
     if (!isEditing) {
       navigate(`${id}`);
     }
   };
+  const editTodo = () => setIsEditing(true);
 
   return (
     <Grid
@@ -123,7 +117,7 @@ function Todo({
       item
     >
       <Paper
-        onClick={todoInfoCard}
+        onClick={informationAboutTodo}
         elevation={2}
         sx={status === 'active' ? styles.Paper : styles.DoneTodos}
       >
@@ -156,21 +150,18 @@ function Todo({
             role='button'
             color='primary'
             aria-label='Edit'
-            sx={styles.Icon}
-            onClick={() => setIsEditing(true)}
+            onClick={editTodo}
           />
           <CheckCircleIcon
             role='button'
             color='primary'
             aria-label='done'
-            sx={styles.Icon}
-            onClick={doneTodos}
+            onClick={changeStatusTodo}
           />
           <DeleteIcon
-            sx={styles.Icon}
             color='secondary'
             aria-label='Delete'
-            onClick={todoInTrash}
+            onClick={addTodoInTrash}
           />
         </Box>
       </Paper>

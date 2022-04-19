@@ -1,87 +1,67 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Box, Grid, Paper } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import AddTodo from './AddTodo';
 import List from './List';
-import {
-  addTodo, changeTodos, fetchTodos,
-} from '../../store/slices/todos';
+import { addTodo, changeTodos, fetchTodos } from '../../store/slices/todos';
 import emptyTrash from '../../images/emtyTrash.png';
 import fullTrash from '../../images/fullTrash.png';
 import ROUTE_LINKS from '../MyRouters/routeLink';
 
 const styles = {
   Paper: {
-    padding: '20px',
+    padding: '15px',
     margin: 'auto',
     textAlign: 'center',
     width: '500px',
     zIndex: 1,
   },
+  Wastebasket: {
+    position: 'absolute',
+    bottom: '80px',
+    right: '10px',
+    cursor: 'pointer',
+  },
 };
-const StyledBox = styled(Box)`
-  display: flex;
-  position: fixed;
-  bottom: 80px;
-  right: 10px;
-  overflow: hidden;
-  cursor: pointer;
-  z-index: 9999;
-`;
 
 function TodoList() {
+  const [trashCondition, setTrashCondition] = useState(false);
+  const [filter, setFilter] = useState('all');
+  const todoArray = useSelector((state) => state.todos.todos || []);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const select = useSelector((state) => state.todos.todos || []);
-  const [trashCondition, setTrashCondition] = useState(false);
-  const [filter, setFilter] = useState('all');
   const filterTodo = useMemo(() => {
     switch (filter) {
       case 'all':
-        return select.filter((todo) => todo.status !== 'trash');
+        return todoArray.filter((todo) => todo.status !== 'trash');
       case 'done':
-        return select.filter((todo) => todo.status === 'done');
+        return todoArray.filter((todo) => todo.status === 'done');
       case 'active':
-        return select.filter((todo) => todo.status === 'active');
+        return todoArray.filter((todo) => todo.status === 'active');
       default:
         return null;
     }
-  }, [filter, select]);
-  const doneTodo = () => {
-    setFilter('done');
-  };
-  const allTodo = () => {
-    setFilter('all');
-  };
-  const activeTodo = () => {
-    setFilter('active');
-  };
+  }, [filter, todoArray]);
   useEffect(() => {
-    const trashStatusInTodo = select.find((item) => item.status === 'trash');
+    const trashStatusInTodo = todoArray.find((todo) => todo.status === 'trash');
     if (!trashStatusInTodo) return;
     setTrashCondition(true);
-  }, [trashCondition, select]);
+  }, [trashCondition, todoArray]);
   useEffect(() => {
-    if (select.length) return;
+    if (todoArray.length) return;
     dispatch(fetchTodos());
-  }, [select]);
+  }, [todoArray]);
 
-  const addToList = (todo) => {
+  const addTodoInList = (todo) => {
     dispatch(addTodo({
       id: Date.now(),
       name: todo,
       status: 'active',
     }));
   };
-  const removeTodo = () => {
-    setFilter('all');
-  };
-  const goToTrash = () => {
-    navigate(ROUTE_LINKS.trash);
-  };
+  const navigatingToTheWastebasket = () => navigate(ROUTE_LINKS.trash);
   const updateTodo = (id, newText) => {
     dispatch(changeTodos({ id, newText }));
   };
@@ -92,21 +72,17 @@ function TodoList() {
           <AddTodo
             filter={filter}
             setFilter={setFilter}
-            done={doneTodo}
-            all={allTodo}
-            active={activeTodo}
-            addToList={addToList}
+            addTodoInList={addTodoInList}
           />
         </Paper>
-        <StyledBox onClick={goToTrash}>
+        <Box sx={styles.Wastebasket} onClick={navigatingToTheWastebasket}>
           {trashCondition
             ? <img src={fullTrash} alt='iconTrash' />
             : <img src={emptyTrash} alt='iconTrash' />}
-        </StyledBox>
+        </Box>
       </Grid>
       <Grid item xs={12} sx={styles.Paper}>
         <List
-          deleteTodo={removeTodo}
           updateTodo={updateTodo}
           list={filterTodo}
         />

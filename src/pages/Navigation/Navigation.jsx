@@ -17,6 +17,8 @@ function Navigation() {
     localStorage.removeItem('token');
     localStorage.removeItem('isAuth');
     navigate(ROUTE_LINKS.login);
+    // eslint-disable-next-line no-restricted-globals
+    location.reload();
   };
 
   return (

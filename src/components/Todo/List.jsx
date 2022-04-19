@@ -3,7 +3,7 @@ import { Grid } from '@mui/material';
 import Todo from './Todo';
 
 function List({
-  list, deleteTodo, updateTodo,
+  list, updateTodo,
 }) {
   return (
     <Grid container>
@@ -11,7 +11,6 @@ function List({
         <Todo
           id={todo.id}
           name={todo.name}
-          deleteTodo={deleteTodo}
           updateTodo={updateTodo}
           key={todo.id}
           todo={todo}
