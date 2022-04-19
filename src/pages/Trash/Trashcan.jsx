@@ -27,8 +27,8 @@ const styles = {
   },
 };
 
-function Trash() {
-  const todo = useSelector((state) => state.todos.todos);
+function Trashcan() {
+  const todoArray = useSelector((state) => state.todos.todos);
   const [trashTodo, setTrashTodo] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,19 +44,19 @@ function Trash() {
     });
   };
   useEffect(() => {
-    if (todo) return;
+    if (todoArray) return;
     dispatch(fetchTodos());
-  }, [todo]);
+  }, [todoArray]);
 
   useEffect(() => {
-    if (!todo) return;
-    const candidate = todo.filter((todos) => todos.status === 'trash');
-    if (candidate.length === 0) {
+    if (!todoArray) return;
+    const todoByStatus = todoArray.filter((todos) => todos.status === 'trash');
+    if (todoByStatus.length === 0) {
       navigate(ROUTE_LINKS.todo);
     }
-    if (!candidate) return;
-    setTrashTodo(candidate);
-  }, [todo]);
+    if (!todoByStatus) return;
+    setTrashTodo(todoByStatus);
+  }, [todoArray]);
   const restoreTodo = (id) => {
     const statusTodoActive = 'active';
     dispatch(changeStatus({ id, statusTodoActive }));
@@ -91,22 +91,8 @@ function Trash() {
           </Box>
         </Paper>
       ))}
-
-      {/* <Button */}
-      {/* sx={{ */}
-      {/*   marginLeft: 'auto', */}
-      {/*   fontFamily: 'serif', fontSize: '12px', textTransform: 'capitalize', */}
-      {/* }} */}
-      {/* onClick={backTodos} */}
-      {/* variant='contained' */}
-      {/* size='small' */}
-      {/* > */}
-      {/* Back Todos */}
-      {/* </Button> */}
-
     </>
-
   );
 }
 
-export default Trash;
+export default Trashcan;

@@ -32,12 +32,9 @@ function Registration() {
   const [emailError, setEmailError] = useState('Enter values for the email field');
   const [passwordError, setPasswordError] = useState('Enter values for the password field');
   const [formValid, setFormValid] = useState(false);
-  const [newUser, setNewUser] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
+  const [newUser, setNewUser] = useState({ username: '', email: '', password: '' });
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     if (userNameError || emailError || passwordError) {
       setFormValid(false);
@@ -58,7 +55,7 @@ function Registration() {
         setPasswordDirty(true);
         break;
       default:
-        console.log('lol');
+        console.log('blurHandler/default');
     }
   };
   const userNameHandler = (e) => {
@@ -77,15 +74,14 @@ function Registration() {
       ...newUser,
       [e.target.name]: e.target.value,
     });
-    const re = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-    if (!re.test(String(e.target.value).toLowerCase())) {
+    const regularExpression = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    if (!regularExpression.test(String(e.target.value).toLowerCase())) {
       setEmailError('Not correct email');
     } else {
       setEmailError('');
     }
   };
   const passwordHandler = (e) => {
-    console.log(e.target.value);
     setNewUser({
       ...newUser,
       [e.target.name]: e.target.value,
@@ -94,7 +90,6 @@ function Registration() {
       setPasswordError('Enter values for the password field');
     }
     if (e.target.value.length < 3) {
-      console.log('password');
       setPasswordError('password must be longer than 3 characters');
     } else {
       setPasswordError('');
@@ -104,14 +99,9 @@ function Registration() {
     event.preventDefault();
     await dispatch(RegistrationInServer(newUser));
     setNewUser(newUser);
-    setNewUser({
-      username: '',
-      email: '',
-      password: '',
-    });
+    setNewUser({ username: '', email: '', password: '' });
   };
-  const { enqueueSnackbar } = useSnackbar();
-  const handleClick = () => {
+  const userRegistrationNotification = () => {
     enqueueSnackbar('User registered', {
       variant: 'success',
     });
@@ -163,7 +153,7 @@ function Registration() {
             />
           </Box>
           <Stack spacing={2} direction='row'>
-            <Button onClick={handleClick} disabled={!formValid} sx={{ marginLeft: '10px' }} variant='contained' type='submit'>
+            <Button onClick={userRegistrationNotification} disabled={!formValid} sx={{ marginLeft: '10px' }} variant='contained' type='submit'>
               Create New
               Account
             </Button>

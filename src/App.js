@@ -9,12 +9,13 @@ import ROUTE_LINKS from './components/MyRouters/routeLink';
 import Loader from './components/loader/Loader';
 
 function App() {
-  const dispatch = useDispatch();
   const [isAuth, setIsAuth] = useState(JSON.parse(localStorage.getItem('isAuth')));
-  const forEsLint = useMemo(() => ({ isAuth, setIsAuth }), [isAuth, setIsAuth]);
   const isLogin = useSelector((state) => state.auth.isLogin);
   const loading = useSelector((state) => state.todos.loading);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const forEsLint = useMemo(() => ({ isAuth, setIsAuth }), [isAuth, setIsAuth]);
+
   useEffect(() => {
     if (isLogin) return;
     dispatch(changeLogout(true));
