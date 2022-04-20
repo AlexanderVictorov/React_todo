@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
-import { AuthContext } from '../../context/Context';
+import { useDispatch, useSelector } from 'react-redux';
 import ROUTE_LINKS from '../../components/MyRouters/routeLink';
+import { logout, userIsAuthorized } from '../../store/slices/auth';
 
 const styles = {
   nav: {
@@ -17,19 +18,20 @@ function Navigation() {
   const isActiveStyle = ({ isActive }) => ({
     fontWeight: isActive ? 'bold' : 'normal',
   });
-  const { isAuth } = useContext(AuthContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.auth.isLogin);
 
   const onClickSignOut = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('isAuth');
     navigate(ROUTE_LINKS.login);
-    // eslint-disable-next-line no-restricted-globals
-    location.reload();
+    dispatch(userIsAuthorized(false));
+    dispatch(logout());
   };
 
   return (
-    isAuth
+    isLogin
       ? (
         <Typography sx={styles.nav}>
           <NavLink to='/todo' style={isActiveStyle}>Todos </NavLink>

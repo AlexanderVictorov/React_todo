@@ -50,8 +50,9 @@ const styles = {
 };
 
 function Todo({
-  status, name, id, updateTodo,
+  status, name, id, updateTodo, index,
 }) {
+  console.log(index);
   const [isEditing, setIsEditing] = useState(false);
   const [todoText, setTodoText] = useState(name);
   const { enqueueSnackbar } = useSnackbar();

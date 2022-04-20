@@ -7,8 +7,9 @@ function List({
 }) {
   return (
     <Grid container>
-      {list.map((todo) => (
+      {list.map((todo, index) => (
         <Todo
+          index={index}
           id={todo.id}
           name={todo.name}
           updateTodo={updateTodo}

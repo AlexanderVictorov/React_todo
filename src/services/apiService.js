@@ -30,9 +30,11 @@ $api.interceptors.response.use(
         return $api(error.config);
       } catch (e) {
         if (e.response.status === 401) {
-          // store.dispatch(changeLogout(false));
+          // store.dispatch(userIsAuthorized(false));
           localStorage.removeItem('token');
           localStorage.removeItem('isAuth');
+          // eslint-disable-next-line no-restricted-globals
+          location.reload();
         }
       }
     }
