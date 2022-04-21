@@ -10,6 +10,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
+// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { changeStatus } from '../../store/slices/todos';
 
 const styles = {
