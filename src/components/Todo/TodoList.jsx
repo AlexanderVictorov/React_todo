@@ -75,7 +75,11 @@ function TodoList() {
             addTodoInList={addTodoInList}
           />
         </Paper>
-        <Box sx={styles.Wastebasket} onClick={navigatingToTheWastebasket}>
+        <Box
+          sx={styles.Wastebasket}
+          onClick={navigatingToTheWastebasket}
+          dragover
+        >
           {trashCondition
             ? <img src={fullTrash} alt='iconTrash' />
             : <img src={emptyTrash} alt='iconTrash' />}

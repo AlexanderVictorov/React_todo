@@ -20,6 +20,7 @@ function List({
   };
 
   const dragEndHandler = (e) => {
+    console.log(e);
     e.target.style.opacity = '1';
   };
 
