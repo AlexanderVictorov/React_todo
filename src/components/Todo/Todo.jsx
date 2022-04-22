@@ -10,7 +10,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
-// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { changeStatus } from '../../store/slices/todos';
 
 const styles = {
@@ -28,7 +27,7 @@ const styles = {
     alignItems: 'center',
     width: '500px',
     textDecoration: 'none',
-    cursor: 'pointer',
+    cursor: 'grabbing',
   },
   DoneTodos: {
     textDecoration: 'line-through',
@@ -39,7 +38,7 @@ const styles = {
     padding: '5px',
     display: 'flex',
     width: '500px',
-    cursor: 'pointer',
+    cursor: 'grabbing',
   },
   Textarea: {
     width: '87%',
@@ -51,7 +50,8 @@ const styles = {
 };
 
 function Todo({
-  status, name, id, updateTodo, index,
+  status, name, id, updateTodo, index, onDragEnd,
+  onDragLeave, onDragOver, onDragStart, onDrop, todo,
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [todoText, setTodoText] = useState(name);
@@ -118,6 +118,12 @@ function Todo({
       item
     >
       <Paper
+        onDragStart={(e) => onDragStart(e, todo)}
+        onDragLeave={(e) => onDragLeave(e)}
+        onDragEnd={(e) => onDragEnd(e)}
+        onDragOver={(e) => onDragOver(e)}
+        onDrop={(e) => onDrop(e, todo)}
+        draggable
         onClick={informationAboutTodo}
         elevation={2}
         sx={status === 'active' ? styles.Paper : styles.DoneTodos}

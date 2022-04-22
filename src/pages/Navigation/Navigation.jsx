@@ -20,11 +20,8 @@ function Navigation() {
     fontWeight: isActive ? 'bold' : 'normal',
   });
   const { isAuth, setIsAuth } = useContext(AuthContext);
-  console.log('isAuth', isAuth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const isLogin = useSelector((state) => state.auth.isLogin);
-  // console.log('isLogin', isLogin);
 
   const onClickSignOut = () => {
     setIsAuth(false);
