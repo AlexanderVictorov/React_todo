@@ -7,7 +7,7 @@ const appReducer = combineReducers({
   todos: todoSlice,
 });
 const rootReducer = (state, action) => {
-  if (action.type === 'USER_LOGOUT') {
+  if (action.type === 'auth/logout/pending') {
     return appReducer(undefined, action);
   }
   return appReducer(state, action);
