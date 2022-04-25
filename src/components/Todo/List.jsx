@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { useSnackbar } from 'notistack';
 import Todo from './Todo';
+import { changeStatus } from '../../store/slices/todos';
 
 function List({
-  list, updateTodo,
+  list, updateTodo, InWastebasket,
 }) {
   const [todoList, setTodoList] = useState(list);
   const [currentTodo, setCurrentTodo] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
+  const handleMoveToTrash = () => {
+    enqueueSnackbar('Delete Todos', {
+      variant: 'info',
+    });
+  };
+  const dispatch = useDispatch();
   useEffect(() => {
     setTodoList(list);
   }, [list]);
@@ -19,8 +29,13 @@ function List({
     e.target.style.opacity = '1';
   };
 
-  const dragEndHandler = (e) => {
-    console.log(e);
+  const dragEndHandler = (e, todo) => {
+    const { id } = todo;
+    if (InWastebasket) {
+      const statusTodoTrash = 'trash';
+      dispatch(changeStatus({ id, statusTodoTrash }));
+      handleMoveToTrash();
+    }
     e.target.style.opacity = '1';
   };
 

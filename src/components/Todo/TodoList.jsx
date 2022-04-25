@@ -28,6 +28,7 @@ const styles = {
 function TodoList() {
   const [trashCondition, setTrashCondition] = useState(false);
   const [filter, setFilter] = useState('all');
+  const [InWastebasket, setInWastebasket] = useState(false);
   const todoArray = useSelector((state) => state.todos.todos || []);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -65,6 +66,14 @@ function TodoList() {
   const updateTodo = (id, newText) => {
     dispatch(changeTodos({ id, newText }));
   };
+
+  const onDragOver = (e) => {
+    e.preventDefault();
+  };
+  const onDrop = () => {
+    setInWastebasket(true);
+  };
+
   return (
     <Grid container spacing={0}>
       <Grid item xs={12}>
@@ -78,7 +87,8 @@ function TodoList() {
         <Box
           sx={styles.Wastebasket}
           onClick={navigatingToTheWastebasket}
-          dragover
+          onDragOver={(e) => onDragOver(e)}
+          onDrop={onDrop}
         >
           {trashCondition
             ? <img src={fullTrash} alt='iconTrash' />
@@ -87,6 +97,7 @@ function TodoList() {
       </Grid>
       <Grid item xs={12} sx={styles.Paper}>
         <List
+          InWastebasket={InWastebasket}
           updateTodo={updateTodo}
           list={filterTodo}
         />

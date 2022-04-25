@@ -46,6 +46,7 @@ const styles = {
   },
   ControlButtons: {
     width: '78px',
+    cursor: 'pointer',
   },
 };
 
@@ -120,7 +121,7 @@ function Todo({
       <Paper
         onDragStart={(e) => onDragStart(e, todo)}
         onDragLeave={(e) => onDragLeave(e)}
-        onDragEnd={(e) => onDragEnd(e)}
+        onDragEnd={(e) => onDragEnd(e, todo)}
         onDragOver={(e) => onDragOver(e)}
         onDrop={(e) => onDrop(e, todo)}
         draggable

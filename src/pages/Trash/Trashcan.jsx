@@ -61,6 +61,7 @@ function Trashcan() {
     const statusTodoActive = 'active';
     dispatch(changeStatus({ id, statusTodoActive }));
     handleClickRestoreTodo();
+    dispatch(saveTodoOnServer());
   };
   const removeTodo = (id) => {
     dispatch(deleteTodo(id));
