@@ -28,6 +28,7 @@ function Registration() {
   const [userNameDirty, setUserNameDirty] = useState(false);
   const [emailDirty, setEmailDirty] = useState(false);
   const [passwordDirty, setPasswordDirty] = useState(false);
+  // todo тут как-то намудрил с переменными ошибок. как-то симпатичнее бы.
   const [userNameError, setUserNameError] = useState('Enter values for the username field');
   const [emailError, setEmailError] = useState('Enter values for the email field');
   const [passwordError, setPasswordError] = useState('Enter values for the password field');

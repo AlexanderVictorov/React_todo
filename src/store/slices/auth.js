@@ -34,12 +34,10 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(LoginInServer.pending, () => {
-    }).addCase(LoginInServer.rejected, () => {
-      console.log('logout/rejected');
-    })
-      .addCase(LoginInServer.fulfilled, () => {
-      });
+    builder
+      .addCase(LoginInServer.pending)
+      .addCase(LoginInServer.rejected, () => console.log('logout/rejected'))
+      .addCase(LoginInServer.fulfilled);
   },
 });
 const { reducer } = authSlice;

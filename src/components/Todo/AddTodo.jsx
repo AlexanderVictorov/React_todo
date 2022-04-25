@@ -58,7 +58,7 @@ function AddTodo({
     setNewTodo('');
   };
   const onChangeInput = (event) => {
-    setNewTodo(() => event.target.value);
+    setNewTodo(event.target.value);
   };
   const saveTodosInServer = () => {
     enqueueSnackbar('Save Todos', {
@@ -66,6 +66,7 @@ function AddTodo({
     });
     dispatch(saveTodoOnServer());
   };
+
   return (
     <Box
       component='form'
