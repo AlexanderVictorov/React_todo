@@ -8,6 +8,7 @@ import { addTodo, changeTodos, fetchTodos } from '../../store/slices/todos';
 import emptyTrash from '../../images/emtyTrash.png';
 import fullTrash from '../../images/fullTrash.png';
 import ROUTE_LINKS from '../MyRouters/routeLink';
+import ShowPagination from '../Pagination/ShowPagination';
 
 const styles = {
   Paper: {
@@ -29,9 +30,14 @@ function TodoList() {
   const [trashCondition, setTrashCondition] = useState(false);
   const [filter, setFilter] = useState('all');
   const [InWastebasket, setInWastebasket] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [todoPerPage] = useState(4);
   const todoArray = useSelector((state) => state.todos.todos || []);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const lastTodoIndex = currentPage * todoPerPage;
+  const firstTodoIndex = lastTodoIndex - todoPerPage;
 
   useEffect(() => {
     const trashStatusInTodo = todoArray.find((todo) => todo.status === 'trash');
@@ -55,7 +61,13 @@ function TodoList() {
         return null;
     }
   }, [filter, todoArray]);
-
+  const currentTodoPage = filterTodo.slice(firstTodoIndex, lastTodoIndex);
+  const paginate = (event) => {
+    console.log(event.target);
+    if (event.target === 'button') {
+      setCurrentPage(event.target.innerText);
+    }
+  };
   const addTodoInList = (todo) => {
     dispatch(addTodo({
       id: Date.now(),
@@ -67,6 +79,7 @@ function TodoList() {
   const updateTodo = (id, newText) => {
     dispatch(changeTodos({ id, newText }));
   };
+
   const onDragOver = (e) => {
     e.preventDefault();
   };
@@ -99,7 +112,12 @@ function TodoList() {
         <List
           InWastebasket={InWastebasket}
           updateTodo={updateTodo}
-          list={filterTodo}
+          list={currentTodoPage}
+        />
+        <ShowPagination
+          paginate={paginate}
+          todoPerPage={todoPerPage}
+          total={filterTodo.length}
         />
       </Grid>
     </Grid>
