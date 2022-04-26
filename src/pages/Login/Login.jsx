@@ -30,7 +30,6 @@ function Login() {
   const [userNameDirty, setUserNameDirty] = useState(false);
   const [emailDirty, setEmailDirty] = useState(false);
   const [passwordDirty, setPasswordDirty] = useState(false);
-  // todo тут как-то намудрил с переменными ошибок. Как-то симпатичнее бы.
   const [validateError, setValidateError] = useState(
     {
       userNameError: 'Enter values for the username field',
@@ -64,7 +63,18 @@ function Login() {
         setPasswordDirty(true);
         break;
       default:
-        console.log('default');
+        console.log('blurHandler/default');
+    }
+  };
+  const userNameHandler = (e) => {
+    setUserLoginDetails({
+      ...userLoginDetails,
+      [e.target.name]: e.target.value,
+    });
+    if (!e.target.value) {
+      setValidateError({ ...validateError, userNameError: 'Enter values for the username field' });
+    } else {
+      setValidateError({ ...validateError, userNameError: '' });
     }
   };
   const emailHandler = (e) => {
@@ -91,17 +101,6 @@ function Login() {
       setValidateError({ ...validateError, passwordError: 'Password must be longer than 3 characters' });
     } else {
       setValidateError({ ...validateError, passwordError: '' });
-    }
-  };
-  const userNameHandler = (e) => {
-    setUserLoginDetails({
-      ...userLoginDetails,
-      [e.target.name]: e.target.value,
-    });
-    if (!e.target.value) {
-      setValidateError({ ...validateError, userNameError: 'Enter values for the username field' });
-    } else {
-      setValidateError({ ...validateError, userNameError: '' });
     }
   };
   const userNotification = () => {
