@@ -31,9 +31,13 @@ function Login() {
   const [emailDirty, setEmailDirty] = useState(false);
   const [passwordDirty, setPasswordDirty] = useState(false);
   // todo тут как-то намудрил с переменными ошибок. Как-то симпатичнее бы.
-  const [userNameError, setUserNameError] = useState('Enter values for the username field');
-  const [emailError, setEmailError] = useState('Enter values for the email field');
-  const [passwordError, setPasswordError] = useState('Enter values for the password field');
+  const [validateError, setValidateError] = useState(
+    {
+      userNameError: 'Enter values for the username field',
+      emailError: 'Enter values for the email field',
+      passwordError: 'Enter values for the password field',
+    },
+  );
   const [formValid, setFormValid] = useState(false);
   const { setIsAuth } = useContext(AuthContext);
   const { enqueueSnackbar } = useSnackbar();
@@ -41,12 +45,12 @@ function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userNameError || emailError || passwordError) {
+    if (validateError.userNameError || validateError.emailError || validateError.passwordError) {
       setFormValid(false);
     } else {
       setFormValid(true);
     }
-  }, [userNameError, emailError, passwordError]);
+  }, [validateError]);
 
   const blurHandler = (e) => {
     switch (e.target.name) {
@@ -70,9 +74,9 @@ function Login() {
     });
     const regularExpression = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
     if (!regularExpression.test(String(e.target.value).toLowerCase())) {
-      setEmailError('Not correct email');
+      setValidateError({ ...validateError, emailError: 'Not correct email' });
     } else {
-      setEmailError('');
+      setValidateError({ ...validateError, emailError: '' });
     }
   };
   const passwordHandler = (e) => {
@@ -81,12 +85,12 @@ function Login() {
       [e.target.name]: e.target.value,
     });
     if (!e.target.value) {
-      setPasswordError('Enter values for the password field');
+      setValidateError({ ...validateError, passwordError: 'Enter values for the password field' });
     }
     if (e.target.value.length < 3) {
-      setPasswordError('password must be longer than 3 characters');
+      setValidateError({ ...validateError, passwordError: 'Password must be longer than 3 characters' });
     } else {
-      setPasswordError('');
+      setValidateError({ ...validateError, passwordError: '' });
     }
   };
   const userNameHandler = (e) => {
@@ -95,9 +99,9 @@ function Login() {
       [e.target.name]: e.target.value,
     });
     if (!e.target.value) {
-      setUserNameError('Enter values for the username field');
+      setValidateError({ ...validateError, userNameError: 'Enter values for the username field' });
     } else {
-      setUserNameError('');
+      setValidateError({ ...validateError, userNameError: '' });
     }
   };
   const userNotification = () => {
@@ -129,8 +133,8 @@ function Login() {
             noValidate
             autoComplete='off'
           >
-            {(userNameDirty && userNameError)
-              && <Typography sx={{ fontSize: '12px' }} color='error'>{userNameError}</Typography>}
+            {(userNameDirty && validateError.userNameError)
+              && <Typography sx={{ fontSize: '12px' }} color='error'>{validateError.userNameError}</Typography>}
             <TextField
               label='Username'
               variant='outlined'
@@ -140,8 +144,8 @@ function Login() {
               onChange={userNameHandler}
               onBlur={blurHandler}
             />
-            {(emailDirty && emailError)
-              && <Typography sx={{ fontSize: '12px' }} color='error'>{emailError}</Typography>}
+            {(emailDirty && validateError.emailError)
+              && <Typography sx={{ fontSize: '12px' }} color='error'>{validateError.emailError}</Typography>}
             <TextField
               label='Email'
               variant='outlined'
@@ -151,8 +155,8 @@ function Login() {
               onChange={emailHandler}
               onBlur={blurHandler}
             />
-            {(passwordDirty && passwordError)
-              && <Typography sx={{ fontSize: '12px' }} color='error'>{passwordError}</Typography>}
+            {(passwordDirty && validateError.passwordError)
+              && <Typography sx={{ fontSize: '12px' }} color='error'>{validateError.passwordError}</Typography>}
             <TextField
               label='Password'
               variant='outlined'
