@@ -25,6 +25,7 @@ export const LoginInServer = createAsyncThunk('auth/LoginInServer', async (actio
     console.log('Пользователь не зарегестрирован');
   }
 });
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,

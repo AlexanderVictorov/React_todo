@@ -36,6 +36,7 @@ function Registration() {
   const [newUser, setNewUser] = useState({ username: '', email: '', password: '' });
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
+
   useEffect(() => {
     if (userNameError || emailError || passwordError) {
       setFormValid(false);
@@ -107,6 +108,7 @@ function Registration() {
       variant: 'success',
     });
   };
+
   return (
     <StyledBox>
       <Box sx={{ marginTop: '30px' }}>

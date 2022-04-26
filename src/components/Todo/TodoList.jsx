@@ -33,6 +33,16 @@ function TodoList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const trashStatusInTodo = todoArray.find((todo) => todo.status === 'trash');
+    if (!trashStatusInTodo) return;
+    setTrashCondition(true);
+  }, [trashCondition, todoArray]);
+  useEffect(() => {
+    if (todoArray.length) return;
+    dispatch(fetchTodos());
+  }, []);
+
   const filterTodo = useMemo(() => {
     switch (filter) {
       case 'all':
@@ -45,15 +55,6 @@ function TodoList() {
         return null;
     }
   }, [filter, todoArray]);
-  useEffect(() => {
-    const trashStatusInTodo = todoArray.find((todo) => todo.status === 'trash');
-    if (!trashStatusInTodo) return;
-    setTrashCondition(true);
-  }, [trashCondition, todoArray]);
-  useEffect(() => {
-    if (todoArray.length) return;
-    dispatch(fetchTodos());
-  }, []);
 
   const addTodoInList = (todo) => {
     dispatch(addTodo({
@@ -66,7 +67,6 @@ function TodoList() {
   const updateTodo = (id, newText) => {
     dispatch(changeTodos({ id, newText }));
   };
-
   const onDragOver = (e) => {
     e.preventDefault();
   };

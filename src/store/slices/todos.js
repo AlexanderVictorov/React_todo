@@ -59,6 +59,7 @@ const todoSlice = createSlice({
       });
   },
 });
+
 export const {
   addTodo, deleteTodo, changeTodos, changeStatus,
 } = todoSlice.actions;

@@ -33,9 +33,9 @@ function TodoInfo() {
   const loading = useSelector((state) => state.todos.loading);
   const params = useParams();
   const todoArray = useSelector((state) => state.todos.todos);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (todoArray) return;
     dispatch(fetchTodos());
@@ -52,6 +52,7 @@ function TodoInfo() {
     if (!todoByIndex) return;
     setTodoInfo(todoByIndex);
   }, [todoArray, params]);
+
   const onNextTodo = () => {
     if (todoArray[curIndex + 1]) {
       navigate(`${ROUTE_LINKS.todo}/${todoArray[curIndex + 1].id}`);
@@ -69,7 +70,9 @@ function TodoInfo() {
   const backTodos = () => {
     navigate(ROUTE_LINKS.todo);
   };
+
   if (!todoInfo) return <Loader />;
+
   return (
     <Box>
       <Paper

@@ -33,6 +33,21 @@ function Trashcan() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    if (todoArray) return;
+    dispatch(fetchTodos());
+  }, [todoArray]);
+  useEffect(() => {
+    if (!todoArray) return;
+    const todoByStatus = todoArray.filter((todos) => todos.status === 'trash');
+    if (todoByStatus.length === 0) {
+      navigate(ROUTE_LINKS.todo);
+    }
+    if (!todoByStatus) return;
+    setTrashTodo(todoByStatus);
+  }, [todoArray]);
+
   const handleClickRestoreTodo = () => {
     enqueueSnackbar('Restore Todos', {
       variant: 'success',
@@ -43,20 +58,6 @@ function Trashcan() {
       variant: 'info',
     });
   };
-  useEffect(() => {
-    if (todoArray) return;
-    dispatch(fetchTodos());
-  }, [todoArray]);
-
-  useEffect(() => {
-    if (!todoArray) return;
-    const todoByStatus = todoArray.filter((todos) => todos.status === 'trash');
-    if (todoByStatus.length === 0) {
-      navigate(ROUTE_LINKS.todo);
-    }
-    if (!todoByStatus) return;
-    setTrashTodo(todoByStatus);
-  }, [todoArray]);
   const restoreTodo = (id) => {
     const statusTodoActive = 'active';
     dispatch(changeStatus({ id, statusTodoActive }));
@@ -68,7 +69,9 @@ function Trashcan() {
     handleClickRemoveTodo();
     dispatch(saveTodoOnServer());
   };
+
   if (!trashTodo) return <Loader />;
+
   return (
     <>
       {trashTodo.map((todos) => (

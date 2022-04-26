@@ -16,13 +16,13 @@ const styles = {
   },
 };
 function Navigation() {
-  const isActiveStyle = ({ isActive }) => ({
-    fontWeight: isActive ? 'bold' : 'normal',
-  });
   const { isAuth, setIsAuth } = useContext(AuthContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const isActiveStyle = ({ isActive }) => ({
+    fontWeight: isActive ? 'bold' : 'normal',
+  });
   const onClickSignOut = () => {
     setIsAuth(false);
     localStorage.removeItem('token');
