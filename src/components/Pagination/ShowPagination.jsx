@@ -9,15 +9,13 @@ function ShowPagination({ todoPerPage, total, paginate }) {
     }
     return pageNumber.length;
   };
-  const numbers = numberPage();
+
   return (
     <Pagination
-      // hidePrevButton
-      // hideNextButton
       sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}
       color='primary'
-      count={numbers}
-      onClick={(e) => paginate(e)}
+      count={numberPage()}
+      onChange={(event, page) => paginate(page)}
     />
   );
 }

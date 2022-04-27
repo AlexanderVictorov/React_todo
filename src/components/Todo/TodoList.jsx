@@ -36,19 +36,6 @@ function TodoList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const lastTodoIndex = currentPage * todoPerPage;
-  const firstTodoIndex = lastTodoIndex - todoPerPage;
-
-  useEffect(() => {
-    const trashStatusInTodo = todoArray.find((todo) => todo.status === 'trash');
-    if (!trashStatusInTodo) return;
-    setTrashCondition(true);
-  }, [trashCondition, todoArray]);
-  useEffect(() => {
-    if (todoArray.length) return;
-    dispatch(fetchTodos());
-  }, []);
-
   const filterTodo = useMemo(() => {
     switch (filter) {
       case 'all':
@@ -61,13 +48,22 @@ function TodoList() {
         return null;
     }
   }, [filter, todoArray]);
+
+  const lastTodoIndex = currentPage * todoPerPage;
+  const firstTodoIndex = lastTodoIndex - todoPerPage;
   const currentTodoPage = filterTodo.slice(firstTodoIndex, lastTodoIndex);
-  const paginate = (event) => {
-    console.log(event.target);
-    if (event.target === 'button') {
-      setCurrentPage(event.target.innerText);
-    }
-  };
+
+  useEffect(() => {
+    const trashStatusInTodo = todoArray.find((todo) => todo.status === 'trash');
+    if (!trashStatusInTodo) return;
+    setTrashCondition(true);
+  }, [trashCondition, todoArray]);
+  useEffect(() => {
+    if (todoArray.length) return;
+    dispatch(fetchTodos());
+  }, []);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const addTodoInList = (todo) => {
     dispatch(addTodo({
       id: Date.now(),
@@ -79,7 +75,6 @@ function TodoList() {
   const updateTodo = (id, newText) => {
     dispatch(changeTodos({ id, newText }));
   };
-
   const onDragOver = (e) => {
     e.preventDefault();
   };
