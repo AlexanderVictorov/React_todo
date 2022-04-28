@@ -48,11 +48,19 @@ const todoSlice = createSlice({
         return item;
       });
     },
+    leadTimeTodo(state, action) {
+      state.todos.map((item) => {
+        if (item.id === action.payload.id) {
+          item.validity = action.payload.newTime;
+        }
+        return item;
+      });
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTodos.pending, (state) => { state.loading = true; })
-      .addCase(fetchTodos.rejected, (state) => { state.loading = false; })
+      .addCase(fetchTodos.rejected, (state) => { console.log('fetchTodos.rejected'); state.loading = false; })
       .addCase(fetchTodos.fulfilled, (state, { payload }) => {
         state.todos = payload;
         state.loading = false;
@@ -61,6 +69,6 @@ const todoSlice = createSlice({
 });
 
 export const {
-  addTodo, deleteTodo, changeTodos, changeStatus,
+  addTodo, deleteTodo, changeTodos, changeStatus, leadTimeTodo,
 } = todoSlice.actions;
 export default todoSlice.reducer;

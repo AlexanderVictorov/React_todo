@@ -10,7 +10,7 @@ const apiService = axios.create({
 });
 
 const onRequest = (config) => {
-  const token = JSON.parse(localStorage.getItem('token'));
+  const token = localStorage.getItem('token');
   if (token && !config.url.includes('auth')) {
     // eslint-disable-next-line no-param-reassign
     config.headers.authorization = `Bearer ${token}`;

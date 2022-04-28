@@ -15,7 +15,7 @@ export const LoginInServer = createAsyncThunk('auth/LoginInServer', async (actio
   try {
     const response = await AuthService.login(action);
     const { token } = response.data;
-    localStorage.setItem('token', JSON.stringify(token));
+    localStorage.setItem('token', token);
     if (response.status === 200) {
       localStorage.setItem('isAuth', 'true');
       // eslint-disable-next-line no-use-before-define

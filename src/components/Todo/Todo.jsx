@@ -11,6 +11,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { changeStatus } from '../../store/slices/todos';
+import DateTimePickers from '../DateTimePicker/DateTimePicker';
 
 const styles = {
   Card: {
@@ -18,6 +19,7 @@ const styles = {
     width: '430px',
   },
   Paper: {
+    lineHeight: '1rem',
     position: 'relative',
     margin: 'auto',
     marginTop: '10px',
@@ -45,8 +47,12 @@ const styles = {
     height: 'auto',
   },
   ControlButtons: {
-    width: '78px',
+    paddingLeft: '5px',
+    width: 'auto',
     cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 };
 
@@ -103,10 +109,10 @@ function Todo({
       handleClickChangeTodo();
     }
   };
-  const preventDef = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
+  // const preventDef = (e) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  // };
   const informationAboutTodo = () => {
     if (!isEditing) {
       navigate(`${id}`);
@@ -126,7 +132,6 @@ function Todo({
         onDragOver={(e) => onDragOver(e)}
         onDrop={(e) => onDrop(e, todo)}
         draggable
-        onClick={informationAboutTodo}
         elevation={2}
         sx={status === 'active' ? styles.Paper : styles.DoneTodos}
       >
@@ -145,16 +150,20 @@ function Todo({
             autoFocus
           />
         ) : (
-          <Typography sx={styles.Card}>
+          <Typography
+            sx={styles.Card}
+            onClick={informationAboutTodo}
+          >
             {`${index}.${name}`}
           </Typography>
         )}
+
         <Box
           sx={styles.ControlButtons}
-          onClick={preventDef}
           className='icon_change_todo'
           aria-hidden='true'
         >
+          <DateTimePickers id={id} />
           <EditIcon
             role='button'
             color='primary'
@@ -173,6 +182,7 @@ function Todo({
             onClick={addTodoInTrash}
           />
         </Box>
+
       </Paper>
     </Grid>
   );
