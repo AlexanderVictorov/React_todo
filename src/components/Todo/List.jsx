@@ -65,6 +65,8 @@ function List({
           onDragEnd={dragEndHandler}
           onDragOver={dragOvertHandler}
           onDrop={dropHandler}
+          validity={todo.validity}
+          overdue={todo.overdue}
           index={index + 1}
           id={todo.id}
           name={todo.name}

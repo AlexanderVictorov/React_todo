@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events,
 jsx-a11y/no-noninteractive-element-interactions */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box, Grid, Paper, TextField, Typography,
@@ -10,12 +10,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { changeStatus } from '../../store/slices/todos';
+import { changeStatus, overdueTask, validForExecution } from '../../store/slices/todos';
 import DateTimePickers from '../DateTimePicker/DateTimePicker';
+import backgroundTimer from '../../images/time.png';
 
 const styles = {
   Card: {
     textDecoration: 'none',
+    width: '430px',
+  },
+  CardTime: {
+    backgroundImage: `url(${backgroundTimer})`,
+    backgroundRepeat: 'no-repeat',
+    color: '#808080',
     width: '430px',
   },
   Paper: {
@@ -58,13 +65,31 @@ const styles = {
 
 function Todo({
   status, name, id, updateTodo, index, onDragEnd,
-  onDragLeave, onDragOver, onDragStart, onDrop, todo,
+  onDragLeave, onDragOver, onDragStart, onDrop, todo, validity, overdue,
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [todoText, setTodoText] = useState(name);
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const handleClickTimeOff = () => {
+    enqueueSnackbar('Execution time out', {
+      variant: 'warning',
+    });
+  };
+
+  useEffect(() => {
+    const dateNow = Date.now();
+    if (validity <= dateNow) {
+      const activeTime = true;
+      dispatch(overdueTask({ id, activeTime }));
+      handleClickTimeOff();
+    } else {
+      const timeOver = false;
+      dispatch(validForExecution({ id, timeOver }));
+    }
+  }, [validity]);
 
   const onChangeTodoText = (event) => setTodoText(event.target.value);
   const handleClickChangeTodo = () => {
@@ -109,10 +134,6 @@ function Todo({
       handleClickChangeTodo();
     }
   };
-  // const preventDef = (e) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-  // };
   const informationAboutTodo = () => {
     if (!isEditing) {
       navigate(`${id}`);
@@ -151,7 +172,7 @@ function Todo({
           />
         ) : (
           <Typography
-            sx={styles.Card}
+            sx={!overdue ? styles.Card : styles.CardTime}
             onClick={informationAboutTodo}
           >
             {`${index}.${name}`}

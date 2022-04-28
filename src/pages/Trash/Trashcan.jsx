@@ -81,7 +81,7 @@ function Trashcan() {
           key={todos.id}
         >
           {todos.name}
-          <Box sx={{ marginLeft: 'auto', cursor: 'pointer' }}>
+          <Box sx={{ marginLeft: 'auto', cursor: 'pointer', display: 'flex' }}>
             <AutorenewIcon
               color='primary'
               aria-label='Restore'

@@ -56,6 +56,22 @@ const todoSlice = createSlice({
         return item;
       });
     },
+    overdueTask(state, action) {
+      state.todos.map((item) => {
+        if (item.id === action.payload.id) {
+          item.overdue = action.payload.activeTime;
+        }
+        return item;
+      });
+    },
+    validForExecution(state, action) {
+      state.todos.map((item) => {
+        if (item.id === action.payload.id) {
+          item.overdue = action.payload.timeOver;
+        }
+        return item;
+      });
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -69,6 +85,6 @@ const todoSlice = createSlice({
 });
 
 export const {
-  addTodo, deleteTodo, changeTodos, changeStatus, leadTimeTodo,
+  addTodo, deleteTodo, changeTodos, changeStatus, leadTimeTodo, overdueTask, validForExecution,
 } = todoSlice.actions;
 export default todoSlice.reducer;

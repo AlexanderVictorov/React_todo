@@ -69,8 +69,8 @@ function TodoList() {
       id: Date.now(),
       name: todo,
       status: 'active',
-      validity: '',
-      overdue: '',
+      validity: Infinity,
+      overdue: false,
     }));
   };
   const navigatingToTheWastebasket = () => navigate(ROUTE_LINKS.trash);
