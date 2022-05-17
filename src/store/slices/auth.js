@@ -37,7 +37,6 @@ const authSlice = createSlice({
         state.isLogin = true;
         localStorage.setItem('token', action.payload);
         localStorage.setItem('isAuth', 'true');
-        console.log(action.payload);
       });
   },
 });
