@@ -8,11 +8,12 @@ import Loader from './components/loader/Loader';
 function App() {
   const [isAuth, setIsAuth] = useState(JSON.parse(localStorage.getItem('isAuth')));
   const loading = useSelector((state) => state.todos.loading);
-  const forEsLint = useMemo(() => ({ isAuth, setIsAuth }), [isAuth, setIsAuth]);
+  const providerValue = useMemo(() => ({ isAuth, setIsAuth }), [isAuth, setIsAuth]);
+
   return (
     <div className='App'>
       {loading && <Loader />}
-      <AuthContext.Provider value={forEsLint}>
+      <AuthContext.Provider value={providerValue}>
         <MyRoutes />
       </AuthContext.Provider>
     </div>
