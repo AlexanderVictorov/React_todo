@@ -11,18 +11,14 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 export const RegistrationInServer = createAsyncThunk('auth/RegistrationInServer', async (action) => {
   await AuthService.registration(action);
 });
-export const LoginInServer = createAsyncThunk('auth/LoginInServer', async (action, getState) => {
+export const LoginInServer = createAsyncThunk('auth/LoginInServer', async (action, { rejectWithValue }) => {
   try {
     const response = await AuthService.login(action);
     const { token } = response.data;
-    localStorage.setItem('token', token);
-    if (response.status === 200) {
-      localStorage.setItem('isAuth', 'true');
-      // eslint-disable-next-line no-use-before-define
-      getState.dispatch(userIsAuthorized(true));
-    }
+    return token;
   } catch (error) {
     console.log('Пользователь не зарегестрирован');
+    return rejectWithValue(error);
   }
 });
 
@@ -36,9 +32,13 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(LoginInServer.pending)
       .addCase(LoginInServer.rejected, () => console.log('logout/rejected'))
-      .addCase(LoginInServer.fulfilled);
+      .addCase(LoginInServer.fulfilled, (state, action) => {
+        state.isLogin = true;
+        localStorage.setItem('token', action.payload);
+        localStorage.setItem('isAuth', 'true');
+        console.log(action.payload);
+      });
   },
 });
 const { reducer } = authSlice;
