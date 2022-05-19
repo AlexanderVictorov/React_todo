@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { useSnackbar } from 'notistack';
-import Todo from './Todo';
-import { changeStatus } from '../../store/slices/todos';
 
-function List({
+import { Grid } from '@mui/material';
+
+import { useSnackbar } from 'notistack';
+import Todo from '../Todo/Todo';
+import { changeStatus } from '../../../store/slices/todos';
+
+const List = ({
   list, updateTodo, InWastebasket,
-}) {
+}) => {
   const [todoList, setTodoList] = useState(list);
   const [currentTodo, setCurrentTodo] = useState(null);
+
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
 
@@ -78,6 +81,6 @@ function List({
       ))}
     </Grid>
   );
-}
+};
 
 export default List;

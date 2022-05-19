@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { Box } from '@mui/material';
 import Moment from 'react-moment';
-import Animation from '../Animation/animation';
+
+import Animation from '../Animation';
 
 const styles = {
   Footer: {
@@ -20,14 +22,12 @@ const styles = {
   },
 };
 
-function Footer() {
-  return (
-    <Box sx={styles.Footer}>
-      <Box />
-      <Moment format='HH:mm' interval={1000} />
-      <Animation />
-    </Box>
-  );
-}
+const Footer = () => (
+  <Box sx={styles.Footer}>
+    <Box />
+    <Moment format="HH:mm" interval={1000} />
+    <Animation />
+  </Box>
+);
 
 export default Footer;

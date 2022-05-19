@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  Box, Button, Paper, Typography,
-} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+
+import {
+  Box,
+  Button,
+  Paper,
+  Typography,
+} from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
+import Loader from '../../components/Loader';
 import { fetchTodos } from '../../store/slices/todos';
 import ROUTE_LINKS from '../../components/MyRouters/routeLink';
-import Loader from '../../components/loader/Loader';
 
 const styles = {
   Paper: {
@@ -27,12 +32,15 @@ const styles = {
   },
 };
 
-function TodoInfo() {
+const TodoInfo = () => {
   const [todoInfo, setTodoInfo] = useState(null);
   const [curIndex, setCurIndex] = useState(null);
+
   const loading = useSelector((state) => state.todos.loading);
-  const params = useParams();
   const todoArray = useSelector((state) => state.todos.todos);
+
+  const params = useParams();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -86,8 +94,8 @@ function TodoInfo() {
         <Button
           sx={styles.ButtonBackTodo}
           onClick={backTodos}
-          variant='contained'
-          size='small'
+          variant="contained"
+          size="small"
         >
           Back Todos
         </Button>
@@ -105,6 +113,6 @@ function TodoInfo() {
       </Box>
     </Box>
   );
-}
+};
 
 export default TodoInfo;

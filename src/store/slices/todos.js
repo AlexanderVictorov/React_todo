@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TodoService } from '../../services/TodoService';
 
@@ -10,6 +9,7 @@ export const fetchTodos = createAsyncThunk('todoSlice/fetchTodos', async () => {
   const response = await TodoService.getTodos();
   return response.data;
 });
+
 export const saveTodoOnServer = createAsyncThunk('todoSlice/saveTodoOnServer', async (_, { getState }) => {
   const { todos } = getState().todos;
   await TodoService.postTodos(todos);
@@ -76,7 +76,10 @@ const todoSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchTodos.pending, (state) => { state.loading = true; })
-      .addCase(fetchTodos.rejected, (state) => { console.log('fetchTodos.rejected'); state.loading = false; })
+      .addCase(fetchTodos.rejected, (state) => {
+        console.log('fetchTodos.rejected');
+        state.loading = false;
+      })
       .addCase(fetchTodos.fulfilled, (state, { payload }) => {
         state.todos = payload;
         state.loading = false;

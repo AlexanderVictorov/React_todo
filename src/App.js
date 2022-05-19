@@ -1,23 +1,24 @@
 import React, { useMemo, useState } from 'react';
-import './App.css';
 import { useSelector } from 'react-redux';
-import MyRoutes from './components/MyRouters/MyRoutes';
-import { AuthContext } from './context/Context';
-import Loader from './components/loader/Loader';
+import './App.css';
 
-function App() {
+import MyRoutes from './components/MyRouters/MyRoutes';
+import Loader from './components/Loader';
+import { AuthContext } from './context/Context';
+
+const App = () => {
   const [isAuth, setIsAuth] = useState(JSON.parse(localStorage.getItem('isAuth')));
   const loading = useSelector((state) => state.todos.loading);
   const providerValue = useMemo(() => ({ isAuth, setIsAuth }), [isAuth, setIsAuth]);
 
   return (
-    <div className='App'>
+    <div className="App">
       {loading && <Loader />}
       <AuthContext.Provider value={providerValue}>
         <MyRoutes />
       </AuthContext.Provider>
     </div>
   );
-}
+};
 
 export default App;

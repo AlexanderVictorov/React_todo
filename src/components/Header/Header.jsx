@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { Box, Typography } from '@mui/material';
-import Navigation from '../../pages/Navigation/Navigation';
-import Animation from '../Animation/animation';
+
+import Navigation from '../../pages/Navigation';
+import Animation from '../Animation';
 
 const styles = {
   Header: {
@@ -19,16 +21,14 @@ const styles = {
   },
 };
 
-function Header() {
-  return (
-    <Box sx={styles.Header}>
-      <Box>
-        <Typography variant='h5'>Todos App</Typography>
-        <Navigation />
-      </Box>
-      <Animation />
+const Header = () => (
+  <Box sx={styles.Header}>
+    <Box>
+      <Typography variant="h5">Todos App</Typography>
+      <Navigation />
     </Box>
-  );
-}
+    <Animation />
+  </Box>
+);
 
 export default Header;

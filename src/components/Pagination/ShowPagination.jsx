@@ -1,23 +1,17 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Pagination } from '@mui/material';
 
-function ShowPagination({ todoPerPage, total, paginate }) {
-  const numberPage = () => {
-    const pageNumber = [];
-    for (let i = 1; i <= Math.ceil(total / todoPerPage); i += 1) {
-      pageNumber.push(i);
-    }
-    return pageNumber.length;
-  };
+const ShowPagination = ({ todoPerPage, total, paginate }) => {
+  const pageNumber = useMemo(() => Math.ceil(total / todoPerPage), [total, todoPerPage]);
 
   return (
     <Pagination
       sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}
-      color='primary'
-      count={numberPage()}
+      color="primary"
+      count={pageNumber}
       onChange={(event, page) => paginate(page)}
     />
   );
-}
+};
 
 export default ShowPagination;

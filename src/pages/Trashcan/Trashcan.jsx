@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Box, Paper,
-} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+import { Box, Paper } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-import { useNavigate } from 'react-router-dom';
+
 import { useSnackbar } from 'notistack';
+
 import {
-  changeStatus, deleteTodo, fetchTodos, saveTodoOnServer,
+  changeStatus,
+  deleteTodo,
+  fetchTodos,
+  saveTodoOnServer,
 } from '../../store/slices/todos';
-import Loader from '../../components/loader/Loader';
+import Loader from '../../components/Loader';
 import ROUTE_LINKS from '../../components/MyRouters/routeLink';
 
 const styles = {
@@ -27,11 +31,14 @@ const styles = {
   },
 };
 
-function Trashcan() {
-  const todoArray = useSelector((state) => state.todos.todos);
+const Trashcan = () => {
   const [trashTodo, setTrashTodo] = useState(null);
+
+  const todoArray = useSelector((state) => state.todos.todos);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -83,13 +90,13 @@ function Trashcan() {
           {todos.name}
           <Box sx={{ marginLeft: 'auto', cursor: 'pointer', display: 'flex' }}>
             <AutorenewIcon
-              color='primary'
-              aria-label='Restore'
+              color="primary"
+              aria-label="Restore"
               onClick={() => restoreTodo(todos.id)}
             />
             <DeleteIcon
-              color='secondary'
-              aria-label='Delete'
+              color="secondary"
+              aria-label="Delete"
               onClick={() => removeTodo(todos.id)}
             />
           </Box>
@@ -97,6 +104,6 @@ function Trashcan() {
       ))}
     </>
   );
-}
+};
 
 export default Trashcan;

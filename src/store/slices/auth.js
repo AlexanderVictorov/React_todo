@@ -1,16 +1,18 @@
-/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AuthService } from '../../services/AuthService';
 
 const initialState = {
   isLogin: false,
 };
+
 export const logout = createAsyncThunk('auth/logout', async () => {
   await AuthService.logout();
 });
+
 export const RegistrationInServer = createAsyncThunk('auth/RegistrationInServer', async (action) => {
   await AuthService.registration(action);
 });
+
 export const LoginInServer = createAsyncThunk('auth/LoginInServer', async (action, { rejectWithValue }) => {
   try {
     const response = await AuthService.login(action);
@@ -40,6 +42,7 @@ const authSlice = createSlice({
       });
   },
 });
+
 const { reducer } = authSlice;
 export const { userIsAuthorized } = authSlice.actions;
 export default reducer;

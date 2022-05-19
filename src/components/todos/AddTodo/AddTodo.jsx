@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+
 import {
-  Box, Button, Input, Typography,
+  Box,
+  Button,
+  Input,
+  Typography,
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
-import { useDispatch } from 'react-redux';
-import SortTodo from '../SortTodo/SortTodo';
-import { saveTodoOnServer } from '../../store/slices/todos';
+import { saveTodoOnServer } from '../../../store/slices/todos';
+
+import SortTodo from '../../SortTodo';
 
 const styles = {
   SortDropDown: {
@@ -39,11 +44,12 @@ const styles = {
   },
 };
 
-function AddTodo({
+const AddTodo = ({
   addTodoInList, setFilter, filter,
-}) {
+}) => {
   const [newTodo, setNewTodo] = useState('');
   const [isError, setIsError] = useState(false);
+
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -69,12 +75,12 @@ function AddTodo({
 
   return (
     <Box
-      component='form'
+      component="form"
       onSubmit={handleSubmit}
     >
       <Box sx={styles.TodoPanel}>
         <Input
-          placeholder='Todo'
+          placeholder="Todo"
           inputProps={{
             'aria-label': 'Description',
           }}
@@ -84,23 +90,23 @@ function AddTodo({
         />
         <Button
           sx={styles.ButtonAddTodo}
-          type='submit'
-          variant='contained'
-          color='primary'
-          size='small'
+          type="submit"
+          variant="contained"
+          color="primary"
+          size="small"
         >
           Add Todos
         </Button>
         <Button
           sx={styles.ButtonSaveTodo}
-          variant='contained'
-          size='small'
+          variant="contained"
+          size="small"
           onClick={saveTodosInServer}
         >
           Save Todos
         </Button>
         {isError && (
-          <Typography sx={{ marginLeft: '10px' }} variant='caption' color='error'>
+          <Typography sx={{ marginLeft: '10px' }} variant="caption" color="error">
             Error, must enter a value!
           </Typography>
         )}
@@ -114,6 +120,6 @@ function AddTodo({
       </Box>
     </Box>
   );
-}
+};
 
 export default AddTodo;

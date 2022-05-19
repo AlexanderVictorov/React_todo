@@ -1,18 +1,22 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events,
-jsx-a11y/no-noninteractive-element-interactions */
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
 import {
-  Box, Grid, Paper, TextField, Typography,
+  Box,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { useDispatch } from 'react-redux';
+
 import { useSnackbar } from 'notistack';
-import { changeStatus, overdueTask, validForExecution } from '../../store/slices/todos';
-import DateTimePickers from '../DateTimePicker/DateTimePicker';
-import backgroundTimer from '../../images/time.png';
+import { changeStatus, overdueTask, validForExecution } from '../../../store/slices/todos';
+import backgroundTimer from '../../../images/time.png';
+import DateTimePickers from '../../DateTimePicker';
 
 const styles = {
   Card: {
@@ -63,13 +67,15 @@ const styles = {
   },
 };
 
-function Todo({
+const Todo = ({
   status, name, id, updateTodo, index, onDragEnd,
   onDragLeave, onDragOver, onDragStart, onDrop, todo, validity, overdue,
-}) {
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [todoText, setTodoText] = useState(name);
+
   const { enqueueSnackbar } = useSnackbar();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -158,9 +164,9 @@ function Todo({
       >
         {isEditing ? (
           <TextField
-            id='standard-basic'
-            label='Todo'
-            variant='standard'
+            id="standard-basic"
+            label="Todo"
+            variant="standard"
             multiline
             onKeyDown={changeInput}
             onKeyUp={blurInput}
@@ -181,25 +187,25 @@ function Todo({
 
         <Box
           sx={styles.ControlButtons}
-          className='icon_change_todo'
-          aria-hidden='true'
+          className="icon_change_todo"
+          aria-hidden="true"
         >
           <DateTimePickers id={id} />
           <EditIcon
-            role='button'
-            color='primary'
-            aria-label='Edit'
+            role="button"
+            color="primary"
+            aria-label="Edit"
             onClick={editTodo}
           />
           <CheckCircleIcon
-            role='button'
-            color='primary'
-            aria-label='done'
+            role="button"
+            color="primary"
+            aria-label="done"
             onClick={changeStatusTodo}
           />
           <DeleteIcon
-            color='secondary'
-            aria-label='Delete'
+            color="secondary"
+            aria-label="Delete"
             onClick={addTodoInTrash}
           />
         </Box>
@@ -207,6 +213,6 @@ function Todo({
       </Paper>
     </Grid>
   );
-}
+};
 
 export default Todo;

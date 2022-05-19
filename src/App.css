@@ -1,19 +1,20 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .App {
-    margin-top: 100px;
-    margin-bottom: 80px;
-    text-align: center;
-    height: 100%;
+  margin-top: 100px;
+  margin-bottom: 80px;
+  text-align: center;
+  height: 100%;
 }
 
 body {
-    background-image: url("./images/background.jpg");
+  background-image: url("./images/background.jpg");
 }
-.css-excro5-MuiGrid-root{
-    padding: 0!important;
+
+.css-excro5-MuiGrid-root {
+  padding: 0 !important;
 }

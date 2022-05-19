@@ -1,14 +1,17 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Box, Grid, Paper } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import AddTodo from './AddTodo';
-import List from './List';
-import { addTodo, changeTodos, fetchTodos } from '../../store/slices/todos';
-import emptyTrash from '../../images/emtyTrash.png';
-import fullTrash from '../../images/fullTrash.png';
-import ROUTE_LINKS from '../MyRouters/routeLink';
-import ShowPagination from '../Pagination/ShowPagination';
+
+import { Box, Grid, Paper } from '@mui/material';
+
+import AddTodo from '../AddTodo/AddTodo';
+import List from '../List/List';
+import ShowPagination from '../../Pagination/ShowPagination';
+import { addTodo, changeTodos, fetchTodos } from '../../../store/slices/todos';
+import emptyTrash from '../../../images/emtyTrash.png';
+import fullTrash from '../../../images/fullTrash.png';
+
+import ROUTE_LINKS from '../../MyRouters/routeLink';
 
 const styles = {
   Paper: {
@@ -26,13 +29,15 @@ const styles = {
   },
 };
 
-function TodoList() {
+const TodoList = () => {
   const [trashCondition, setTrashCondition] = useState(false);
   const [filter, setFilter] = useState('all');
   const [InWastebasket, setInWastebasket] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [todoPerPage] = useState(4);
+
   const todoArray = useSelector((state) => state.todos.todos || []);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -101,8 +106,8 @@ function TodoList() {
           onDrop={onDrop}
         >
           {trashCondition
-            ? <img src={fullTrash} alt='iconTrash' />
-            : <img src={emptyTrash} alt='iconTrash' />}
+            ? <img src={fullTrash} alt="iconTrash" />
+            : <img src={emptyTrash} alt="iconTrash" />}
         </Box>
       </Grid>
       <Grid item xs={12} sx={styles.Paper}>
@@ -119,6 +124,6 @@ function TodoList() {
       </Grid>
     </Grid>
   );
-}
+};
 
 export default TodoList;

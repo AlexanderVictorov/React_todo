@@ -1,18 +1,18 @@
 import axios from 'axios';
+import { AXIOS_URL, SERVER_URL } from '../../envConfig';
 
 const $api = axios.create({
   withCredentials: true,
-  baseURL: process.env.REACT_APP_BASE_URL,
+  baseURL: SERVER_URL,
 });
 const apiService = axios.create({
   withCredentials: true,
-  baseURL: process.env.REACT_APP_BASE_URL_AXIOS,
+  baseURL: AXIOS_URL,
 });
 
 const onRequest = (config) => {
   const token = localStorage.getItem('token');
   if (token && !config.url.includes('auth')) {
-    // eslint-disable-next-line no-param-reassign
     config.headers.authorization = `Bearer ${token}`;
   }
   return config;
@@ -25,7 +25,6 @@ const onResponseError = async (error) => {
       const res = await apiService.get('refresh');
       const newToken = res.data.token;
       localStorage.setItem('token', newToken);
-      // eslint-disable-next-line no-param-reassign
       error.config.headers.authorization = `Bearer ${newToken}`;
       return $api(error.config);
     } catch (e) {
